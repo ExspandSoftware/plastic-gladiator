@@ -5,12 +5,12 @@ import os
 
 # setup frame and game engine
 pg.init()
-scr = pygame.display.set_mode((1200, 700),pygame.RESIZABLE)
+scr = pg.display.set_mode((1920, 1080), pg.RESIZABLE)
 clock = pg.time.Clock()
 running = True
 
 # Now set the title for the window
-pygame.display.set_caption('')
+pg.display.set_caption('{PLACEHOLDER}')
 
 while running:
     for event in pg.event.get():
@@ -18,7 +18,7 @@ while running:
             running = False
 
     
-    screen.fill("purple")
+    scr.fill("purple")
 
     # RENDER YOUR GAME HERE
 
