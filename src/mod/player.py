@@ -1,29 +1,40 @@
 import pygame
 
-import sys
-sys.path.append('..')
+import math
 
-from ..config import *
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
 
-        self.stand_animation = [pygame.Surface((200, 400)), pygame.Surface((200, 405)), pygame.Surface((200, 410)), pygame.Surface((200, 405))]
+        self.stand = pygame.Surface((200, 400))
+        self.stand.fill((203, 178, 98))
         self.super_jump_animation = [pygame.Surface((150, 200)), pygame.Surface((100, 180)), pygame.Surface((110, 150)), pygame.Surface((150, 100)), pygame.Surface((110, 150)), pygame.Surface((100, 180)), pygame.Surface((80, 210))]
 
         self.current_state = "stand"
         self.animation_index = 0
-        self.image = self.stand_animation[self.animation_index]
-        self.rect = self.image.get_rect(topleft=(x, y))
+        self.image = self.stand
+        self.original_height = self.image.get_height()
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+        self.original_y = y
 
 
-    def update(self):
-        self.animation_index = (self.animation_index + 1) % len(self.get_current_animation())
-        self.image = self.get_current_animation()[self.animation_index]
+    def update(self, stage):
 
-        if STAGE == "home":
-            pass
+        if stage == "home":
+            #Player zentrieren
+
+            #dynamische Bewegung dse Spielers
+            factor = (100 + 2*math.sin(pygame.time.get_ticks() * 0.005))/100
+            new_height = int(self.original_height * factor)
+
+            self.rect = self.image.get_rect(topleft=(self.rect.x, self.original_y - (new_height - self.original_height)))
+            self.image = pygame.transform.scale(self.image, (self.image.get_width(), new_height))
+
+        elif stage == "level_1":
+            self.animation_index = (self.animation_index + 1) % len(self.get_current_animation())
+            self.image = self.get_current_animation()[self.animation_index]
 
         # Dynamische Anpassung der Größe an die Fenstergröße
         #screen_width, screen_height = pygame.display.get_surface().get_size()

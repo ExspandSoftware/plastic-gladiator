@@ -20,7 +20,8 @@ class Game:
         self.home_sprites = pygame.sprite.Group()
         self.level_1_sprites = pygame.sprite.Group()
         self.level_2_sprites = pygame.sprite.Group()
-        self.player = Player(Cwidth/2 - 75, Cheight * 0.6)
+        
+        self.player = Player(Cwidth//2, Cheight * 0.4)
         self.home_sprites.add(self.player)
 
         #update screen with data
@@ -114,13 +115,13 @@ class Game:
             self.screen.fill((35, 23, 11))
             
             if STAGE == "home":
-                self.home_sprites.update()
+                self.home_sprites.update(STAGE)
                 self.home_sprites.draw(self.screen)
 
             self.draw_p_data()
 
             pygame.display.flip()
 
-            self.clock.tick(30)
+            self.clock.tick(60)
 
         pygame.quit()
