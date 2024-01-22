@@ -12,10 +12,11 @@ import os
 #Konstante, in Form eines Paths, der zum Arbeitsverzeichnis führt
 WORKING_DIR = os.getcwd()
 #Konstante, in Form eines Paths, der zum Source Code führt
-CURRENT_DIR = os.getcwd()
+#CURRENT_DIR = os.path.curdir()
 
 #Framemode
-Iwidth = 1200
-Iheight = 800
-Cwidth = 0
-Cheight = 0
+Cwidth = 1200
+Cheight = 800
+
+#Gamerules
+STAGE = "home"

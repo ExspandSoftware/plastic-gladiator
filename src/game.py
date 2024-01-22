@@ -12,13 +12,16 @@ from config import *
 class Game:
     def __init__(self):
         #general
-        self.screen = pygame.display.set_mode((Iwidth, Iheight), pygame.RESIZABLE)
+        self.screen = pygame.display.set_mode((Cwidth, Cheight), pygame.RESIZABLE)
         pygame.display.set_caption('Plastic Gladiator')
-        pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'icons', 'Mülleimer.png')))
+        pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'Mülleimer.png')))
         self.clock = pygame.time.Clock()
-        self.all_sprites = pygame.sprite.Group()
-        self.player = Player(400, 300)
-        self.all_sprites.add(self.player)
+
+        self.home_sprites = pygame.sprite.Group()
+        self.level_1_sprites = pygame.sprite.Group()
+        self.level_2_sprites = pygame.sprite.Group()
+        self.player = Player(Cwidth/2 - 75, Cheight * 0.6)
+        self.home_sprites.add(self.player)
 
         #update screen with data
         self.font_size = 24
@@ -108,16 +111,16 @@ class Game:
         while running:
             self.handle_events()
             self.update_wh()
+            self.screen.fill((35, 23, 11))
             
-            self.all_sprites.update()
-
-            self.screen.fill((150, 150, 175))
-            self.all_sprites.draw(self.screen)
+            if STAGE == "home":
+                self.home_sprites.update()
+                self.home_sprites.draw(self.screen)
 
             self.draw_p_data()
 
             pygame.display.flip()
 
-            self.clock.tick(60)
+            self.clock.tick(30)
 
         pygame.quit()
