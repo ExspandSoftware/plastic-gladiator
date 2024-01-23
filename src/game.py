@@ -6,6 +6,8 @@ import sys
 import os
 
 from mod.player import Player
+from mod.button import Button
+from mod.g_image import GImage
 from config import *
 
 #%% Class ------------------------------------------------------------------
@@ -15,14 +17,23 @@ class Game:
         self.screen = pygame.display.set_mode((Cwidth, Cheight), pygame.RESIZABLE)
         pygame.display.set_caption('Plastic Gladiator')
         pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'Mülleimer.png')))
+        
         self.clock = pygame.time.Clock()
 
         self.home_sprites = pygame.sprite.Group()
         self.level_1_sprites = pygame.sprite.Group()
         self.level_2_sprites = pygame.sprite.Group()
         
+        self.background = GImage(0, 0, Cwidth, Cheight, (15, 34, 65))
         self.player = Player(Cwidth//2, Cheight * 0.4)
+        self.start_button = Button()
+        self.progress_bar = GImage(Cwidth*0.02, Cheight*0.02, Cwidth*0.2, Cheight*0.075, (70, 200, 110))
+        self.titel_name = GImage(Cwidth//2 - Cwidth*0.2, Cheight*0.02, Cwidth*0.4, Cheight*0.2, (123, 65, 78))
+
+        self.home_sprites.add(self.background)
         self.home_sprites.add(self.player)
+        self.home_sprites.add(self.titel_name)
+        self.home_sprites.add(self.progress_bar)
 
         #update screen with data
         self.font_size = 24
@@ -112,7 +123,7 @@ class Game:
         while running:
             self.handle_events()
             self.update_wh()
-            self.screen.fill((35, 23, 11))
+            self.screen.fill((255, 255, 255))
             
             if STAGE == "home":
                 self.home_sprites.update(STAGE)
