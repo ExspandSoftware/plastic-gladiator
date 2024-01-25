@@ -7,40 +7,47 @@ class Player(pygame.sprite.Sprite):
     def __init__(self, x: int, y: int, w: int, h: int):
         super().__init__()
 
-        self.x = x
-        self.y = y
-
         self.stand = pygame.Surface((w, h))
         self.stand.fill((203, 178, 98))
         self.super_jump_animation = []#[pygame.Surface((150, 200)), pygame.Surface((100, 180)), pygame.Surface((110, 150)), pygame.Surface((150, 100)), pygame.Surface((110, 150)), pygame.Surface((100, 180)), pygame.Surface((80, 210))]
 
         self.current_state = "stand"
         self.animation_index = 0
-
+        
         self.image = self.stand
-        self.rect = self.image.get_rect(topleft=(x, y))
-        #Konstanten
-        self.width = self.image.get_width()
-        self.height = self.image.get_height()
+        self.width = self.image.get_width() / 1280
+        self.height = self.image.get_height() / 720
+        self.rect = self.image.get_rect()
+        self.rect.center = (x, y)
+        self.x = x / 1280
+        self.y = y / 720
 
 
-    def update(self, Iwidth:int, Iheight:int, Cwidth:int, Cheight:int, *args, **kwargs):
-        #Objekt skalieren
-        x_factor = Cwidth/Iwidth
-        y_factor = Cheight/Iheight
-
-        self.image = pygame.transform.scale(self.image, (self.width * x_factor, self.height * y_factor))
-        self.rect = self.image.get_rect(topleft=(self.x * x_factor, self.y * y_factor))
+    def update(self, *args, **kwargs):
 
         for key, value in kwargs.items():
 
+            if key == "width":
+                self.image = pygame.Surface((self.width * value, self.image.get_height()))
+                self.image.fill((203, 178, 98))
+                self.rect.centerx = self.x * value
+            if key == "height":
+                self.height = self.height * value / 720
+                self.image = pygame.Surface((self.image.get_width(), self.height * value))
+                self.image.fill((203, 178, 98))
+                self.rect.centery = self.y * value
+                self.y = self.y * value / 720
+
             if key == "stage":
                 if value == "home":
+                    #Player zentrieren
+
                     #dynamische Bewegung dse Spielers
                     factor = (100 + 2*math.sin(pygame.time.get_ticks() * 0.005))/100
+                    new_height = int(self.height * 720*factor)
 
-                    self.image = pygame.transform.scale(self.image, (self.image.get_width(), self.image.get_height() * factor))
-                    self.rect = self.image.get_rect(topleft=(self.rect.x, self.rect.y - (self.image.get_height() - self.height * y_factor)))
+                    self.rect = self.image.get_rect(topleft=(self.rect.x, self.y - (new_height - self.height * 720)))
+                    self.image = pygame.transform.scale(self.image, (self.image.get_width(), new_height))
 
                 elif value == "level_1":
                     self.animation_index = int((self.animation_index + 0.1)) % len(self.get_current_animation())

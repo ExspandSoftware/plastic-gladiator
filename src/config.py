@@ -15,8 +15,8 @@ WORKING_DIR = os.getcwd()
 #CURRENT_DIR = os.path.curdir()
 
 #Framemode
-Cwidth = 1280
-Cheight = 720
+Iwidth, Iheight = 1280, 720
+Cwidth, Cheight = 1280, 720
 
 #Gamerules
 STAGE = "home"

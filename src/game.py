@@ -13,30 +13,42 @@ from config import *
 #%% Class ------------------------------------------------------------------
 class Game:
     def __init__(self):
-        #general
+        #Pygame Window
         global monitor_size
         monitor_size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
         self.fullscreen = False
-        self.screen = pygame.display.set_mode((Cwidth, Cheight), pygame.RESIZABLE)
+        self.screen = pygame.display.set_mode((Iwidth, Iheight), pygame.RESIZABLE)
         pygame.display.set_caption('Plastic Gladiator')
         pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'Mülleimer.png')))
-        
+        #Pygame Logik
         self.clock = pygame.time.Clock()
 
+        #Sprite Groups
         self.home_sprites = pygame.sprite.Group()
+        self.walk_into_edeka = pygame.sprite.Group()
         self.level_1_sprites = pygame.sprite.Group()
         self.level_2_sprites = pygame.sprite.Group()
-        
-        self.background = GImage(0, 0, Cwidth, Cheight, (15, 34, 65))
-        self.player = Player(Cwidth//2, int(Cheight * 0.4))
-        self.start_button = Button()
-        self.progress_bar = GImage(int(Cwidth*0.02), int(Cheight*0.02), int(Cwidth*0.2), int(Cheight*0.075), (70, 200, 110))
-        self.titel_name = GImage(Cwidth//2 - int(Cwidth*0.2), int(Cheight*0.02), int(Cwidth*0.4), int(Cheight*0.2), (123, 65, 78))
 
+        #Objekte für die verschiedenen Bilder
+        self.background = GImage(0, 0, Iwidth, Iheight, (15, 34, 65))
+        self.player = Player(Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2)
+        self.titel_name = GImage(Cwidth//2 - int(Cwidth*0.2), int(Cheight*0.02), int(Cwidth*0.4), int(Cheight*0.25), (123, 65, 78))
+        self.progress_bar = GImage(int(Cwidth*0.02), int(Cheight*0.02), int(Cwidth*0.15), int(Cheight*0.5), (70, 200, 110))
+        self.settings_button = Button(int(Cwidth*0.88), int(Cheight*0.02), int(Cwidth*0.1), int(Cwidth*0.1), (234, 76, 198))
+        self.start_button = Button(int(Cwidth*0.68), int(Cheight*0.78), int(Cwidth*0.3), int(Cheight*0.2), (234, 201, 65))
+        self.book = Button(int(Cwidth*0.02), int(Cheight*0.98 - int(Cwidth*0.1)), int(Cwidth*0.1), int(Cwidth*0.1), (176, 23, 205))
+
+        #ZUweisung der Objekte
         self.home_sprites.add(self.background)
         self.home_sprites.add(self.player)
         self.home_sprites.add(self.titel_name)
         self.home_sprites.add(self.progress_bar)
+        self.home_sprites.add(self.settings_button)
+        self.home_sprites.add(self.start_button)
+        self.home_sprites.add(self.book)
+
+        #game variables
+        self.progress = 0
 
         #update screen with data
         self.font_size = 24
@@ -111,37 +123,43 @@ class Game:
 
     def handle_events(self):
         for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
 
-                if event.type == pygame.VIDEORESIZE and not self.fullscreen:
-                    self.screen = pygame.display.set_mode(event.size, pygame.RESIZABLE)
-                    self.update_wh()
-                    self.home_sprites.update(width=Cwidth, height=Cheight)
+            if event.type == pygame.KEYDOWN:
+                keys = pygame.key.get_pressed()
+                if keys[pygame.K_F1]:
+                    self.toggle_data = not self.toggle_data
+                if (keys[pygame.K_RCTRL] or keys[pygame.K_LCTRL]) and keys[pygame.K_f]:
+                    self.fullscreen = not self.fullscreen
 
-                if event.type == pygame.KEYDOWN:
-                    keys = pygame.key.get_pressed()
-                    if keys[pygame.K_F1]:
-                        self.toggle_data = not self.toggle_data
-                    if keys[pygame.K_F12]:
-                        self.fullscreen = not self.fullscreen
+                    if self.fullscreen:
+                        self.screen = pygame.display.set_mode(monitor_size, pygame.FULLSCREEN)
+                    else:
+                        self.screen = pygame.display.set_mode((1280, 720) if monitor_size[0] <= 1920 else (1920, 1080), pygame.RESIZABLE)
 
-                        if self.fullscreen:
-                            self.screen = pygame.display.set_mode(monitor_size, pygame.FULLSCREEN)
-                            self.update_wh()
-                            self.home_sprites.update(width=Cwidth, height=Cheight)
-                        else:
-                            self.screen = pygame.display.set_mode((1280, 720) if monitor_size[0] <= 1920 else (1920, 1080), pygame.RESIZABLE)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    if STAGE == "home":
+                        if self.settings_button.is_clicked(event.pos):
+                            print("settings button")
+                        if self.start_button.is_clicked(event.pos):
+                            STAGE = "walk_into_edeka"
+                        if self.book.is_clicked(event.pos):
+                            print("Book Button")
+
 
     def run(self):
         running = True
         while running:
             self.handle_events()
             self.screen.fill((255, 255, 255))
+
+            self.update_wh()
             
             if STAGE == "home":
-                self.home_sprites.update(stage="home")
+                self.home_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage="home")
                 self.home_sprites.draw(self.screen)
 
             self.draw_p_data()
