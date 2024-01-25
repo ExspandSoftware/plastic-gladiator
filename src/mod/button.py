@@ -23,7 +23,7 @@ class Button(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=(self.x * x_factor, self.y * y_factor))
 
     def is_clicked(self, pos):
-        if pos[0] >= self.x and pos[0] <= self.x + self.width and pos[1] >= self.y and pos[1] <= self.y + self.height:
+        if pos[0] >= self.rect.x and pos[0] <= self.rect.x + self.image.get_width() and pos[1] >= self.rect.y and pos[1] <= self.rect.y + self.image.get_height():
             return True	
         else:
             return False

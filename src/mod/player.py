@@ -4,14 +4,14 @@ import math
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x: int, y: int, w: int, h: int):
+    def __init__(self, x: int, y: int, w: int, h: int, image):
         super().__init__()
 
         self.x = x
         self.y = y
 
         self.stand = pygame.Surface((w, h))
-        self.stand.fill((203, 178, 98))
+        self.stand.fill(image)
         self.super_jump_animation = []#[pygame.Surface((150, 200)), pygame.Surface((100, 180)), pygame.Surface((110, 150)), pygame.Surface((150, 100)), pygame.Surface((110, 150)), pygame.Surface((100, 180)), pygame.Surface((80, 210))]
 
         self.current_state = "stand"
@@ -42,25 +42,22 @@ class Player(pygame.sprite.Sprite):
                     self.image = pygame.transform.scale(self.image, (self.image.get_width(), self.image.get_height() * factor))
                     self.rect = self.image.get_rect(topleft=(self.rect.x, self.rect.y - (self.image.get_height() - self.height * y_factor)))
 
-                elif value == "level_1":
+                elif value == "walk_into_edeka":
+                    #andere Größe festlegen
+                    factor = 0.5
+                    self.x = Cwidth * 0.01
+                    self.y = Cheight * 0.8
+                    self.image = pygame.transform.scale(self.image, (self.width * factor, self.height * factor))
+                    self.rect = self.image.get_rect(topleft=(self.x, self.y))
+
+
+
                     self.animation_index = int((self.animation_index + 0.1)) % len(self.get_current_animation())
                     self.image = self.get_current_animation()[self.animation_index]
-
-        # Dynamische Anpassung der Größe an die Fenstergröße
-        #screen_width, screen_height = pygame.display.get_surface().get_size()
-        #new_width = int(screen_width/12)  # Beispielbreite
-        #new_height = int(screen_height/4)  # Beispielhöhe
-
-        #self.image = pygame.transform.scale(self.image, (new_width, new_height))
+                    
 
     def change_stage(self, new_stage):
         # Hier kannst du die Stage ändern und die Animationen entsprechend aktualisieren
         self.current_stage = new_stage
         self.animation_index = 0
         self.image = self.get_current_animation()[self.animation_index]
-
-    def get_current_animation(self):
-        if self.current_state == "stand":
-            return self.stand_animation
-        elif self.current_state == "super_jump":
-            return self.super_jump_animation

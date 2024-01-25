@@ -30,22 +30,27 @@ class Game:
         self.level_2_sprites = pygame.sprite.Group()
 
         #Objekte für die verschiedenen Bilder
-        self.background = GImage(0, 0, Iwidth, Iheight, (15, 34, 65))
-        self.player = Player(Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2)
-        self.titel_name = GImage(Cwidth//2 - int(Cwidth*0.2), int(Cheight*0.02), int(Cwidth*0.4), int(Cheight*0.25), (123, 65, 78))
+        self.home_background = GImage(0, 0, Iwidth, Iheight, (15, 34, 65))
+        self.player = Player(Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2, (208, 157, 95))
+        self.titel_name = GImage(Cwidth//2 - int(Cwidth*0.2), int(Cheight*0.02), int(Cwidth*0.4), int(Cheight*0.25), (123, 65, 235))
         self.progress_bar = GImage(int(Cwidth*0.02), int(Cheight*0.02), int(Cwidth*0.15), int(Cheight*0.5), (70, 200, 110))
         self.settings_button = Button(int(Cwidth*0.88), int(Cheight*0.02), int(Cwidth*0.1), int(Cwidth*0.1), (234, 76, 198))
         self.start_button = Button(int(Cwidth*0.68), int(Cheight*0.78), int(Cwidth*0.3), int(Cheight*0.2), (234, 201, 65))
         self.book = Button(int(Cwidth*0.02), int(Cheight*0.98 - int(Cwidth*0.1)), int(Cwidth*0.1), int(Cwidth*0.1), (176, 23, 205))
 
-        #ZUweisung der Objekte
-        self.home_sprites.add(self.background)
+        self.edeka_background = GImage(0, 0, Iwidth, Iheight, (15, 65, 34))
+
+        #Zuweisung der Objekte
+        self.home_sprites.add(self.home_background)
         self.home_sprites.add(self.player)
         self.home_sprites.add(self.titel_name)
         self.home_sprites.add(self.progress_bar)
         self.home_sprites.add(self.settings_button)
         self.home_sprites.add(self.start_button)
         self.home_sprites.add(self.book)
+
+        self.walk_into_edeka.add(self.edeka_background)
+        self.walk_into_edeka.add(self.player)
 
         #game variables
         self.progress = 0
@@ -119,9 +124,14 @@ class Game:
                 text_rect = line_team_text.get_rect(right=Cwidth-10, top=y)
                 self.screen.blit(line_team_text, text_rect)
                 y += Zeilenabstand
+    
+
+    def transition_black(self):
+        pass
 
 
     def handle_events(self):
+        global STAGE
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
@@ -159,8 +169,11 @@ class Game:
             self.update_wh()
             
             if STAGE == "home":
-                self.home_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage="home")
+                self.home_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE)
                 self.home_sprites.draw(self.screen)
+            elif STAGE == "walk_into_edeka":
+                self.walk_into_edeka.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE)
+                self.walk_into_edeka.draw(self.screen)
 
             self.draw_p_data()
 
