@@ -4,7 +4,7 @@ import math
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x, y):
+    def __init__(self, x: int, y: int):
         super().__init__()
 
         self.stand = pygame.Surface((200, 400))
@@ -14,27 +14,43 @@ class Player(pygame.sprite.Sprite):
         self.current_state = "stand"
         self.animation_index = 0
         self.image = self.stand
-        self.original_height = self.image.get_height()
+        self.width = self.image.get_width() / 1280
+        self.height = self.image.get_height() / 720
         self.rect = self.image.get_rect()
         self.rect.center = (x, y)
-        self.original_y = y
+        self.x = x / 1280
+        self.y = y / 720
 
 
-    def update(self, stage):
+    def update(self, *args, **kwargs):
 
-        if stage == "home":
-            #Player zentrieren
+        for key, value in kwargs.items():
 
-            #dynamische Bewegung dse Spielers
-            factor = (100 + 2*math.sin(pygame.time.get_ticks() * 0.005))/100
-            new_height = int(self.original_height * factor)
+            if key == "width":
+                self.image = pygame.Surface((self.width * value, self.image.get_height()))
+                self.image.fill((203, 178, 98))
+                self.rect.centerx = self.x * value
+            if key == "height":
+                self.height = self.height * value / 720
+                self.image = pygame.Surface((self.image.get_width(), self.height * value))
+                self.image.fill((203, 178, 98))
+                self.rect.centery = self.y * value
+                self.y = self.y * value / 720
 
-            self.rect = self.image.get_rect(topleft=(self.rect.x, self.original_y - (new_height - self.original_height)))
-            self.image = pygame.transform.scale(self.image, (self.image.get_width(), new_height))
+            if key == "stage":
+                if value == "home":
+                    #Player zentrieren
 
-        elif stage == "level_1":
-            self.animation_index = (self.animation_index + 1) % len(self.get_current_animation())
-            self.image = self.get_current_animation()[self.animation_index]
+                    #dynamische Bewegung dse Spielers
+                    factor = (100 + 2*math.sin(pygame.time.get_ticks() * 0.005))/100
+                    new_height = int(self.height * 720 * factor)
+
+                    self.rect = self.image.get_rect(topleft=(self.rect.x, self.y - (new_height - self.height * 720)))
+                    self.image = pygame.transform.scale(self.image, (self.image.get_width(), new_height))
+
+                elif value == "level_1":
+                    self.animation_index = (self.animation_index + 1) % len(self.get_current_animation())
+                    self.image = self.get_current_animation()[self.animation_index]
 
         # Dynamische Anpassung der Größe an die Fenstergröße
         #screen_width, screen_height = pygame.display.get_surface().get_size()

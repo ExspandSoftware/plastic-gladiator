@@ -14,6 +14,9 @@ from config import *
 class Game:
     def __init__(self):
         #general
+        global monitor_size
+        monitor_size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
+        self.fullscreen = False
         self.screen = pygame.display.set_mode((Cwidth, Cheight), pygame.RESIZABLE)
         pygame.display.set_caption('Plastic Gladiator')
         pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'Mülleimer.png')))
@@ -25,10 +28,10 @@ class Game:
         self.level_2_sprites = pygame.sprite.Group()
         
         self.background = GImage(0, 0, Cwidth, Cheight, (15, 34, 65))
-        self.player = Player(Cwidth//2, Cheight * 0.4)
+        self.player = Player(Cwidth//2, int(Cheight * 0.4))
         self.start_button = Button()
-        self.progress_bar = GImage(Cwidth*0.02, Cheight*0.02, Cwidth*0.2, Cheight*0.075, (70, 200, 110))
-        self.titel_name = GImage(Cwidth//2 - Cwidth*0.2, Cheight*0.02, Cwidth*0.4, Cheight*0.2, (123, 65, 78))
+        self.progress_bar = GImage(int(Cwidth*0.02), int(Cheight*0.02), int(Cwidth*0.2), int(Cheight*0.075), (70, 200, 110))
+        self.titel_name = GImage(Cwidth//2 - int(Cwidth*0.2), int(Cheight*0.02), int(Cwidth*0.4), int(Cheight*0.2), (123, 65, 78))
 
         self.home_sprites.add(self.background)
         self.home_sprites.add(self.player)
@@ -38,7 +41,7 @@ class Game:
         #update screen with data
         self.font_size = 24
         self.font = pygame.font.Font(None, self.font_size)  # Schriftart und Größe
-        self.toggle_data = True
+        self.toggle_data = False
 
 
     def update_wh(self):
@@ -112,21 +115,33 @@ class Game:
                     pygame.quit()
                     sys.exit()
 
+                if event.type == pygame.VIDEORESIZE and not self.fullscreen:
+                    self.screen = pygame.display.set_mode(event.size, pygame.RESIZABLE)
+                    self.update_wh()
+                    self.home_sprites.update(width=Cwidth, height=Cheight)
+
                 if event.type == pygame.KEYDOWN:
                     keys = pygame.key.get_pressed()
                     if keys[pygame.K_F1]:
                         self.toggle_data = not self.toggle_data
+                    if keys[pygame.K_F12]:
+                        self.fullscreen = not self.fullscreen
 
+                        if self.fullscreen:
+                            self.screen = pygame.display.set_mode(monitor_size, pygame.FULLSCREEN)
+                            self.update_wh()
+                            self.home_sprites.update(width=Cwidth, height=Cheight)
+                        else:
+                            self.screen = pygame.display.set_mode((1280, 720) if monitor_size[0] <= 1920 else (1920, 1080), pygame.RESIZABLE)
 
     def run(self):
         running = True
         while running:
             self.handle_events()
-            self.update_wh()
             self.screen.fill((255, 255, 255))
             
             if STAGE == "home":
-                self.home_sprites.update(STAGE)
+                self.home_sprites.update(stage="home")
                 self.home_sprites.draw(self.screen)
 
             self.draw_p_data()
