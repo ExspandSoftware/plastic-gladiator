@@ -32,11 +32,11 @@ class Game:
         #Objekte für die verschiedenen Bilder
         self.home_background = GImage(0, 0, Iwidth, Iheight, (15, 34, 65))
         self.player = Player(Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2, (208, 157, 95))
-        self.titel_name = GImage(Cwidth//2 - int(Cwidth*0.2), int(Cheight*0.02), int(Cwidth*0.4), int(Cheight*0.25), (123, 65, 235))
-        self.progress_bar = GImage(int(Cwidth*0.02), int(Cheight*0.02), int(Cwidth*0.15), int(Cheight*0.5), (70, 200, 110))
-        self.settings_button = Button(int(Cwidth*0.88), int(Cheight*0.02), int(Cwidth*0.1), int(Cwidth*0.1), (234, 76, 198))
-        self.start_button = Button(int(Cwidth*0.68), int(Cheight*0.78), int(Cwidth*0.3), int(Cheight*0.2), (234, 201, 65))
-        self.book = Button(int(Cwidth*0.02), int(Cheight*0.98 - int(Cwidth*0.1)), int(Cwidth*0.1), int(Cwidth*0.1), (176, 23, 205))
+        self.titel_name = GImage(Iwidth//2 - int(Iwidth*0.2), int(Iheight*0.02), int(Iwidth*0.4), int(Iheight*0.25), (123, 65, 235))
+        self.progress_bar = GImage(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.15), int(Iheight*0.5), (70, 200, 110))
+        self.settings_button = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (234, 76, 198))
+        self.start_button = Button(int(Iwidth*0.68), int(Iheight*0.78), int(Iwidth*0.3), int(Iheight*0.2), (234, 201, 65))
+        self.book = Button(int(Iwidth*0.02), int(Iheight*0.98 - int(Iwidth*0.15)), int(Iwidth*0.15), int(Iwidth*0.15), (176, 23, 205))
 
         self.edeka_background = GImage(0, 0, Iwidth, Iheight, (15, 65, 34))
 
@@ -154,8 +154,15 @@ class Game:
                     if STAGE == "home":
                         if self.settings_button.is_clicked(event.pos):
                             print("settings button")
+
                         if self.start_button.is_clicked(event.pos):
                             STAGE = "walk_into_edeka"
+                            
+                            self.player.x = int(Iwidth*0.05)
+                            self.player.y = int(Iheight*0.7)
+                            self.player.width = Iwidth//15
+                            self.player.height = Iheight//5
+
                         if self.book.is_clicked(event.pos):
                             print("Book Button")
 
