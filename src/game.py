@@ -29,6 +29,7 @@ class Game:
         global monitor_size
         monitor_size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
         self.fullscreen = False
+        self.stage_change_wait = 0
         self.screen = pygame.display.set_mode((Iwidth, Iheight), pygame.RESIZABLE)
         pygame.display.set_caption('Plastic Gladiator')
         pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'Mülleimer.png')))
@@ -120,7 +121,7 @@ class Game:
             lines = []
             current_line = ''
 
-            #seperate words and build diffrent lines
+            #separate words and build different lines
             for name in names:
                 test_line = current_line + name + ', '
                 text_width, text_height = self.font.size(test_line)
@@ -134,7 +135,7 @@ class Game:
             lines.append(current_line.rstrip())
             lines[0] = "Team: " + lines[0]
 
-            #draw diffent lines to the surface
+            #draw different lines to the surface
             y = 10
             for idx, line in enumerate(lines):
                 line_team_text = self.font.render(line, True, (255, 255, 255))
@@ -167,6 +168,25 @@ class Game:
 
     def handle_events(self):
         global STAGE
+
+        #change stage from outside to inside after a given time
+        if self.stage_change_wait >= 50:
+                self.stage_change_wait = 0
+                STAGE = "edeka"
+
+
+        if STAGE == "walk_into_edeka":
+            if pygame.sprite.collide_rect(self.player, self.outer_edeka_door):
+                #door should open
+                pass
+                
+
+            if pygame.sprite.collide_rect(self.player, self.inner_edeka_door):
+                self.stage_change_wait += 1
+            else:
+                self.stage_change_wait = 0
+                
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 #first save all the game state

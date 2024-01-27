@@ -26,8 +26,8 @@ class Player(pygame.sprite.Sprite):
 
         self.dx = 0
         self.dy = 0
-        self.walking_speed = 3
-        self.jump_power = 10
+        self.walking_speed = 4
+        self.jump_power = 8
 
 
     def update(self, Iwidth:int, Iheight:int, Cwidth:int, Cheight:int, *args, **kwargs):
@@ -50,15 +50,18 @@ class Player(pygame.sprite.Sprite):
                     #animationshandler
                     keys = pygame.key.get_pressed()
                     if self.y == int(Iheight*0.7):
-                        if keys[pygame.K_d] and abs(self.dx) <= self.walking_speed:
+                        if keys[pygame.K_d] and not keys[pygame.K_a] and abs(self.dx) <= self.walking_speed:
                             self.dx += self.walking_speed*0.1
-                        if keys[pygame.K_a] and abs(self.dx) <= self.walking_speed:
+                        if keys[pygame.K_a] and not keys[pygame.K_d] and abs(self.dx) <= self.walking_speed:
                             self.dx -= self.walking_speed*0.1
                         if keys[pygame.K_SPACE]:
                             self.dy = -self.jump_power
 
-                        if self.dx != 0:
-                            self.dx -= self.dx/abs(self.dx)*0.1
+                        if self.dx != 0: 
+                            if abs(self.dx) <= 0.0000001:
+                                self.dx = 0
+                            else:   
+                                self.dx -= self.dx/abs(self.dx)*0.1
 
                     self.dy += 0.5
                     if self.y + self.dy >= int(Iheight*0.7):
