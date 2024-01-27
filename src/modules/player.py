@@ -54,20 +54,23 @@ class Player(pygame.sprite.Sprite):
                             self.dx += self.walking_speed*0.1
                         if keys[pygame.K_a] and abs(self.dx) <= self.walking_speed:
                             self.dx -= self.walking_speed*0.1
+                        if keys[pygame.K_SPACE]:
+                            self.dy = -self.jump_power
 
                         if self.dx != 0:
                             self.dx -= self.dx/abs(self.dx)*0.1
-
-                        if keys[pygame.K_SPACE]:
-                            self.dy = -self.jump_power
 
                     self.dy += 0.5
                     if self.y + self.dy >= int(Iheight*0.7):
                         self.y = int(Iheight*0.7)
                         self.dy = 0
+                    if -0.1 <= self.dx <= 0.1:
+                        self.dx = 0
 
                     self.x += self.dx
                     self.y += self.dy
+
+                    #handle animations
                     
                     #self._wackeln(y_factor)
                     #self.animation_index = int((self.animation_index + 0.1)) % len(self.get_current_animation())

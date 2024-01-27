@@ -6,6 +6,9 @@ __moderators__ = "Karen Iwamya, Paul Niemann"
 __team__ = "Paul Niemann, Yannick Braune, Karen Iwamya, Louisa Krieger, Dana Brandis, Clemens Brandhoff, Jakob Pfeiffer, Phillipp Relogio Stauber, Vincent Winter, Mats Parlov, Franz Overlack, Leonard Hosie, Maximilian Bolt"
 __head__ = "Wilhelm Gymnasium Hamburg"
 __supervisor__ = "Nicole Kind (Chemie S4, Abiturjahrgang 2024)"
+__sound__ = "Vincent Winter"
+__concept__ = "..."
+__graphics__ = "..."
 EXPORT_VARS = [__author__, __version__, __CIO__, __moderators__, __team__, __head__, __supervisor__]
 
 import os
