@@ -13,6 +13,8 @@ class Button(pygame.sprite.Sprite):
         self.image.fill(image)
         self.rect = self.image.get_rect(topleft=(x, y))
 
+        self.click_sound = pygame.mixer.Sound("assets/sounds/button_click.mp3")
+
 
     def update(self, Iwidth:int, Iheight:int, Cwidth:int, Cheight:int, *vars, **kwargs):
         #Objekt skalieren
@@ -24,6 +26,7 @@ class Button(pygame.sprite.Sprite):
 
     def is_clicked(self, pos):
         if pos[0] >= self.rect.x and pos[0] <= self.rect.x + self.image.get_width() and pos[1] >= self.rect.y and pos[1] <= self.rect.y + self.image.get_height():
+            pygame.mixer.Sound.play(self.click_sound)
             return True	
         else:
             return False

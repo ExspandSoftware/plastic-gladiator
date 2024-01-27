@@ -103,7 +103,7 @@ class Game:
             lines = []
             current_line = ''
 
-            #seperate words and build diffrent lines
+            #separate words and build different lines
             for name in names:
                 test_line = current_line + name + ', '
                 text_width, text_height = self.font.size(test_line)
@@ -117,7 +117,7 @@ class Game:
             lines.append(current_line.rstrip())
             lines[0] = "Team: " + lines[0]
 
-            #draw diffent lines to the surface
+            #draw different lines to the surface
             y = 10
             for idx, line in enumerate(lines):
                 line_team_text = self.font.render(line, True, (255, 255, 255))
