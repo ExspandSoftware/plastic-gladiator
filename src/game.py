@@ -17,6 +17,7 @@ class Game:
         global monitor_size
         monitor_size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
         self.fullscreen = False
+        self.stage_change_wait = 0
         self.screen = pygame.display.set_mode((Iwidth, Iheight), pygame.RESIZABLE)
         pygame.display.set_caption('Plastic Gladiator')
         pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'Mülleimer.png')))
@@ -39,6 +40,9 @@ class Game:
         self.book = Button(int(Iwidth*0.02), int(Iheight*0.98 - int(Iwidth*0.15)), int(Iwidth*0.15), int(Iwidth*0.15), (176, 23, 205))
 
         self.edeka_background = GImage(0, 0, Iwidth, Iheight, (15, 65, 34))
+        self.edeka_door = GImage(int(Iwidth//2 * 1.33 - Iwidth//6), int(int(Iheight*0.7) + int(Iheight//5) - int(Iheight//3.5)), int(Iwidth//6), int(Iheight//3.5), (80, 120, 40))
+        self.inner_edeka_door = GImage(int(Iwidth//2 * 1.33 - Iwidth//6 + Iwidth//15), int(int(Iheight*0.7) + int(Iheight//5) - int(Iheight//3.5)), int(Iwidth//6 - 2 * Iwidth//15), int(Iheight//3.5), (110, 160, 60))
+        self.outer_edeka_door = GImage(int(Iwidth//2 * 1.33 - Iwidth//6 - 0.75 * Iwidth//15), int(int(Iheight*0.7) + int(Iheight//5) - int(Iheight//3.5)), int(Iwidth//6 + 1.5 * Iwidth//15), int(Iheight//3.5), (50, 80, 20))
 
         #Zuweisung der Objekte
         self.home_sprites.add(self.home_background)
@@ -50,6 +54,9 @@ class Game:
         self.home_sprites.add(self.book)
 
         self.walk_into_edeka.add(self.edeka_background)
+        self.walk_into_edeka.add(self.outer_edeka_door)
+        self.walk_into_edeka.add(self.edeka_door)
+        self.walk_into_edeka.add(self.inner_edeka_door)
         self.walk_into_edeka.add(self.player)
 
         #game variables
@@ -132,6 +139,25 @@ class Game:
 
     def handle_events(self):
         global STAGE
+
+        #change stage from outside to inside after a given time
+        if self.stage_change_wait >= 50:
+                self.stage_change_wait = 0
+                STAGE = "edeka"
+
+
+        if STAGE == "walk_into_edeka":
+            if pygame.sprite.collide_rect(self.player, self.outer_edeka_door):
+                #door should open
+                pass
+                
+
+            if pygame.sprite.collide_rect(self.player, self.inner_edeka_door):
+                self.stage_change_wait += 1
+            else:
+                self.stage_change_wait = 0
+                
+
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
