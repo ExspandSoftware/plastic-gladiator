@@ -29,19 +29,24 @@ class Game:
         global monitor_size
         monitor_size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
         self.fullscreen = False
-        self.stage_change_wait = 0
         self.screen = pygame.display.set_mode((Iwidth, Iheight), pygame.RESIZABLE)
         pygame.display.set_caption('Plastic Gladiator')
         pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'Mülleimer.png')))
         
         #Pygame Logik
         self.clock = pygame.time.Clock()
-        self.HtE_transition = False
+        self.black_transition = (False, None)
+        self.transition_player_info = [None, None, None, None]
         self.tmp_ticker_start = 0
+
+        self.home_buttons_pressable = True
+        self.show_settings = False
+        self.show_book = False
 
         #Sprite Groups
         self.home_sprites = pygame.sprite.Group()
         self.walk_into_edeka = pygame.sprite.Group()
+        self.edeka_1 = pygame.sprite.Group()
 
         #Objekte für die verschiedenen Bilder
         self.home_background = GImage(0, 0, Iwidth, Iheight, (15, 34, 65))
@@ -69,6 +74,8 @@ class Game:
         self.walk_into_edeka.add(self.door_L)
         self.walk_into_edeka.add(self.door_R)
         self.walk_into_edeka.add(self.player)
+
+        self.edeka_1.add(self.player)
 
         #game variables
         self.progress = _try_load_from_json(os.path.join(WORKING_DIR, "JSONs", "GameState.json"), "progress", 0)
@@ -144,7 +151,7 @@ class Game:
                 y += Zeilenabstand
     
 
-    def transition_HtE(self, ticker, start) -> None:
+    def transition_black(self, ticker, start, stage, player_info) -> None:
         global STAGE
         d = 2000 # in milliseconds
         I = min(((math.e/(d*100))+1)**(-((ticker-(start+d//2))**2)), 1.0)*255
@@ -154,40 +161,26 @@ class Game:
         self.screen.blit(semi_black_surface, (0, 0))
 
         if abs(ticker - start - d//2) <= 15:
-            STAGE = "walk_into_edeka"
+            STAGE = stage
                             
-            self.player.x = int(Iwidth*0.05)
-            self.player.y = -100#int(Iheight*0.7)
-            self.player.width = Iwidth//15
-            self.player.height = Iheight//5
+            self.player.x = player_info[0]
+            self.player.y = player_info[1]
+            self.player.width = player_info[2]
+            self.player.height = player_info[3]
 
         if ticker - start >= d:
             self.tmp_ticker_start = 0
-            self.HtE_transition = False
+            self.black_transition = (False, None)
+            self.home_buttons_pressable = True
+            self.transition_player_info = [None, None, None, None]
 
 
     def handle_events(self):
-        global STAGE
-
-        #change stage from outside to inside after a given time
-        if self.stage_change_wait >= 50:
-                self.stage_change_wait = 0
-                STAGE = "edeka"
-
-
-        if STAGE == "walk_into_edeka":
-            if pygame.sprite.collide_rect(self.player, self.outer_edeka_door):
-                #door should open
-                pass
-                
-
-            if pygame.sprite.collide_rect(self.player, self.inner_edeka_door):
-                self.stage_change_wait += 1
-            else:
-                self.stage_change_wait = 0
-                
+        global STAGE      
 
         for event in pygame.event.get():
+            
+            #before quiting the game, save all important variables
             if event.type == pygame.QUIT:
                 #first save all the game state
                 with open(os.path.join(WORKING_DIR, 'JSONs', 'GameState.json'), 'w') as f:
@@ -200,6 +193,7 @@ class Game:
                 pygame.quit()
                 sys.exit()
 
+            #work on key events
             if event.type == pygame.KEYDOWN:
                 keys = pygame.key.get_pressed()
                 
@@ -214,18 +208,53 @@ class Game:
                     else:
                         self.screen = pygame.display.set_mode((1280, 720) if monitor_size[0] <= 1920 else (1920, 1080), pygame.RESIZABLE)
 
+            #run code for mouse clicks (buttons)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     if STAGE == "home":
-                        if self.settings_button.is_clicked(event.pos):
-                            print("settings button")
+                        if self.settings_button.is_clicked(event.pos, self.home_buttons_pressable):
+                            self.home_buttons_pressable = False
+                            self.show_settings = True
 
-                        if self.start_button.is_clicked(event.pos) and not self.HtE_transition:
+                        if self.start_button.is_clicked(event.pos, self.home_buttons_pressable):
                             self.tmp_ticker_start = pygame.time.get_ticks()
-                            self.HtE_transition = True
+                            self.black_transition = (True, "walk_into_edeka")
+                            self.home_buttons_pressable = False
+                            self.transition_player_info = [int(Iwidth*0.05), -100, Iwidth//15, Iheight//5]
 
-                        if self.book.is_clicked(event.pos) and not self.HtE_transition:
-                            print("Book Button")
+                        if self.book.is_clicked(event.pos, self.home_buttons_pressable):
+                            self.home_buttons_pressable = False
+                            self.show_book = True
+
+        #handle stage changes for diffrent stages
+        if STAGE == "walk_into_edeka":
+            
+            #come back to home
+            if self.player.x <= -self.player.width:
+                if self.tmp_ticker_start == 0:
+                    self.tmp_ticker_start = pygame.time.get_ticks()
+                self.black_transition = (True, "home")
+                self.buttons_not_pressable = True
+                self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
+            
+            #Open the doors to go into edeka
+            if int(Iwidth*0.65) <= self.player.x <= int(Iwidth*0.75) + self.door_R.width:
+                if self.door_L.x - 2 >= int(Iwidth*0.55):
+                    self.door_L.x -= 2
+                if self.door_R.x + 2 <= int(Iwidth*0.85):
+                    self.door_R.x += 2
+            else:
+                if self.door_L.x + 2 <= int(Iwidth*0.65):
+                    self.door_L.x += 2
+                if self.door_R.x - 2 >= int(Iwidth*0.75):
+                    self.door_R.x -= 2
+
+            if self.door_L.x - 2 <= int(Iwidth*0.55):
+                if self.tmp_ticker_start == 0:
+                    self.tmp_ticker_start = pygame.time.get_ticks()
+                self.black_transition = (True, "edeka_1")
+                self.buttons_not_pressable = True
+                self.transition_player_info = [int(Iwidth*0.05), -100, Iwidth//15, Iheight//5]
 
 
     def run(self):
@@ -234,18 +263,25 @@ class Game:
             self.handle_events()
             self.screen.fill((255, 255, 255))
 
+            #update the the width and height for scaling
             self.update_wh()
             
+            #update and draw objects for each stage
             if STAGE == "home":
                 self.home_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE)
                 self.home_sprites.draw(self.screen)
             elif STAGE == "walk_into_edeka":
                 self.walk_into_edeka.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE)
                 self.walk_into_edeka.draw(self.screen)
+            elif STAGE == "edeka_1":
+                self.edeka_1.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE)
+                self.edeka_1.draw(self.screen)
 
-            if self.HtE_transition:
-                self.transition_HtE(pygame.time.get_ticks(), self.tmp_ticker_start)
+            #handle transitions
+            if self.black_transition[0]:
+                self.transition_black(pygame.time.get_ticks(), self.tmp_ticker_start, self.black_transition[1], self.transition_player_info)
 
+            #do everything ontop of the game then end the frame
             self.draw_p_data()
             pygame.display.flip()
 

@@ -24,9 +24,9 @@ class Button(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(self.image, (self.width * x_factor, self.height * y_factor))
         self.rect = self.image.get_rect(topleft=(self.x * x_factor, self.y * y_factor))
 
-    def is_clicked(self, pos):
-        if pos[0] >= self.rect.x and pos[0] <= self.rect.x + self.image.get_width() and pos[1] >= self.rect.y and pos[1] <= self.rect.y + self.image.get_height():
+    def is_clicked(self, pos, is_clickedable=True):
+        if pos[0] >= self.rect.x and pos[0] <= self.rect.x + self.image.get_width() and pos[1] >= self.rect.y and pos[1] <= self.rect.y + self.image.get_height() and is_clickedable:
             pygame.mixer.Sound.play(self.click_sound)
-            return True	
+            return True
         else:
             return False
