@@ -43,6 +43,8 @@ class Game:
         self.show_settings = False
         self.show_book = False
 
+        self.movement = True
+
         #Sprite Groups
         self.home_sprites = pygame.sprite.Group()
         self.walk_into_edeka = pygame.sprite.Group()
@@ -153,6 +155,7 @@ class Game:
 
     def transition_black(self, ticker, start, stage, player_info) -> None:
         global STAGE
+        self.movement = False
         d = 2000 # in milliseconds
         I = min(((math.e/(d*100))+1)**(-((ticker-(start+d//2))**2)), 1.0)*255
 
@@ -173,6 +176,7 @@ class Game:
             self.black_transition = (False, None)
             self.home_buttons_pressable = True
             self.transition_player_info = [None, None, None, None]
+            self.movement = True
 
 
     def handle_events(self):
@@ -228,17 +232,23 @@ class Game:
 
         #handle stage changes for diffrent stages
         if STAGE == "walk_into_edeka":
+
+            wait_before_transition = 1100 #in Milliseconds 
             
             #come back to home
             if self.player.x <= -self.player.width:
-                if self.tmp_ticker_start == 0:
-                    self.tmp_ticker_start = pygame.time.get_ticks()
-                self.black_transition = (True, "home")
-                self.buttons_not_pressable = True
-                self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
+                if not self.black_transition[0]:
+                    if self.tmp_ticker_start == 0:
+                        self.tmp_ticker_start = pygame.time.get_ticks()
+                    
+                    elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition//2:
+                        self.tmp_ticker_start = pygame.time.get_ticks()
+                        self.black_transition = (True, "home")
+                        self.buttons_not_pressable = True
+                        self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
             
             #Open the doors to go into edeka
-            if int(Iwidth*0.65) <= self.player.x <= int(Iwidth*0.75) + self.door_R.width:
+            if int(Iwidth*0.6 - Iwidth//15) <= self.player.x <= int(Iwidth*0.8) + self.door_R.width:
                 if self.door_L.x - 2 >= int(Iwidth*0.55):
                     self.door_L.x -= 2
                 if self.door_R.x + 2 <= int(Iwidth*0.85):
@@ -249,12 +259,19 @@ class Game:
                 if self.door_R.x - 2 >= int(Iwidth*0.75):
                     self.door_R.x -= 2
 
-            if self.door_L.x - 2 <= int(Iwidth*0.55):
-                if self.tmp_ticker_start == 0:
-                    self.tmp_ticker_start = pygame.time.get_ticks()
-                self.black_transition = (True, "edeka_1")
-                self.buttons_not_pressable = True
-                self.transition_player_info = [int(Iwidth*0.05), -100, Iwidth//15, Iheight//5]
+            if self.door_L.x - 2 <= int(Iwidth*0.65) and int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
+                if not self.black_transition[0]:
+                    if self.tmp_ticker_start == 0:
+                        self.tmp_ticker_start = pygame.time.get_ticks()
+                    
+                    elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition:
+                        self.tmp_ticker_start = pygame.time.get_ticks()
+                        self.black_transition = (True, "edeka_1")
+                        self.buttons_not_pressable = True
+                        self.transition_player_info = [int(Iwidth*0.05), -100, Iwidth//15, Iheight//5]
+            
+            elif not self.player.x <= -self.player.width and not int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
+                self.tmp_ticker_start = 0
 
 
     def run(self):
@@ -271,7 +288,7 @@ class Game:
                 self.home_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE)
                 self.home_sprites.draw(self.screen)
             elif STAGE == "walk_into_edeka":
-                self.walk_into_edeka.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE)
+                self.walk_into_edeka.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE, player_movement=self.movement)
                 self.walk_into_edeka.draw(self.screen)
             elif STAGE == "edeka_1":
                 self.edeka_1.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE)

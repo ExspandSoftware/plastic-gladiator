@@ -39,6 +39,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=(self.x * x_factor, self.y * y_factor))
 
         #Anzeige für Objekt anpassen
+        movement_enabled = kwargs.get("player_movement", False)
         for key, value in kwargs.items():
 
             if key == "stage":
@@ -50,12 +51,13 @@ class Player(pygame.sprite.Sprite):
                     #animationshandler
                     keys = pygame.key.get_pressed()
                     if self.y == int(Iheight*0.7):
-                        if keys[pygame.K_d] and not keys[pygame.K_a] and abs(self.dx) <= self.walking_speed:
-                            self.dx += self.walking_speed*0.1
-                        if keys[pygame.K_a] and not keys[pygame.K_d] and abs(self.dx) <= self.walking_speed:
-                            self.dx -= self.walking_speed*0.1
-                        if keys[pygame.K_SPACE]:
-                            self.dy = -self.jump_power
+                        if movement_enabled:
+                            if keys[pygame.K_d] and not keys[pygame.K_a] and abs(self.dx) <= self.walking_speed:
+                                self.dx += self.walking_speed*0.1
+                            if keys[pygame.K_a] and not keys[pygame.K_d] and abs(self.dx) <= self.walking_speed:
+                                self.dx -= self.walking_speed*0.1
+                            if keys[pygame.K_SPACE]:
+                                self.dy = -self.jump_power
 
                         if self.dx != 0: 
                             if abs(self.dx) <= 0.0000001:
