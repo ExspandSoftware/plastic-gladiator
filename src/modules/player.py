@@ -76,8 +76,10 @@ class Player(pygame.sprite.Sprite):
                     self.y += self.dy
 
                     #handle animations
-                    
-                    #self._wackeln(y_factor)
+                    if self.dx == 0:
+                        self._wackeln(y_factor)
+                    else:
+                        pass
                     #self.animation_index = int((self.animation_index + 0.1)) % len(self.get_current_animation())
                     #self.image = self.get_current_animation()[self.animation_index]
                 

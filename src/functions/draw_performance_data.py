@@ -27,7 +27,7 @@ def draw_p_data(self, screen_width):
                 text = self.font.render(f"{key}: {value}", True, (255, 255, 255))
                 self.screen.blit(text, (10, 10 + line_spacing * (idx + extra_spacing)))
 
-                if idx == 10:
+                if idx == 9:
                      extra_spacing += 1
 
             #team ----------------------------------------------------------------------------------------------------------

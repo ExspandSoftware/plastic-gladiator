@@ -105,7 +105,8 @@ class Game:
         Cwidth, Cheight = info.current_w, info.current_h
 
         font_size_factor = min(Cwidth/Iwidth, Cheight/Iheight)
-        self.font_size = FONT_SIZE * font_size_factor
+        self.font_size = int(FONT_SIZE * font_size_factor)
+        self.font = pygame.font.Font(None, self.font_size)
 
 
     def handle_events(self):
@@ -235,7 +236,7 @@ class Game:
                 self.transition_black(pygame.time.get_ticks(), self.tmp_ticker_start, self.black_transition[1], self.transition_player_info)
 
             #do everything ontop of the game then end the frame
-            draw_p_data(self)
+            draw_p_data(self, Cwidth)
             pygame.display.flip()
 
             self.clock.tick(60)
