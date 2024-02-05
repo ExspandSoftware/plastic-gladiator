@@ -47,7 +47,7 @@ class Game:
         self.progress = _try_load_from_json(os.path.join(WORKING_DIR, 'assets', 'GameState.json'), 'progress', 0)
 
         #update screen with data
-        self.font_size = 24
+        self.font_size = FONT_SIZE
         self.toggle_data = False
 
         #transitions
@@ -104,83 +104,8 @@ class Game:
         info = pygame.display.Info()
         Cwidth, Cheight = info.current_w, info.current_h
 
-
-    def draw_p_data(self):
-        Zeilenabstand = int(self.font_size)
-
-        if self.toggle_data:
-            data_pairs = {
-                "Author": EXPORT_VARS[0],
-                "Version": EXPORT_VARS[1],
-                "Chief Information Officer": EXPORT_VARS[2],
-                "Moderators": EXPORT_VARS[3],
-                "Head": EXPORT_VARS[5],
-                "Supervisor": EXPORT_VARS[6],
-                "Sound": EXPORT_VARS[7],
-                "Concept": EXPORT_VARS[8],
-                "Graphics": EXPORT_VARS[9],
-                "Quality Assurance": EXPORT_VARS[10],
-                "FPS": int(self.clock.get_fps()),
-                "CPU": f"{psutil.cpu_percent()}%"
-            }
-            
-            for idx, (key, value) in enumerate(data_pairs.items()):
-                text = self.font.render(f"{key}: {value}", True, (255, 255, 255))
-                self.screen.blit(text, (10, 10 + Zeilenabstand * idx))
-
-
-
-            #team
-            names = EXPORT_VARS[4].split(", ")
-            lines = []
-            current_line = ""
-
-            #separate words and build different lines
-            for name in names:
-                test_line = current_line + name + ", "
-                text_width, text_height = self.font.size(test_line)
-                
-                if text_width <= Cwidth/3:
-                    current_line = test_line
-                else:
-                    lines.append(current_line.rstrip())
-                    current_line = name + ", "
-
-            lines.append(current_line.rstrip())
-            lines[0] = "Team: " + lines[0]
-
-            #draw different lines to the surface
-            y = 10
-            for idx, line in enumerate(lines):
-                line_team_text = self.font.render(line, True, (255, 255, 255))
-                text_rect = line_team_text.get_rect(right=Cwidth-10, top=y)
-                self.screen.blit(line_team_text, text_rect)
-                y += Zeilenabstand
-    
-
-    def transition_black(self, ticker, start, stage, player_info) -> None:
-        global STAGE
-        self.movement = False
-        duration_ms = 2000 # in milliseconds
-        Opacity = min(((math.e/(duration_ms*100))+1)**(-((ticker-(start+duration_ms//2))**2)), 1.0)*255
-
-        semi_black_surface = pygame.Surface(self.screen.get_size(), pygame.SRCALPHA)
-        semi_black_surface.fill((0, 0, 0, Opacity))
-        self.screen.blit(semi_black_surface, (0, 0))
-
-        if abs(ticker - start - duration_ms//2) <= 15:
-            STAGE = stage
-                            
-            self.player.x = player_info[0]
-            self.player.y = player_info[1]
-            self.player.width = player_info[2]
-            self.player.height = player_info[3]
-
-        if ticker - start >= duration_ms:
-            self.tmp_ticker_start = 0
-            self.black_transition = (False, None)
-            self.home_buttons_pressable = True
-            self.transition_player_info = [None, None, None, None]
+        font_size_factor = min(Cwidth/Iwidth, Cheight/Iheight)
+        self.font_size = FONT_SIZE * font_size_factor
 
 
     def handle_events(self):
@@ -320,14 +245,15 @@ class Game:
     #transitions ------------------------------------------------------------------------------------------------------------------------------
     def transition_black(self, ticker, start, stage, player_info) -> None:
         global STAGE
-        d = 2000 # in milliseconds
-        I = min(((math.e/(d*100))+1)**(-((ticker-(start+d//2))**2)), 1.0)*255
+        self.movement = False
+        duration_ms = 2000 # in milliseconds
+        Opacity = min(((math.e/(duration_ms*100))+1)**(-((ticker-(start+duration_ms//2))**2)), 1.0)*255
 
         semi_black_surface = pygame.Surface(self.screen.get_size(), pygame.SRCALPHA)
-        semi_black_surface.fill((0, 0, 0, I))
+        semi_black_surface.fill((0, 0, 0, Opacity))
         self.screen.blit(semi_black_surface, (0, 0))
 
-        if abs(ticker - start - d//2) <= 15:
+        if abs(ticker - start - duration_ms//2) <= 15:
             STAGE = stage
                             
             self.player.x = player_info[0]
@@ -335,7 +261,7 @@ class Game:
             self.player.width = player_info[2]
             self.player.height = player_info[3]
 
-        if ticker - start >= d:
+        if ticker - start >= duration_ms:
             self.tmp_ticker_start = 0
             self.black_transition = (False, None)
             self.home_buttons_pressable = True

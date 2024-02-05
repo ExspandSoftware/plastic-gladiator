@@ -26,3 +26,4 @@ Cwidth, Cheight = 1280, 720
 
 #Gamerules
 STAGE = "home"
+FONT_SIZE = 24
