@@ -1,10 +1,11 @@
 import psutil
 import pygame
 
-from config import EXPORT_VARS, Cwidth
+from config import *
 
-def draw_p_data(self):
-        line_spacing = int(self.font_size)
+def draw_p_data(self, screen_width):
+        line_spacing = FONT_SIZE
+        extra_spacing = 0
 
         if self.toggle_data:
             data_pairs = {
@@ -24,11 +25,12 @@ def draw_p_data(self):
             
             for idx, (key, value) in enumerate(data_pairs.items()):
                 text = self.font.render(f"{key}: {value}", True, (255, 255, 255))
-                self.screen.blit(text, (10, 10 + line_spacing * idx))
+                self.screen.blit(text, (10, 10 + line_spacing * (idx + extra_spacing)))
 
+                if idx == 10:
+                     extra_spacing += 1
 
-
-            #team
+            #team ----------------------------------------------------------------------------------------------------------
             names = EXPORT_VARS[4].split(", ")
             lines = []
             current_line = ""
@@ -51,6 +53,6 @@ def draw_p_data(self):
             y = 10
             for idx, line in enumerate(lines):
                 line_team_text = self.font.render(line, True, (255, 255, 255))
-                text_rect = line_team_text.get_rect(right=Cwidth-10, top=y)
+                text_rect = line_team_text.get_rect(right=screen_width-10, top=y)
                 self.screen.blit(line_team_text, text_rect)
                 y += line_spacing
