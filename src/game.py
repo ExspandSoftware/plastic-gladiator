@@ -52,9 +52,6 @@ class Game:
         self.show_settings = False
         self.show_book = False
 
-        #game variables, that need to be saved
-        self.progress = _try_load_from_json(os.path.join(WORKING_DIR, "JSONs", "GameState.json"), "progress", 0)
-
         #Sprite Groups
         self.home_sprites = pygame.sprite.Group()
         self.walk_into_edeka = pygame.sprite.Group()
@@ -99,6 +96,89 @@ class Game:
         global Cwidth, Cheight
         info = pygame.display.Info()
         Cwidth, Cheight = info.current_w, info.current_h
+
+
+    def draw_p_data(self):
+        Zeilenabstand = int(self.font_size)
+
+        if self.toggle_data:
+            #author
+            author_text = self.font.render(f"Author: {EXPORT_VARS[0]}", True, (255, 255, 255))
+            self.screen.blit(author_text, (10, 10 + Zeilenabstand * 0))
+            #version
+            version_text = self.font.render(f"Version: {EXPORT_VARS[1]}", True, (255, 255, 255))
+            self.screen.blit(version_text, (10, 10 + Zeilenabstand * 1))
+            #chief information officer
+            cio_text = self.font.render(f"Chief Information Officer: {EXPORT_VARS[2]}", True, (255, 255, 255))
+            self.screen.blit(cio_text, (10, 10 + Zeilenabstand * 2))
+            #moderators
+            mod_text = self.font.render(f"Moderators: {EXPORT_VARS[3]}", True, (255, 255, 255))
+            self.screen.blit(mod_text, (10, 10 + Zeilenabstand * 3))
+            #head
+            head_text = self.font.render(f"Head: {EXPORT_VARS[5]}", True, (255, 255, 255))
+            self.screen.blit(head_text, (10, 10 + Zeilenabstand * 4))
+            #supervisor
+            sv_text = self.font.render(f"Supervisor: {EXPORT_VARS[6]}", True, (255, 255, 255))
+            self.screen.blit(sv_text, (10, 10 + Zeilenabstand * 5))
+
+            #fps
+            fps_text = self.font.render(f"FPS: {int(self.clock.get_fps())}", True, (255, 255, 255))
+            self.screen.blit(fps_text, (10, 10 + Zeilenabstand * 7))
+            #cpu performance
+            cpu_percent = psutil.cpu_percent()
+            cpu_text = self.font.render(f"CPU: {cpu_percent}%", True, (255, 255, 255))
+            self.screen.blit(cpu_text, (10, 10 + Zeilenabstand * 8))
+
+            #team
+            names = EXPORT_VARS[4].split(", ")
+            lines = []
+            current_line = ''
+
+            #separate words and build different lines
+            for name in names:
+                test_line = current_line + name + ', '
+                text_width, text_height = self.font.size(test_line)
+                
+                if text_width <= Cwidth/3:
+                    current_line = test_line
+                else:
+                    lines.append(current_line.rstrip())
+                    current_line = name + ', '
+
+            lines.append(current_line.rstrip())
+            lines[0] = "Team: " + lines[0]
+
+            #draw different lines to the surface
+            y = 10
+            for idx, line in enumerate(lines):
+                line_team_text = self.font.render(line, True, (255, 255, 255))
+                text_rect = line_team_text.get_rect(right=Cwidth-10, top=y)
+                self.screen.blit(line_team_text, text_rect)
+                y += Zeilenabstand
+    
+
+    def transition_black(self, ticker, start, stage, player_info) -> None:
+        global STAGE
+        d = 2000 # in milliseconds
+        I = min(((math.e/(d*100))+1)**(-((ticker-(start+d//2))**2)), 1.0)*255
+
+        semi_black_surface = pygame.Surface(self.screen.get_size(), pygame.SRCALPHA)
+        semi_black_surface.fill((0, 0, 0, I))
+        self.screen.blit(semi_black_surface, (0, 0))
+
+        if abs(ticker - start - d//2) <= 15:
+            STAGE = stage
+                            
+            self.player.x = player_info[0]
+            self.player.y = player_info[1]
+            self.player.width = player_info[2]
+            self.player.height = player_info[3]
+
+        if ticker - start >= d:
+            self.tmp_ticker_start = 0
+            self.black_transition = (False, None)
+            self.home_buttons_pressable = True
+            self.transition_player_info = [None, None, None, None]
 
 
     def handle_events(self):
@@ -154,17 +234,23 @@ class Game:
 
         #handle stage changes for diffrent stages
         if STAGE == "walk_into_edeka":
+
+            wait_before_transition = 1100 #in Milliseconds 
             
             #come back to home
             if self.player.x <= -self.player.width:
-                if self.tmp_ticker_start == 0:
-                    self.tmp_ticker_start = pygame.time.get_ticks()
-                self.black_transition = (True, "home")
-                self.buttons_not_pressable = True
-                self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
+                if not self.black_transition[0]:
+                    if self.tmp_ticker_start == 0:
+                        self.tmp_ticker_start = pygame.time.get_ticks()
+                    
+                    elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition//2:
+                        self.tmp_ticker_start = pygame.time.get_ticks()
+                        self.black_transition = (True, "home")
+                        self.buttons_not_pressable = True
+                        self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
             
             #Open the doors to go into edeka
-            if int(Iwidth*0.65) <= self.player.x <= int(Iwidth*0.75) + self.door_R.width:
+            if int(Iwidth*0.6 - Iwidth//15) <= self.player.x <= int(Iwidth*0.8) + self.door_R.width:
                 if self.door_L.x - 2 >= int(Iwidth*0.55):
                     self.door_L.x -= 2
                 if self.door_R.x + 2 <= int(Iwidth*0.85):
@@ -175,12 +261,19 @@ class Game:
                 if self.door_R.x - 2 >= int(Iwidth*0.75):
                     self.door_R.x -= 2
 
-            if self.door_L.x - 2 <= int(Iwidth*0.55):
-                if self.tmp_ticker_start == 0:
-                    self.tmp_ticker_start = pygame.time.get_ticks()
-                self.black_transition = (True, "edeka_1")
-                self.buttons_not_pressable = True
-                self.transition_player_info = [int(Iwidth*0.05), -100, Iwidth//15, Iheight//5]
+            if self.door_L.x - 2 <= int(Iwidth*0.65) and int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
+                if not self.black_transition[0]:
+                    if self.tmp_ticker_start == 0:
+                        self.tmp_ticker_start = pygame.time.get_ticks()
+                    
+                    elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition:
+                        self.tmp_ticker_start = pygame.time.get_ticks()
+                        self.black_transition = (True, "edeka_1")
+                        self.buttons_not_pressable = True
+                        self.transition_player_info = [int(Iwidth*0.05), -100, Iwidth//15, Iheight//5]
+            
+            elif not self.player.x <= -self.player.width and not int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
+                self.tmp_ticker_start = 0
 
 
     def run(self):
@@ -199,7 +292,7 @@ class Game:
                 self.home_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE)
                 self.home_sprites.draw(self.screen)
             elif STAGE == "walk_into_edeka":
-                self.walk_into_edeka.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE)
+                self.walk_into_edeka.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE, player_movement=self.movement)
                 self.walk_into_edeka.draw(self.screen)
             elif STAGE == "edeka_1":
                 self.edeka_1.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE)
