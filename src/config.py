@@ -1,3 +1,5 @@
+import os
+
 #%% Rahmeninfos ----------------------------------------------------------------
 __author__ = "palo.niemann@t-online.de"
 __version__ = "1.1.0"
@@ -11,7 +13,6 @@ __concept__ = "..."
 __graphics__ = "..."
 EXPORT_VARS = [__author__, __version__, __CIO__, __moderators__, __team__, __head__, __supervisor__]
 
-import os
 #Konstante, in Form eines Paths, der zum Arbeitsverzeichnis führt
 os.chdir(os.path.dirname(os.path.abspath(__file__)) + "/..")
 WORKING_DIR = os.getcwd()
