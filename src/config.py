@@ -13,6 +13,7 @@ EXPORT_VARS = [__author__, __version__, __CIO__, __moderators__, __team__, __hea
 
 import os
 #Konstante, in Form eines Paths, der zum Arbeitsverzeichnis führt
+os.chdir(os.path.dirname(os.path.abspath(__file__)) + "/..")
 WORKING_DIR = os.getcwd()
 #Konstante, in Form eines Paths, der zum Source Code führt
 #CURRENT_DIR = os.path.curdir()

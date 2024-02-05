@@ -10,7 +10,7 @@ import math
 from modules.player import Player
 from modules.button import Button
 from modules.g_image import GImage
-from config import *
+from config import EXPORT_VARS, WORKING_DIR, Iwidth, Iheight, Cwidth, Cheight
 
 #%% Class ------------------------------------------------------------------
 class Game:
@@ -19,7 +19,7 @@ class Game:
 
         def _try_load_from_json(path:str, key:str, default):
             try:
-                with open(path, 'r') as json_file:
+                with open(path, "r") as json_file:
                     data = json.load(json_file)
                     return data.get(key, default)
             except (json.JSONDecodeError, FileNotFoundError):
@@ -30,8 +30,8 @@ class Game:
         monitor_size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
         self.fullscreen = False
         self.screen = pygame.display.set_mode((Iwidth, Iheight), pygame.RESIZABLE)
-        pygame.display.set_caption('Plastic Gladiator')
-        pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'Mülleimer.png')))
+        pygame.display.set_caption("Plastic Gladiator")
+        pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, "assets", "images", "Mülleimer.png")))
         
         #Pygame Logik
         self.clock = pygame.time.Clock()
@@ -128,18 +128,18 @@ class Game:
             #team
             names = EXPORT_VARS[4].split(", ")
             lines = []
-            current_line = ''
+            current_line = ""
 
             #separate words and build different lines
             for name in names:
-                test_line = current_line + name + ', '
+                test_line = current_line + name + ", "
                 text_width, text_height = self.font.size(test_line)
                 
                 if text_width <= Cwidth/3:
                     current_line = test_line
                 else:
                     lines.append(current_line.rstrip())
-                    current_line = name + ', '
+                    current_line = name + ", "
 
             lines.append(current_line.rstrip())
             lines[0] = "Team: " + lines[0]
@@ -156,14 +156,21 @@ class Game:
     def transition_black(self, ticker, start, stage, player_info) -> None:
         global STAGE
         self.movement = False
-        d = 2000 # in milliseconds
-        I = min(((math.e/(d*100))+1)**(-((ticker-(start+d//2))**2)), 1.0)*255
+        duration_ms = 2000 # 2 seconds transition time
+        
+        #Gaussian function for calculating the opacity
+        Opacity = (math.e/(duration_ms*100)+1)**(-((ticker-(start+duration_ms//2))**2)) * 255
+        
+        #if the opacity is greater than 255, set it to 255
+        if Opacity > 255:
+            Opacity = 255
+        
 
         semi_black_surface = pygame.Surface(self.screen.get_size(), pygame.SRCALPHA)
-        semi_black_surface.fill((0, 0, 0, I))
+        semi_black_surface.fill((0, 0, 0, Opacity))
         self.screen.blit(semi_black_surface, (0, 0))
 
-        if abs(ticker - start - d//2) <= 15:
+        if abs(ticker - start - duration_ms//2) <= 15:
             STAGE = stage
                             
             self.player.x = player_info[0]
@@ -171,7 +178,7 @@ class Game:
             self.player.width = player_info[2]
             self.player.height = player_info[3]
 
-        if ticker - start >= d:
+        if ticker - start >= duration_ms:
             self.tmp_ticker_start = 0
             self.black_transition = (False, None)
             self.home_buttons_pressable = True
@@ -187,9 +194,9 @@ class Game:
             #before quiting the game, save all important variables
             if event.type == pygame.QUIT:
                 #first save all the game state
-                with open(os.path.join(WORKING_DIR, 'JSONs', 'GameState.json'), 'w') as f:
+                with open(os.path.join(WORKING_DIR, "JSONs", "GameState.json"), "w") as f:
                     data = {
-                        'progress': self.progress,
+                        "progress": self.progress,
                     }
                     json.dump(data, f, indent=4)
 
@@ -230,7 +237,7 @@ class Game:
                             self.home_buttons_pressable = False
                             self.show_book = True
 
-        #handle stage changes for diffrent stages
+        #handle stage changes for different stages
         if STAGE == "walk_into_edeka":
 
             wait_before_transition = 1100 #in Milliseconds 
@@ -275,6 +282,9 @@ class Game:
 
 
     def run(self):
+        global STAGE
+        STAGE = "home"
+        
         running = True
         while running:
             self.handle_events()
