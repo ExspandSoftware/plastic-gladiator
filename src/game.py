@@ -16,7 +16,7 @@ from functions.draw_performance_data import draw_p_data
 from screens.settings_screen import SettingsScreen
 from screens.book_screen import BookScreen
 
-from config import EXPORT_VARS, WORKING_DIR, Iwidth, Iheight, Cwidth, Cheight
+from config import *
 
 #%% Class ------------------------------------------------------------------
 class Game:
@@ -34,16 +34,25 @@ class Game:
             
             return val
 
-        #Pygame Window
+        #Pygame Window -----------------------------------------------------------------------------------------------------
         global monitor_size
         monitor_size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
         self.fullscreen = False
         self.screen = pygame.display.set_mode((Iwidth, Iheight), pygame.RESIZABLE)
         pygame.display.set_caption('Plastic Gladiator')
         pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'Mülleimer.png')))
+
+        #Game Variables ----------------------------------------------------------------------------------------------------
+        self.progress = _try_load_from_json(os.path.join(WORKING_DIR, 'assets', 'GameState.json'))
+
+        #update screen with data
+        self.font_size = 24
+        self.font = pygame.font.Font(None, self.font_size)
+        self.toggle_data = False
         
-        #Pygame Logik
+        #Pygame Logik ------------------------------------------------------------------------------------------------------
         self.clock = pygame.time.Clock()
+
         self.black_transition = (False, None)
         self.transition_player_info = [None, None, None, None]
         self.tmp_ticker_start = 0
@@ -85,11 +94,6 @@ class Game:
         self.walk_into_edeka.add(self.player)
 
         self.edeka_1.add(self.player)
-
-        #update screen with data
-        self.font_size = 24
-        self.font = pygame.font.Font(None, self.font_size)
-        self.toggle_data = False
 
 
     def update_wh(self):
@@ -154,8 +158,8 @@ class Game:
     def transition_black(self, ticker, start, stage, player_info) -> None:
         global STAGE
         self.movement = False
-        d = 2000 # in milliseconds
-        I = min(((math.e/(d*100))+1)**(-((ticker-(start+d//2))**2)), 1.0)*255
+        duration_ms = 2000 # in milliseconds
+        Opacity = min(((math.e/(duration_ms*100))+1)**(-((ticker-(start+duration_ms//2))**2)), 1.0)*255
 
         semi_black_surface = pygame.Surface(self.screen.get_size(), pygame.SRCALPHA)
         semi_black_surface.fill((0, 0, 0, Opacity))
