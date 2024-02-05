@@ -126,7 +126,7 @@ class Game:
                 pygame.quit()
                 sys.exit()
 
-            #work on key events
+            # work on key events
             if event.type == pygame.KEYDOWN:
                 keys = pygame.key.get_pressed()
                 
@@ -141,7 +141,7 @@ class Game:
                     else:
                         self.screen = pygame.display.set_mode((1280, 720) if monitor_size[0] <= 1920 else (1920, 1080), pygame.RESIZABLE)
 
-            #run code for mouse clicks (buttons)
+            # run code for mouse clicks (buttons)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
                     if STAGE == "home":
@@ -159,7 +159,7 @@ class Game:
                             self.home_buttons_pressable = False
                             self.show_book = True
 
-        #handle stage changes for different stages
+        # handle stage changes for different stages
         if STAGE == "walk_into_edeka":
 
             wait_before_transition = 1100 #in Milliseconds 
@@ -266,6 +266,7 @@ class Game:
             self.black_transition = (False, None)
             self.home_buttons_pressable = True
             self.transition_player_info = [None, None, None, None]
+            self.movement = True
 
 
 if __name__ == "__main__":
