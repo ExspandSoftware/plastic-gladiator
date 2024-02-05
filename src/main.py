@@ -1,6 +1,8 @@
 #%% Imports ----------------------------------------------------------------
 import pygame
+
 from game import Game
+
 
 
 #%% Functions --------------------------------------------------------------
@@ -15,3 +17,6 @@ def main():
 #%% Run Game ---------------------------------------------------------------
 if __name__ == "__main__":
     main()
+else:
+    print("Plastic-Gladiator is a standalone Game and should not be imported as a module!")
+    exit(1)

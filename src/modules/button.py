@@ -14,7 +14,7 @@ class Button(pygame.sprite.Sprite):
 
         self.rect = self.image.get_rect(topleft=(x, y))
 
-        self.click_sound = pygame.mixer.Sound("assets/sounds/button_click.mp3")
+        self.click_sound = pygame.mixer.Sound("./assets/sounds/button_click.mp3")
 
 
     def update(self, Iwidth:int, Iheight:int, Cwidth:int, Cheight:int, *vars, **kwargs):
