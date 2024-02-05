@@ -7,9 +7,9 @@ import os
 import json
 import math
 
-from modules.player import Player
-from modules.button import Button
-from modules.g_image import GImage
+from classes.player import Player
+from classes.button import Button
+from classes.g_image import GImage
 
 from functions.draw_performance_data import draw_p_data
 
