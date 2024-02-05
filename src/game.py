@@ -43,25 +43,28 @@ class Game:
         pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'Mülleimer.png')))
 
         #Game Variables ----------------------------------------------------------------------------------------------------
-        self.progress = _try_load_from_json(os.path.join(WORKING_DIR, 'assets', 'GameState.json'))
+        #variables that should be saved for the next opening
+        self.progress = _try_load_from_json(os.path.join(WORKING_DIR, 'assets', 'GameState.json'), 'progress', 0)
 
         #update screen with data
         self.font_size = 24
-        self.font = pygame.font.Font(None, self.font_size)
         self.toggle_data = False
-        
-        #Pygame Logik ------------------------------------------------------------------------------------------------------
-        self.clock = pygame.time.Clock()
 
+        #transitions
         self.black_transition = (False, None)
         self.transition_player_info = [None, None, None, None]
         self.tmp_ticker_start = 0
 
+        #pop-up screens
         self.home_buttons_pressable = True
         self.show_settings = False
         self.show_book = False
+        
+        #Pygame Logik ------------------------------------------------------------------------------------------------------
+        self.clock = pygame.time.Clock()
+        self.font = pygame.font.Font(None, self.font_size)
 
-        #Sprite Groups
+        #Sprite Groups -----------------------------------------------------------------------------------------------------
         self.home_sprites = pygame.sprite.Group()
         self.walk_into_edeka = pygame.sprite.Group()
         self.edeka_1 = pygame.sprite.Group()
@@ -79,7 +82,7 @@ class Game:
         self.door_L = GImage(int(Iwidth*0.65), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
         self.door_R = GImage(int(Iwidth*0.75), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
 
-        # Add objects to sprite groups
+        # Add objects to sprite groups -------------------------------------------------------------------------------------
         self.home_sprites.add(self.home_background)
         self.home_sprites.add(self.player)
         self.home_sprites.add(self.titel_name)
