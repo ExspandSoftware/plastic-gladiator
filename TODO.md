@@ -10,7 +10,9 @@
 
 # Home Screen
 
-- [ ] ...
+- [ ] Pop-up menues
+    - [ ] Chemistry Book
+    - [ ] Settings Screen
 - [ ] ...
 
 # Other
