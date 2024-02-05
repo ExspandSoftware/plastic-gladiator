@@ -17,13 +17,16 @@ class Game:
 
     def __init__(self) -> None:
 
-        def _try_load_from_json(path:str, key:str, default):
+        def _try_load_from_json(path:str, key:str, default: str | int | float | bool) -> str | int | float | bool:
             try:
                 with open(path, "r") as json_file:
                     data = json.load(json_file)
-                    return data.get(key, default)
+                    val = data.get(key, default)
+            
             except (json.JSONDecodeError, FileNotFoundError):
-                return default
+                val = default
+            
+            return val
 
         #Pygame Window
         global monitor_size
@@ -33,7 +36,7 @@ class Game:
         pygame.display.set_caption("Plastic Gladiator")
         pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, "assets", "images", "Mülleimer.png")))
         
-        #Pygame Logik
+        #Pygame Logic
         self.clock = pygame.time.Clock()
         self.black_transition = (False, None)
         self.transition_player_info = [None, None, None, None]
@@ -50,7 +53,7 @@ class Game:
         self.walk_into_edeka = pygame.sprite.Group()
         self.edeka_1 = pygame.sprite.Group()
 
-        #Objekte für die verschiedenen Bilder
+        #Image Objects for each stage
         self.home_background = GImage(0, 0, Iwidth, Iheight, (15, 34, 65))
         self.player = Player(Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2, (208, 157, 95))
         self.titel_name = GImage(Iwidth//2 - int(Iwidth*0.2), int(Iheight*0.02), int(Iwidth*0.4), int(Iheight*0.25), (123, 65, 235))
@@ -63,7 +66,7 @@ class Game:
         self.door_L = GImage(int(Iwidth*0.65), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
         self.door_R = GImage(int(Iwidth*0.75), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
 
-        #Zuweisung der Objekte
+        # Add objects to sprite groups
         self.home_sprites.add(self.home_background)
         self.home_sprites.add(self.player)
         self.home_sprites.add(self.titel_name)
@@ -84,7 +87,7 @@ class Game:
 
         #update screen with data
         self.font_size = 24
-        self.font = pygame.font.Font(None, self.font_size)  # Schriftart und Größe
+        self.font = pygame.font.Font(None, self.font_size)
         self.toggle_data = False
 
 
@@ -98,32 +101,26 @@ class Game:
         Zeilenabstand = int(self.font_size)
 
         if self.toggle_data:
-            #author
-            author_text = self.font.render(f"Author: {EXPORT_VARS[0]}", True, (255, 255, 255))
-            self.screen.blit(author_text, (10, 10 + Zeilenabstand * 0))
-            #version
-            version_text = self.font.render(f"Version: {EXPORT_VARS[1]}", True, (255, 255, 255))
-            self.screen.blit(version_text, (10, 10 + Zeilenabstand * 1))
-            #chief information officer
-            cio_text = self.font.render(f"Chief Information Officer: {EXPORT_VARS[2]}", True, (255, 255, 255))
-            self.screen.blit(cio_text, (10, 10 + Zeilenabstand * 2))
-            #moderators
-            mod_text = self.font.render(f"Moderators: {EXPORT_VARS[3]}", True, (255, 255, 255))
-            self.screen.blit(mod_text, (10, 10 + Zeilenabstand * 3))
-            #head
-            head_text = self.font.render(f"Head: {EXPORT_VARS[5]}", True, (255, 255, 255))
-            self.screen.blit(head_text, (10, 10 + Zeilenabstand * 4))
-            #supervisor
-            sv_text = self.font.render(f"Supervisor: {EXPORT_VARS[6]}", True, (255, 255, 255))
-            self.screen.blit(sv_text, (10, 10 + Zeilenabstand * 5))
+            data_pairs = {
+                "Author": EXPORT_VARS[0],
+                "Version": EXPORT_VARS[1],
+                "Chief Information Officer": EXPORT_VARS[2],
+                "Moderators": EXPORT_VARS[3],
+                "Head": EXPORT_VARS[5],
+                "Supervisor": EXPORT_VARS[6],
+                "Sound": EXPORT_VARS[7],
+                "Concept": EXPORT_VARS[8],
+                "Graphics": EXPORT_VARS[9],
+                "Quality Assurance": EXPORT_VARS[10],
+                "FPS": int(self.clock.get_fps()),
+                "CPU": f"{psutil.cpu_percent()}%"
+            }
+            
+            for idx, (key, value) in enumerate(data_pairs.items()):
+                text = self.font.render(f"{key}: {value}", True, (255, 255, 255))
+                self.screen.blit(text, (10, 10 + Zeilenabstand * idx))
 
-            #fps
-            fps_text = self.font.render(f"FPS: {int(self.clock.get_fps())}", True, (255, 255, 255))
-            self.screen.blit(fps_text, (10, 10 + Zeilenabstand * 7))
-            #cpu performance
-            cpu_percent = psutil.cpu_percent()
-            cpu_text = self.font.render(f"CPU: {cpu_percent}%", True, (255, 255, 255))
-            self.screen.blit(cpu_text, (10, 10 + Zeilenabstand * 8))
+
 
             #team
             names = EXPORT_VARS[4].split(", ")
@@ -315,3 +312,8 @@ class Game:
             self.clock.tick(60)
 
         pygame.quit()
+
+
+if __name__ == "__main__":
+    print("Plastic-Gladiator game.py should not be run as a standalone script! Please run main.py instead.")
+    exit(1)
