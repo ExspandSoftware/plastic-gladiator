@@ -115,7 +115,7 @@ class Game:
 
         for event in pygame.event.get():
             
-            #before quiting the game, save all important variables
+            # Before quitting the game, save all important variables
             if event.type == pygame.QUIT:
                 #first save all the game state
                 with open(os.path.join(WORKING_DIR, "JSONs", "GameState.json"), "w") as f:
@@ -124,11 +124,11 @@ class Game:
                     }
                     json.dump(data, f, indent=4)
 
-                #then quit the game
+                # Then quit the game
                 pygame.quit()
                 sys.exit()
 
-            # work on key events
+            # Work on key events
             if event.type == pygame.KEYDOWN:
                 keys = pygame.key.get_pressed()
                 
@@ -142,6 +142,7 @@ class Game:
                         self.screen = pygame.display.set_mode(monitor_size, pygame.FULLSCREEN)
                     else:
                         self.screen = pygame.display.set_mode((1280, 720) if monitor_size[0] <= 1920 else (1920, 1080), pygame.RESIZABLE)
+                        self.screen = pygame.display.set_mode((1280, 720) if monitor_size[0] <= 1920 else (1920, 1080), pygame.RESIZABLE) # Workaround for https://github.com/pygame/pygame/issues/3107 from the comment https://github.com/pygame/pygame/issues/3107#issuecomment-1146788096 
 
             # run code for mouse clicks (buttons)
             if event.type == pygame.MOUSEBUTTONDOWN:
