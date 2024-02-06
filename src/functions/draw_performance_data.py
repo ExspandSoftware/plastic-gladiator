@@ -1,10 +1,9 @@
 import psutil
-import pygame
 
-from config import *
+from config import EXPORT_VARS
 
 def draw_p_data(self, screen_width):
-        line_spacing = FONT_SIZE
+        line_spacing = self.font.size("TEST")[1] * 1.25
         extra_spacing = 0
 
         if self.toggle_data:
@@ -24,23 +23,24 @@ def draw_p_data(self, screen_width):
             }
             
             for idx, (key, value) in enumerate(data_pairs.items()):
+                if key == "FPS":
+                     extra_spacing += 1
+                
                 text = self.font.render(f"{key}: {value}", True, (255, 255, 255))
                 self.screen.blit(text, (10, 10 + line_spacing * (idx + extra_spacing)))
 
-                if idx == 9:
-                     extra_spacing += 1
 
-            #team ----------------------------------------------------------------------------------------------------------
+            # team ----------------------------------------------------------------------------------------------------------
             names = EXPORT_VARS[4].split(", ")
             lines = []
             current_line = ""
 
-            #separate words and build different lines
+            # separate words and build different lines
             for name in names:
                 test_line = current_line + name + ", "
                 text_width, text_height = self.font.size(test_line)
                 
-                if text_width <= Cwidth/3:
+                if text_width <= screen_width/3:
                     current_line = test_line
                 else:
                     lines.append(current_line.rstrip())
@@ -49,7 +49,7 @@ def draw_p_data(self, screen_width):
             lines.append(current_line.rstrip())
             lines[0] = "Team: " + lines[0]
 
-            #draw different lines to the surface
+            # draw different lines to the surface
             y = 10
             for idx, line in enumerate(lines):
                 line_team_text = self.font.render(line, True, (255, 255, 255))
