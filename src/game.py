@@ -1,6 +1,5 @@
 #%% Imports ----------------------------------------------------------------
 import pygame
-import psutil
 
 import sys
 import os
