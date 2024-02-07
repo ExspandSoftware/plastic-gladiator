@@ -108,6 +108,62 @@ class Game:
         self.font_size = int(FONT_SIZE * font_size_factor)
         self.font = pygame.font.Font(None, self.font_size)
 
+    def __walk_into_edeka(self):
+        wait_before_transition = 1100 #in Milliseconds 
+        
+        #come back to home
+        if self.player.x <= -self.player.width:
+            if not self.black_transition[0]:
+                if self.tmp_ticker_start == 0:
+                    self.tmp_ticker_start = pygame.time.get_ticks()
+                
+                elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition//2:
+                    self.tmp_ticker_start = pygame.time.get_ticks()
+                    self.black_transition = (True, "home")
+                    self.buttons_not_pressable = True
+                    self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
+        
+        #Open the doors to go into edeka
+        if int(Iwidth*0.6 - Iwidth//15) <= self.player.x <= int(Iwidth*0.8) + self.door_R.width:
+            if self.door_L.x - 2 >= int(Iwidth*0.55):
+                self.door_L.x -= 2
+            if self.door_R.x + 2 <= int(Iwidth*0.85):
+                self.door_R.x += 2
+        else:
+            if self.door_L.x + 2 <= int(Iwidth*0.65):
+                self.door_L.x += 2
+            if self.door_R.x - 2 >= int(Iwidth*0.75):
+                self.door_R.x -= 2
+
+        if self.door_L.x - 2 <= int(Iwidth*0.65) and int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
+            if not self.black_transition[0]:
+                if self.tmp_ticker_start == 0:
+                    self.tmp_ticker_start = pygame.time.get_ticks()
+                
+                elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition:
+                    self.tmp_ticker_start = pygame.time.get_ticks()
+                    self.black_transition = (True, "edeka_1")
+                    self.buttons_not_pressable = True
+                    self.transition_player_info = [int(Iwidth*0.05), -100, Iwidth//15, Iheight//5]
+        
+        elif not self.player.x <= -self.player.width and not int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
+            self.tmp_ticker_start = 0
+
+    def __save(self):
+        #save game
+        with open(os.path.join(WORKING_DIR, "JSONs", "GameState.json"), "w") as f:
+            data = {
+                "progress": self.progress,
+            }
+            json.dump(data, f, indent=4)
+            
+    
+    def __quit(self):
+        #save game and quit
+        self.__save()
+        
+        pygame.quit()
+        sys.exit(1)
 
     def handle_events(self):
         global STAGE      
@@ -116,16 +172,7 @@ class Game:
             
             # Before quitting the game, save all important variables
             if event.type == pygame.QUIT:
-                #first save all the game state
-                with open(os.path.join(WORKING_DIR, "JSONs", "GameState.json"), "w") as f:
-                    data = {
-                        "progress": self.progress,
-                    }
-                    json.dump(data, f, indent=4)
-
-                # Then quit the game
-                pygame.quit()
-                sys.exit()
+                self.__quit()
 
             # Work on key events
             if event.type == pygame.KEYDOWN:
@@ -141,7 +188,9 @@ class Game:
                         self.screen = pygame.display.set_mode(monitor_size, pygame.FULLSCREEN)
                     else:
                         self.screen = pygame.display.set_mode((1280, 720) if monitor_size[0] <= 1920 else (1920, 1080), pygame.RESIZABLE)
-                        self.screen = pygame.display.set_mode((1280, 720) if monitor_size[0] <= 1920 else (1920, 1080), pygame.RESIZABLE) # Workaround for https://github.com/pygame/pygame/issues/3107 from the comment https://github.com/pygame/pygame/issues/3107#issuecomment-1146788096 
+                        
+                        # Workaround for https://github.com/pygame/pygame/issues/3107 from the comment https://github.com/pygame/pygame/issues/3107#issuecomment-1146788096 
+                        self.screen = pygame.display.set_mode((1280, 720) if monitor_size[0] <= 1920 else (1920, 1080), pygame.RESIZABLE)
 
             # run code for mouse clicks (buttons)
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -163,47 +212,9 @@ class Game:
 
         # handle stage changes for different stages
         if STAGE == "walk_into_edeka":
-
-            wait_before_transition = 1100 #in Milliseconds 
+            self.__walk_into_edeka()
             
-            #come back to home
-            if self.player.x <= -self.player.width:
-                if not self.black_transition[0]:
-                    if self.tmp_ticker_start == 0:
-                        self.tmp_ticker_start = pygame.time.get_ticks()
-                    
-                    elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition//2:
-                        self.tmp_ticker_start = pygame.time.get_ticks()
-                        self.black_transition = (True, "home")
-                        self.buttons_not_pressable = True
-                        self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
-            
-            #Open the doors to go into edeka
-            if int(Iwidth*0.6 - Iwidth//15) <= self.player.x <= int(Iwidth*0.8) + self.door_R.width:
-                if self.door_L.x - 2 >= int(Iwidth*0.55):
-                    self.door_L.x -= 2
-                if self.door_R.x + 2 <= int(Iwidth*0.85):
-                    self.door_R.x += 2
-            else:
-                if self.door_L.x + 2 <= int(Iwidth*0.65):
-                    self.door_L.x += 2
-                if self.door_R.x - 2 >= int(Iwidth*0.75):
-                    self.door_R.x -= 2
-
-            if self.door_L.x - 2 <= int(Iwidth*0.65) and int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
-                if not self.black_transition[0]:
-                    if self.tmp_ticker_start == 0:
-                        self.tmp_ticker_start = pygame.time.get_ticks()
-                    
-                    elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition:
-                        self.tmp_ticker_start = pygame.time.get_ticks()
-                        self.black_transition = (True, "edeka_1")
-                        self.buttons_not_pressable = True
-                        self.transition_player_info = [int(Iwidth*0.05), -100, Iwidth//15, Iheight//5]
-            
-            elif not self.player.x <= -self.player.width and not int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
-                self.tmp_ticker_start = 0
-
+                
 
     def run(self):
         running = True
