@@ -26,5 +26,5 @@ Iwidth, Iheight = 1280, 720
 Cwidth, Cheight = 1280, 720
 
 #Gamerules
-STAGE = "home"
-FONT_SIZE = 24
+STAGE: str = "home"
+FONT_SIZE: int = 24

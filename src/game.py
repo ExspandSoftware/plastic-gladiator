@@ -20,7 +20,22 @@ from config import *
 
 #%% Class ------------------------------------------------------------------
 class Game:
-
+    screen: pygame.display
+    progress: int | float
+    
+    font_size: int = FONT_SIZE
+    
+    black_transition: tuple[bool, str | None] = (False, None)
+    transition_player_info: list[int] = [None, None, None, None]
+    tmp_ticker_start: int = 0
+    
+    home_buttons_pressable: bool = True
+    show_settings: bool = False
+    show_book: bool = False
+    
+    is_fullscreen: bool = False
+    show_data: bool = False
+    
     def __init__(self) -> None:
 
         def _try_load_from_json(path:str, key:str, default: str | int | float | bool) -> str | int | float | bool:
@@ -37,7 +52,6 @@ class Game:
         #Pygame Window -----------------------------------------------------------------------------------------------------
         global monitor_size
         monitor_size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
-        self.fullscreen = False
         self.screen = pygame.display.set_mode((Iwidth, Iheight), pygame.RESIZABLE)
         pygame.display.set_caption('Plastic Gladiator')
         pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'Mülleimer.png')))
@@ -46,21 +60,7 @@ class Game:
         #variables that should be saved for the next opening
         self.progress = _try_load_from_json(os.path.join(WORKING_DIR, 'assets', 'GameState.json'), 'progress', 0)
 
-        #update screen with data
-        self.font_size = FONT_SIZE
-        self.toggle_data = False
-
-        #transitions
-        self.black_transition = (False, None)
-        self.transition_player_info = [None, None, None, None]
-        self.tmp_ticker_start = 0
-
-        #pop-up screens
-        self.home_buttons_pressable = True
-        self.show_settings = False
-        self.show_book = False
-        
-        #Pygame Logik ------------------------------------------------------------------------------------------------------
+        #Pygame Logic ------------------------------------------------------------------------------------------------------
         self.clock = pygame.time.Clock()
         self.font = pygame.font.Font(None, self.font_size)
 
@@ -179,12 +179,12 @@ class Game:
                 keys = pygame.key.get_pressed()
                 
                 if keys[pygame.K_F1]:
-                    self.toggle_data = not self.toggle_data
+                    self.show_data = not self.show_data
                 
                 if (keys[pygame.K_RCTRL] or keys[pygame.K_LCTRL]) and keys[pygame.K_f]:
-                    self.fullscreen = not self.fullscreen
+                    self.is_fullscreen = not self.is_fullscreen
                     
-                    if self.fullscreen:
+                    if self.is_fullscreen:
                         self.screen = pygame.display.set_mode(monitor_size, pygame.FULLSCREEN)
                     else:
                         self.screen = pygame.display.set_mode((1280, 720) if monitor_size[0] <= 1920 else (1920, 1080), pygame.RESIZABLE)
