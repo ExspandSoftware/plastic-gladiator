@@ -1,4 +1,7 @@
-# Byte-compiled / optimized / DLL files
+# files that are created by sciptes or other files that don't need to be committed to github
+JSONs/GameState.json
+
+ Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
