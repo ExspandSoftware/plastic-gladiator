@@ -2,7 +2,7 @@ import psutil
 
 from config import EXPORT_VARS
 
-def draw_p_data(self, screen_width):
+def draw_p_data(self, screen_width: int):
         line_spacing = self.font.size("TEST")[1] * 1.25
         extra_spacing = 0
 

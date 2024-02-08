@@ -31,14 +31,14 @@ class Button(pygame.sprite.Sprite):
         #    semi_black_surface.fill((100, 100, 100, 10))
         #    self.image.blit(semi_black_surface, (0, 0))
 
-    def is_clicked(self, pos, is_clickedable=True):
-        if self._mouse_is_over_button(pos) and is_clickedable:
+    def is_clicked(self, pos: list[int, int], is_clickable: bool = True):
+        if self._mouse_is_over_button(pos) and is_clickable:
             pygame.mixer.Sound.play(self.click_sound)
             return True
         else:
             return False
         
-    def _mouse_is_over_button(self, pos):
+    def _mouse_is_over_button(self, pos: list[int, int]):
         if pos[0] >= self.rect.x and pos[0] <= self.rect.x + self.image.get_width() and pos[1] >= self.rect.y and pos[1] <= self.rect.y + self.image.get_height():
             return True
         else:
