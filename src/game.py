@@ -10,9 +10,11 @@ from classes.player import Player
 from classes.button import Button
 from classes.g_image import GImage
 from classes.progress_bar import ProgressBar
-from classes.progress_bar import ProgressBar
+from classes.memory import MemoryGame
 
 from functions.draw_performance_data import draw_p_data
+from functions.save_state import save_state
+from functions.walk_into_edeka_check import walk_into_edeka
 
 from screens.settings_screen import SettingsScreen
 from screens.book_screen import BookScreen
@@ -112,7 +114,7 @@ class Game:
         self.walk_into_edeka.add(self.player)
 
         self.edeka_1.add(self.player)
-
+        
 
     def handle_events(self):
         global STAGE      
@@ -161,13 +163,14 @@ class Game:
 
         # handle stage changes for different stages
         if STAGE == "walk_into_edeka":
-            self.__walk_into_edeka()
+            walk_into_edeka(self)
                
 
     def run(self):
         running = True
 
         while running:
+            #handle events and setup screen than update it
             self.handle_events()
             self.screen.fill((255, 255, 255))
 
@@ -243,62 +246,11 @@ class Game:
         font_size_factor = min(Cwidth/Iwidth, Cheight/Iheight)
         self.font_size = int(FONT_SIZE * font_size_factor)
         self.font = pygame.font.Font(None, self.font_size)
-
-
-    def __walk_into_edeka(self):
-        wait_before_transition = 1100 #in Milliseconds 
-        
-        #come back to home
-        if self.player.x <= -self.player.width:
-            if not self.black_transition[0]:
-                if self.tmp_ticker_start == 0:
-                    self.tmp_ticker_start = pygame.time.get_ticks()
-                
-                elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition//2:
-                    self.tmp_ticker_start = pygame.time.get_ticks()
-                    self.black_transition = (True, "home")
-                    self.buttons_not_pressable = True
-                    self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
-        
-        #Open the doors to go into edeka
-        if int(Iwidth*0.6 - Iwidth//15) <= self.player.x <= int(Iwidth*0.8) + self.door_R.width:
-            if self.door_L.x - 2 >= int(Iwidth*0.55):
-                self.door_L.x -= 2
-            if self.door_R.x + 2 <= int(Iwidth*0.85):
-                self.door_R.x += 2
-        else:
-            if self.door_L.x + 2 <= int(Iwidth*0.65):
-                self.door_L.x += 2
-            if self.door_R.x - 2 >= int(Iwidth*0.75):
-                self.door_R.x -= 2
-
-        if self.door_L.x - 2 <= int(Iwidth*0.65) and int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
-            if not self.black_transition[0]:
-                if self.tmp_ticker_start == 0:
-                    self.tmp_ticker_start = pygame.time.get_ticks()
-                
-                elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition:
-                    self.tmp_ticker_start = pygame.time.get_ticks()
-                    self.black_transition = (True, "edeka_1")
-                    self.buttons_not_pressable = True
-                    self.transition_player_info = [int(Iwidth*0.05), -100, Iwidth//15, Iheight//5]
-        
-        elif not self.player.x <= -self.player.width and not int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
-            self.tmp_ticker_start = 0
-
-
-    def __save(self):
-        #save game
-        with open(os.path.join(WORKING_DIR, "JSONs", "GameState.json"), "w") as f:
-            data = {
-                "progress": self.progress,
-            }
-            json.dump(data, f, indent=4)
             
     
     def __quit(self):
         #save game and quit
-        self.__save()
+        save_state(self)
         
         pygame.quit()
         sys.exit(1)
