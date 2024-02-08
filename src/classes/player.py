@@ -17,7 +17,6 @@ class Player(pygame.sprite.Sprite):
         self.image = self.stand
         self.rect = self.image.get_rect(topleft=(x, y))
 
-        #Konstanten
         self.x = x
         self.y = y
 
@@ -89,5 +88,3 @@ class Player(pygame.sprite.Sprite):
 
         self.image = pygame.transform.scale(self.image, (self.image.get_width(), self.image.get_height() * factor))
         self.rect = self.image.get_rect(topleft=(self.rect.x, self.rect.y - (self.image.get_height() - self.height * y_factor)))
-
-                    
