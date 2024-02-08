@@ -52,23 +52,23 @@ class Game:
 
         #Pygame Window -----------------------------------------------------------------------------------------------------
         global monitor_size
-        monitor_size = (pygame.display.Info().current_w, pygame.display.Info().current_h)
-        self.screen = pygame.display.set_mode((Iwidth, Iheight), pygame.RESIZABLE)
+        monitor_size                = (pygame.display.Info().current_w, pygame.display.Info().current_h)
+        self.screen                 = pygame.display.set_mode((Iwidth, Iheight), pygame.RESIZABLE)
         pygame.display.set_caption('Plastic Gladiator')
         pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'Mülleimer.png')))
 
         #Game Variables ----------------------------------------------------------------------------------------------------
         #variables that should be saved for the next opening
-        self.progress = _try_load_from_json(os.path.join(WORKING_DIR, 'assets', 'GameState.json'), 'progress', 0)
+        self.progress               = _try_load_from_json(os.path.join(WORKING_DIR, 'JSONs', 'GameState.json'), 'progress', 0)
 
         #update screen with data
-        self.font_size = FONT_SIZE
-        self.toggle_data = False
+        self.font_size              = FONT_SIZE
+        self.toggle_data            = False
 
         #transitions
-        self.black_transition = (False, None)
+        self.black_transition       = (False, None)
         self.transition_player_info = [None, None, None, None]
-        self.tmp_ticker_start = 0
+        self.tmp_ticker_start       = 0
 
         #pop-up screens
         self.home_buttons_pressable = True
@@ -85,18 +85,17 @@ class Game:
         self.edeka_1 = pygame.sprite.Group()
 
         #Image Objects for each stage
-        self.home_background = GImage(0, 0, Iwidth, Iheight, (15, 34, 65))
-        self.player = Player(Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2, (208, 157, 95))
-        self.titel_name = GImage(Iwidth//2 - int(Iwidth*0.2), int(Iheight*0.02), int(Iwidth*0.4), int(Iheight*0.25), (123, 65, 235))
-        self.progress_bar = ProgressBar(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.15), int(Iheight*0.5), (50, 220, 150), (165, 213, 25))
-        self.progress_bar = ProgressBar(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.15), int(Iheight*0.5), (70, 200, 110))
-        self.settings_button = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (234, 76, 198))
-        self.start_button = Button(int(Iwidth*0.73), int(Iheight*0.73), int(Iwidth*0.25), int(Iheight*0.25), (234, 201, 65))
-        self.book = Button(int(Iwidth*0.02), int(Iheight*0.98 - int(Iwidth*0.15)), int(Iwidth*0.15), int(Iwidth*0.15), (176, 23, 205))
+        self.home_background        = GImage(0, 0, Iwidth, Iheight, (15, 34, 65))
+        self.player                 = Player(Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2, (208, 157, 95))
+        self.titel_name             = GImage(Iwidth//2 - int(Iwidth*0.2), int(Iheight*0.02), int(Iwidth*0.4), int(Iheight*0.25), (123, 65, 235))
+        self.progress_bar           = ProgressBar(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.15), int(Iheight*0.5), (70, 200, 110), (165, 213, 25))
+        self.settings_button        = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (234, 76, 198))
+        self.start_button           = Button(int(Iwidth*0.73), int(Iheight*0.73), int(Iwidth*0.25), int(Iheight*0.25), (234, 201, 65))
+        self.book                   = Button(int(Iwidth*0.02), int(Iheight*0.98 - int(Iwidth*0.15)), int(Iwidth*0.15), int(Iwidth*0.15), (176, 23, 205))
 
-        self.edeka_background = GImage(0, 0, Iwidth, Iheight, (15, 65, 34))
-        self.door_L = GImage(int(Iwidth*0.65), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
-        self.door_R = GImage(int(Iwidth*0.75), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
+        self.edeka_background       = GImage(0, 0, Iwidth, Iheight, (15, 65, 34))
+        self.door_L                 = GImage(int(Iwidth*0.65), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
+        self.door_R                 = GImage(int(Iwidth*0.75), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
 
         # Add objects to sprite groups -------------------------------------------------------------------------------------
         self.home_sprites.add(self.home_background)
@@ -114,72 +113,6 @@ class Game:
 
         self.edeka_1.add(self.player)
 
-
-    def update_wh(self):
-        global Cwidth, Cheight
-        info = pygame.display.Info()
-        Cwidth, Cheight = info.current_w, info.current_h
-
-        font_size_factor = min(Cwidth/Iwidth, Cheight/Iheight)
-        self.font_size = int(FONT_SIZE * font_size_factor)
-        self.font = pygame.font.Font(None, self.font_size)
-
-    def __walk_into_edeka(self):
-        wait_before_transition = 1100 #in Milliseconds 
-        
-        #come back to home
-        if self.player.x <= -self.player.width:
-            if not self.black_transition[0]:
-                if self.tmp_ticker_start == 0:
-                    self.tmp_ticker_start = pygame.time.get_ticks()
-                
-                elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition//2:
-                    self.tmp_ticker_start = pygame.time.get_ticks()
-                    self.black_transition = (True, "home")
-                    self.buttons_not_pressable = True
-                    self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
-        
-        #Open the doors to go into edeka
-        if int(Iwidth*0.6 - Iwidth//15) <= self.player.x <= int(Iwidth*0.8) + self.door_R.width:
-            if self.door_L.x - 2 >= int(Iwidth*0.55):
-                self.door_L.x -= 2
-            if self.door_R.x + 2 <= int(Iwidth*0.85):
-                self.door_R.x += 2
-        else:
-            if self.door_L.x + 2 <= int(Iwidth*0.65):
-                self.door_L.x += 2
-            if self.door_R.x - 2 >= int(Iwidth*0.75):
-                self.door_R.x -= 2
-
-        if self.door_L.x - 2 <= int(Iwidth*0.65) and int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
-            if not self.black_transition[0]:
-                if self.tmp_ticker_start == 0:
-                    self.tmp_ticker_start = pygame.time.get_ticks()
-                
-                elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition:
-                    self.tmp_ticker_start = pygame.time.get_ticks()
-                    self.black_transition = (True, "edeka_1")
-                    self.buttons_not_pressable = True
-                    self.transition_player_info = [int(Iwidth*0.05), -100, Iwidth//15, Iheight//5]
-        
-        elif not self.player.x <= -self.player.width and not int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
-            self.tmp_ticker_start = 0
-
-    def __save(self):
-        #save game
-        with open(os.path.join(WORKING_DIR, "JSONs", "GameState.json"), "w") as f:
-            data = {
-                "progress": self.progress,
-            }
-            json.dump(data, f, indent=4)
-            
-    
-    def __quit(self):
-        #save game and quit
-        self.__save()
-        
-        pygame.quit()
-        sys.exit(1)
 
     def handle_events(self):
         global STAGE      
@@ -229,8 +162,7 @@ class Game:
         # handle stage changes for different stages
         if STAGE == "walk_into_edeka":
             self.__walk_into_edeka()
-            
-                
+               
 
     def run(self):
         running = True
@@ -301,6 +233,75 @@ class Game:
             self.home_buttons_pressable = True
             self.transition_player_info = [None, None, None, None]
             self.movement = True
+
+
+    def update_wh(self):
+        global Cwidth, Cheight
+        info = pygame.display.Info()
+        Cwidth, Cheight = info.current_w, info.current_h
+
+        font_size_factor = min(Cwidth/Iwidth, Cheight/Iheight)
+        self.font_size = int(FONT_SIZE * font_size_factor)
+        self.font = pygame.font.Font(None, self.font_size)
+
+
+    def __walk_into_edeka(self):
+        wait_before_transition = 1100 #in Milliseconds 
+        
+        #come back to home
+        if self.player.x <= -self.player.width:
+            if not self.black_transition[0]:
+                if self.tmp_ticker_start == 0:
+                    self.tmp_ticker_start = pygame.time.get_ticks()
+                
+                elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition//2:
+                    self.tmp_ticker_start = pygame.time.get_ticks()
+                    self.black_transition = (True, "home")
+                    self.buttons_not_pressable = True
+                    self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
+        
+        #Open the doors to go into edeka
+        if int(Iwidth*0.6 - Iwidth//15) <= self.player.x <= int(Iwidth*0.8) + self.door_R.width:
+            if self.door_L.x - 2 >= int(Iwidth*0.55):
+                self.door_L.x -= 2
+            if self.door_R.x + 2 <= int(Iwidth*0.85):
+                self.door_R.x += 2
+        else:
+            if self.door_L.x + 2 <= int(Iwidth*0.65):
+                self.door_L.x += 2
+            if self.door_R.x - 2 >= int(Iwidth*0.75):
+                self.door_R.x -= 2
+
+        if self.door_L.x - 2 <= int(Iwidth*0.65) and int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
+            if not self.black_transition[0]:
+                if self.tmp_ticker_start == 0:
+                    self.tmp_ticker_start = pygame.time.get_ticks()
+                
+                elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition:
+                    self.tmp_ticker_start = pygame.time.get_ticks()
+                    self.black_transition = (True, "edeka_1")
+                    self.buttons_not_pressable = True
+                    self.transition_player_info = [int(Iwidth*0.05), -100, Iwidth//15, Iheight//5]
+        
+        elif not self.player.x <= -self.player.width and not int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
+            self.tmp_ticker_start = 0
+
+
+    def __save(self):
+        #save game
+        with open(os.path.join(WORKING_DIR, "JSONs", "GameState.json"), "w") as f:
+            data = {
+                "progress": self.progress,
+            }
+            json.dump(data, f, indent=4)
+            
+    
+    def __quit(self):
+        #save game and quit
+        self.__save()
+        
+        pygame.quit()
+        sys.exit(1)
 
 
 if __name__ == "__main__":
