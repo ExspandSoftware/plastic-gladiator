@@ -88,8 +88,8 @@ class Game:
 
         #Image Objects for each stage
         self.home_background        = GImage(0, 0, Iwidth, Iheight, (15, 34, 65))
-        self.player                 = Player(Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2, (208, 157, 95))
         self.titel_name             = GImage(Iwidth//2 - int(Iwidth*0.2), int(Iheight*0.02), int(Iwidth*0.4), int(Iheight*0.25), (123, 65, 235))
+        self.player                 = Player(Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2, (208, 157, 95))
         self.progress_bar           = ProgressBar(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.15), int(Iheight*0.5), (70, 200, 110), (165, 213, 25))
         self.settings_button        = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (234, 76, 198))
         self.start_button           = Button(int(Iwidth*0.73), int(Iheight*0.73), int(Iwidth*0.25), int(Iheight*0.25), (234, 201, 65))
@@ -98,6 +98,8 @@ class Game:
         self.edeka_background       = GImage(0, 0, Iwidth, Iheight, (15, 65, 34))
         self.door_L                 = GImage(int(Iwidth*0.65), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
         self.door_R                 = GImage(int(Iwidth*0.75), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
+
+        self.edeka_1_Background     = GImage(0, 0, Iwidth, Iheight, (123, 53, 12))
 
         # Add objects to sprite groups -------------------------------------------------------------------------------------
         self.home_sprites.add(self.home_background)
@@ -113,8 +115,9 @@ class Game:
         self.walk_into_edeka.add(self.door_R)
         self.walk_into_edeka.add(self.player)
 
+        self.edeka_1.add(self.edeka_1_Background)
         self.edeka_1.add(self.player)
-        
+
 
     def handle_events(self):
         global STAGE      
