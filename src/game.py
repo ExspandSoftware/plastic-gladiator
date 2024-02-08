@@ -9,6 +9,7 @@ import math
 from classes.player import Player
 from classes.button import Button
 from classes.g_image import GImage
+from classes.progress_bar import ProgressBar
 
 from functions.draw_performance_data import draw_p_data
 
@@ -58,7 +59,7 @@ class Game:
         self.home_buttons_pressable = True
         self.show_settings = False
         self.show_book = False
-        
+   
         #Pygame Logik ------------------------------------------------------------------------------------------------------
         self.clock = pygame.time.Clock()
         self.font = pygame.font.Font(None, self.font_size)
@@ -72,9 +73,9 @@ class Game:
         self.home_background = GImage(0, 0, Iwidth, Iheight, (15, 34, 65))
         self.player = Player(Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2, (208, 157, 95))
         self.titel_name = GImage(Iwidth//2 - int(Iwidth*0.2), int(Iheight*0.02), int(Iwidth*0.4), int(Iheight*0.25), (123, 65, 235))
-        self.progress_bar = GImage(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.15), int(Iheight*0.5), (70, 200, 110))
+        self.progress_bar = ProgressBar(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.15), int(Iheight*0.5), (50, 220, 150), (165, 213, 25))
         self.settings_button = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (234, 76, 198))
-        self.start_button = Button(int(Iwidth*0.68), int(Iheight*0.78), int(Iwidth*0.3), int(Iheight*0.2), (234, 201, 65))
+        self.start_button = Button(int(Iwidth*0.73), int(Iheight*0.73), int(Iwidth*0.25), int(Iheight*0.25), (234, 201, 65))
         self.book = Button(int(Iwidth*0.02), int(Iheight*0.98 - int(Iwidth*0.15)), int(Iwidth*0.15), int(Iwidth*0.15), (176, 23, 205))
 
         self.edeka_background = GImage(0, 0, Iwidth, Iheight, (15, 65, 34))
@@ -215,7 +216,7 @@ class Game:
             
             #update and draw objects for each stage
             if STAGE == "home":
-                self.home_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE)
+                self.home_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE, progress=self.progress)
                 self.home_sprites.draw(self.screen)
             elif STAGE == "walk_into_edeka":
                 self.walk_into_edeka.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE, player_movement=self.movement)
@@ -239,6 +240,11 @@ class Game:
             pygame.display.flip()
 
             self.clock.tick(60)
+
+            #do calculations
+            self.progress += 0.001
+            if self.progress > 1.0:
+                self.progress = 1.0
 
         pygame.quit()
 
