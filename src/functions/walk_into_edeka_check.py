@@ -38,7 +38,6 @@ def walk_into_edeka(self):
                     self.tmp_ticker_start = pygame.time.get_ticks()
                     self.black_transition = (True, "edeka_1")
                     self.buttons_not_pressable = True
-                    self.transition_player_info = [int(Iwidth*0.05), -100, Iwidth//15, Iheight//5]
         
         elif not self.player.x <= -self.player.width and not int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
             self.tmp_ticker_start = 0

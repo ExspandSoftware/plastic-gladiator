@@ -87,4 +87,4 @@ class Player(pygame.sprite.Sprite):
         factor = (100 + 2*math.sin(pygame.time.get_ticks() * 0.005))/100
 
         self.image = pygame.transform.scale(self.image, (self.image.get_width(), self.image.get_height() * factor))
-        self.rect = self.image.get_rect(topleft=(self.rect.x, self.rect.y - (self.image.get_height() - self.height * y_factor)))
+        self.rect = self.image.get_rect(topleft=(self.rect.x, self.rect.y - (self.image.get_height() - self.height*y_factor)))
