@@ -22,10 +22,12 @@ def draw_p_data(self, screen_width: int, stage):
                 "CPU Usage": f"{psutil.cpu_percent()}%",
                 "CPU Cores": f"{psutil.cpu_count(logical=False)}",
                 "CPU logical Threads": f"{psutil.cpu_count(logical=True)}",
+                "virtual memory (RAM)": f"{psutil.virtual_memory().total/1024**2} MB",
+                "virtual memory (RAM) used": f"{(psutil.virtual_memory().total - psutil.virtual_memory().available)/1024**2} MB - ({psutil.virtual_memory().percent}%)",
             }
             
             for idx, (key, value) in enumerate(left_text.items()):
-                if key == "CPU Usage" or key == "FPS":
+                if key == "CPU Usage" or key == "FPS" or key == "virtual memory (RAM)":
                      extra_spacing += 1
                 
                 text = self.font.render(f"{key}: {value}", True, (255, 255, 255))
