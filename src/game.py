@@ -76,6 +76,8 @@ class Game:
         self.font = pygame.font.Font(None, self.font_size)
 
         #Sprite Groups -----------------------------------------------------------------------------------------------------
+        self.STAGE = stage
+        
         self.home_sprites = pygame.sprite.Group()
         self.walk_into_edeka = pygame.sprite.Group()
         self.edeka_1 = pygame.sprite.Group()
@@ -84,9 +86,8 @@ class Game:
         init_home(self)
 
 
+    # events ---------------------------------------------------------------------------------------------------------------
     def handle_events(self):
-        global STAGE
-
         #handle pygame events
         for event in pygame.event.get():
             # Before quitting the game, save all important variables
@@ -114,7 +115,7 @@ class Game:
             # run code for mouse clicks (buttons)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:
-                    if STAGE == "home":
+                    if self.STAGE == "home":
                         if self.settings_button.is_clicked(event.pos, self.home_buttons_pressable):
                             self.home_buttons_pressable = False
                             self.show_settings = True
@@ -130,10 +131,11 @@ class Game:
                             self.show_book = True
 
         # handle stage changes for different stages
-        if STAGE == "walk_into_edeka":
+        if self.STAGE == "walk_into_edeka":
             walk_into_edeka(self)
                
 
+    # event loop -----------------------------------------------------------------------------------------------------------
     def run(self):
         running = True
 
@@ -146,14 +148,14 @@ class Game:
             self.update_wh()
             
             #update and draw objects for each stage
-            if STAGE == "home":
-                self.home_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE, progress=self.progress)
+            if self.STAGE == "home":
+                self.home_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE, progress=self.progress)
                 self.home_sprites.draw(self.screen)
-            elif STAGE == "walk_into_edeka":
-                self.walk_into_edeka.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE, player_movement=self.movement)
+            elif self.STAGE == "walk_into_edeka":
+                self.walk_into_edeka.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE, player_movement=self.movement)
                 self.walk_into_edeka.draw(self.screen)
-            elif STAGE == "edeka_1":
-                self.edeka_1.update(Iwidth, Iheight, Cwidth, Cheight, stage=STAGE)
+            elif self.STAGE == "edeka_1":
+                self.edeka_1.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE)
                 self.edeka_1.draw(self.screen)
 
             #handle pop-up menues
@@ -163,10 +165,8 @@ class Game:
                 pass
 
             #do everything ontop of the game then end the frame
-            #handle transitions
             self.transition_black(pygame.time.get_ticks(), self.tmp_ticker_start, self.black_transition[1])
-            
-            draw_p_data(self, Cwidth)
+            draw_p_data(self, Cwidth, self.STAGE)
             pygame.display.flip()
 
             self.clock.tick(60)
@@ -178,10 +178,10 @@ class Game:
 
         pygame.quit()
 
+
     #transitions ------------------------------------------------------------------------------------------------------------------------------
     def transition_black(self, ticker, start, stage, **kwargs) -> None:
         if self.black_transition[0]:
-            global STAGE
             self.movement = False
             duration_ms = 2000 # in milliseconds
             Opacity = min(((math.e/(duration_ms*100))+1)**(-((ticker-(start+duration_ms//2))**2)), 1.0)*255
@@ -192,7 +192,7 @@ class Game:
 
             if abs(ticker - start - duration_ms//2) <= 15:
                 #change stage and load sprites
-                STAGE = stage
+                self.STAGE = stage
                 if stage == "walk_into_edeka":
                     init_pre_edeka(self)
                 elif stage == "edeka_1":

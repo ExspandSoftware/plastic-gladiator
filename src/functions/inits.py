@@ -33,8 +33,8 @@ def init_pre_edeka(self):
     self.door_L                 = GImage(int(Iwidth*0.65), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
     self.door_R                 = GImage(int(Iwidth*0.75), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
 
-    self.secret_background = GImage(Iwidth, 0, Iwidth, Iheight, (15*2, 65*2, 34*2))
-    self.secret_button_bin = Button(Iwidth + int(Iwidth*0.75), int(Iheight*0.7 + Iheight//15 - Iheight//20), Iwidth//40, Iheight//20, (100, 100, 120))
+    self.secret_background      = GImage(Iwidth, 0, Iwidth, Iheight, (15*2, 65*2, 34*2))
+    self.secret_button_bin      = Button(Iwidth + int(Iwidth*0.75), int(Iheight*0.7 + Iheight//5 - Iheight//7.5), Iwidth//20, Iheight//7.5, (100, 100, 120))
 
     #add those objects to the right sprites group
     self.walk_into_edeka.add(self.edeka_background)
