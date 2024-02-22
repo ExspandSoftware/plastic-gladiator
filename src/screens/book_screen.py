@@ -1,5 +1,7 @@
 import pygame
 
+from config import *
+
 class BookScreen(pygame.sprite.Sprite):
 
     def __init__(self, x, y, width, height, page_image):
@@ -13,11 +15,11 @@ class BookScreen(pygame.sprite.Sprite):
         self.height = height
         
         # other vars
-        self.background = pygame.Surface((1280, 720), pygame.SRCALPHA)
+        self.background = pygame.Surface((Iwidth, Iheight), pygame.SRCALPHA)
         self.background.fill((0, 0, 0, 150))
 
         self.book_page = pygame.Surface((self.width*0.35, self.height*0.95))
-        self.book_page.fill((120, 230, 40))
+        self.book_page.fill(page_image)
 
         self.background.blit(self.book_page, self.book_page.get_rect(topleft=(int(self.x+self.width*0.5), self.height*0.025)))
 

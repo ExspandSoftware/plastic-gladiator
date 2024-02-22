@@ -4,6 +4,9 @@ from classes.g_image import GImage
 from classes.progress_bar import ProgressBar
 from classes.memory import MemoryGame
 
+from screens.book_screen import BookScreen
+from screens.settings_screen import SettingsScreen
+
 from config import *
 
 def init_home(self):
@@ -15,6 +18,12 @@ def init_home(self):
     self.settings_button        = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (234, 76, 198))
     self.start_button           = Button(int(Iwidth*0.73), int(Iheight*0.73), int(Iwidth*0.25), int(Iheight*0.25), (234, 201, 65))
     self.book                   = Button(int(Iwidth*0.02), int(Iheight*0.98 - int(Iwidth*0.15)), int(Iwidth*0.15), int(Iwidth*0.15), (176, 23, 205))
+
+    #sprites for the book
+    self.book_screen            = BookScreen(0, 0, Iwidth, Iheight, (123, 93, 235))
+    self.next_page              = Button(30, Iheight/2 - 25, 100, 100, (165, 165, 112))
+    self.last_page              = Button(Iwidth - 130, Iheight/2 - 50, 100, 100, (165, 165, 112))
+    self.close_book             = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, (200, 200, 140))
 
     #add those bjects to the right sprites group
     self.home_sprites.add(self.home_background)
