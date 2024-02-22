@@ -128,7 +128,19 @@ class Game:
 
                         if self.book.is_clicked(event.pos, self.home_buttons_pressable):
                             self.home_buttons_pressable = False
+                            self.home_sprites.add(self.book_screen)
+                            self.home_sprites.add(self.next_page)
+                            self.home_sprites.add(self.last_page)
+                            self.home_sprites.add(self.close_book)
                             self.show_book = True
+                        
+                        if self.close_book.is_clicked(event.pos, self.show_book):
+                            self.home_buttons_pressable = True
+                            self.home_sprites.remove(self.book_screen)
+                            self.home_sprites.remove(self.next_page)
+                            self.home_sprites.remove(self.last_page)
+                            self.home_sprites.remove(self.close_book)
+                            self.show_book = False
 
         # handle stage changes for different stages
         if self.STAGE == "walk_into_edeka":
@@ -185,6 +197,58 @@ class Game:
             self.movement = False
             duration_ms = 2000 # in milliseconds
             Opacity = min(((math.e/(duration_ms*100))+1)**(-((ticker-(start+duration_ms//2))**2)), 1.0)*255
+    def __init_home(self):
+        # objects in the stage
+        self.home_background        = GImage(0, 0, Iwidth, Iheight, (15, 34, 65))
+        self.titel_name             = GImage(Iwidth//2 - int(Iwidth*0.2), int(Iheight*0.02), int(Iwidth*0.4), int(Iheight*0.25), (123, 65, 235))
+        self.player                 = Player(Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2, (208, 157, 95))
+        self.progress_bar           = ProgressBar(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.15), int(Iheight*0.5), (70, 200, 110), (165, 213, 25))
+        self.settings_button        = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (234, 76, 198))
+        self.start_button           = Button(int(Iwidth*0.73), int(Iheight*0.73), int(Iwidth*0.25), int(Iheight*0.25), (234, 201, 65))
+        self.book                   = Button(int(Iwidth*0.02), int(Iheight*0.98 - int(Iwidth*0.15)), int(Iwidth*0.15), int(Iwidth*0.15), (176, 23, 205))
+        
+        self.book_screen            = BookScreen(0, 0, 1280, 720, None)
+        self.next_page              = Button(int(Iwidth*0.05), int(Iheight * 0.45), int(Iwidth * 0.1), int(Iheight * 0.1), (123, 45, 167))
+        self.last_page              = Button(int(Iwidth*0.85), int(Iheight * 0.45), int(Iwidth * 0.1), int(Iheight * 0.1), (123, 45, 167))
+        self.close_book             = Button(int(Iwidth*0.9), int(Iheight * 0.05), int(Iwidth * 0.07), int(Iheight * 0.1), (180, 85, 17))
+        
+        #add those objects to the right sprites group
+        self.home_sprites.add(self.home_background)
+        self.home_sprites.add(self.player)
+        self.home_sprites.add(self.titel_name)
+        self.home_sprites.add(self.progress_bar)
+        self.home_sprites.add(self.settings_button)
+        self.home_sprites.add(self.start_button)
+        self.home_sprites.add(self.book)
+
+    
+    def __init_pre_edeka(self):
+        # objects in the stage
+        self.edeka_background       = GImage(0, 0, Iwidth, Iheight, (15, 65, 34))
+        self.door_L                 = GImage(int(Iwidth*0.65), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
+        self.door_R                 = GImage(int(Iwidth*0.75), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
+
+        #add those objects to the right sprites group
+        self.walk_into_edeka.add(self.edeka_background)
+        self.walk_into_edeka.add(self.door_L)
+        self.walk_into_edeka.add(self.door_R)
+        self.walk_into_edeka.add(self.player)
+    
+
+    def __init_edeka_1(self):
+        # objects in the stage
+        self.edeka_1_Background     = GImage(0, 0, Iwidth, Iheight, (123, 53, 12))
+
+        # add those objects to the right sprites group
+        self.edeka_1.add(self.edeka_1_Background)
+        self.edeka_1.add(self.player)
+    
+
+    def transition_black(self, ticker, start, stage, player_info) -> None:
+        global STAGE
+        self.movement = False
+        duration_ms = 2000 # in milliseconds
+        Opacity = min(((math.e/(duration_ms*100))+1)**(-((ticker-(start+duration_ms//2))**2)), 1.0)*255
 
             semi_black_surface = pygame.Surface(self.screen.get_size(), pygame.SRCALPHA)
             semi_black_surface.fill((0, 0, 0, Opacity))
