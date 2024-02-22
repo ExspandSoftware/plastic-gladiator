@@ -133,7 +133,19 @@ class Game:
 
                         if self.book.is_clicked(event.pos, self.home_buttons_pressable):
                             self.home_buttons_pressable = False
+                            self.home_sprites.add(self.book_screen)
+                            self.home_sprites.add(self.next_page)
+                            self.home_sprites.add(self.last_page)
+                            self.home_sprites.add(self.close_book)
                             self.show_book = True
+                        
+                        if self.close_book.is_clicked(event.pos, self.show_book):
+                            self.home_buttons_pressable = True
+                            self.home_sprites.remove(self.book_screen)
+                            self.home_sprites.remove(self.next_page)
+                            self.home_sprites.remove(self.last_page)
+                            self.home_sprites.remove(self.close_book)
+                            self.show_book = False
 
         # handle stage changes for different stages
         if STAGE == "walk_into_edeka":
@@ -195,8 +207,13 @@ class Game:
         self.settings_button        = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (234, 76, 198))
         self.start_button           = Button(int(Iwidth*0.73), int(Iheight*0.73), int(Iwidth*0.25), int(Iheight*0.25), (234, 201, 65))
         self.book                   = Button(int(Iwidth*0.02), int(Iheight*0.98 - int(Iwidth*0.15)), int(Iwidth*0.15), int(Iwidth*0.15), (176, 23, 205))
-
-        #add those bjects to the right sprites group
+        
+        self.book_screen            = BookScreen(0, 0, 1280, 720, None)
+        self.next_page              = Button(int(Iwidth*0.05), int(Iheight * 0.45), int(Iwidth * 0.1), int(Iheight * 0.1), (123, 45, 167))
+        self.last_page              = Button(int(Iwidth*0.85), int(Iheight * 0.45), int(Iwidth * 0.1), int(Iheight * 0.1), (123, 45, 167))
+        self.close_book             = Button(int(Iwidth*0.9), int(Iheight * 0.05), int(Iwidth * 0.07), int(Iheight * 0.1), (180, 85, 17))
+        
+        #add those objects to the right sprites group
         self.home_sprites.add(self.home_background)
         self.home_sprites.add(self.player)
         self.home_sprites.add(self.titel_name)
