@@ -57,10 +57,22 @@ def init_pre_edeka(self):
 
 
 def init_edeka(self):
-    # objects in the stage
-    self.edeka_Background       = GImage(0, 0, Iwidth, Iheight, (123, 53, 12))
-    self.player                 = Player(int(Iwidth*0.1), int(Iheight*0.5), Iwidth//7.5, Iheight//2.5, (208, 157, 95))
+    # objects in stage 1
+    self.edeka_1_background         = GImage(0, 0, Iwidth, Iheight, (123, 53, 12))
 
+    # obejcts in stage 2
+    self.edeka_2_background         = GImage(Iwidth, 0, Iwidth, Iheight, (53, 123, 12))
+                                             
+    # obejcts in stage 3
+    self.edeka_3_background         = GImage(Iwidth*2, 0, Iwidth, Iheight, (12, 123, 53))
+    
+    # obejcts in stage 4
+    self.edeka_4_background         = GImage(Iwidth*3, 0, Iwidth, Iheight, (12, 53, 123))
+
+    self.player                 = Player(int(Iwidth*0.1), int(Iheight*0.5), Iwidth//7.5, Iheight//2.5, (208, 157, 95))
     # add those objects to the right sprites group
-    self.edeka.add(self.edeka_Background)
+    self.edeka.add(self.edeka_1_background)
+    self.edeka.add(self.edeka_2_background)
+    self.edeka.add(self.edeka_3_background)
+    self.edeka.add(self.edeka_4_background)
     self.edeka.add(self.player)

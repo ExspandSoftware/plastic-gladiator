@@ -18,4 +18,4 @@
 # Other
 
 - [ ] Information Tab
-- [ ] ...
+- [ ] add GameState.json to .gitignore

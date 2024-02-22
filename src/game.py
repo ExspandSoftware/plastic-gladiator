@@ -10,6 +10,7 @@ from functions.draw_performance_data import draw_p_data
 from functions.save_state import save_state
 from functions.walk_into_edeka_check import walk_into_edeka
 from functions.inits import init_home, init_pre_edeka, init_edeka
+from functions.handle_edeka import handle_edeka
 
 from screens.settings_screen import SettingsScreen
 from screens.book_screen import BookScreen
@@ -146,6 +147,8 @@ class Game:
         # handle stage changes for different stages
         if self.STAGE == "walk_into_edeka":
             walk_into_edeka(self)
+        elif self.STAGE == "edeka":
+            handle_edeka(self)
                
 
     # event loop -----------------------------------------------------------------------------------------------------------
