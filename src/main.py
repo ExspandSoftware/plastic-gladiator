@@ -4,7 +4,6 @@ import pygame
 from game import Game
 
 
-
 #%% Functions --------------------------------------------------------------
 def main():
     pygame.init()

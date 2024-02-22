@@ -9,7 +9,7 @@ import math
 from functions.draw_performance_data import draw_p_data
 from functions.save_state import save_state
 from functions.walk_into_edeka_check import walk_into_edeka
-from functions.inits import init_home, init_pre_edeka, init_edeka_1
+from functions.inits import init_home, init_pre_edeka, init_edeka
 
 from screens.settings_screen import SettingsScreen
 from screens.book_screen import BookScreen
@@ -65,6 +65,7 @@ class Game:
         #transitions
         self.black_transition       = (False, None)
         self.tmp_ticker_start       = 0
+        self.movement               = True
 
         #pop-up screens
         self.home_buttons_pressable = True
@@ -80,7 +81,7 @@ class Game:
         
         self.home_sprites = pygame.sprite.Group()
         self.walk_into_edeka = pygame.sprite.Group()
-        self.edeka_1 = pygame.sprite.Group()
+        self.edeka = pygame.sprite.Group()
 
         # init the home stage
         init_home(self)
@@ -166,9 +167,9 @@ class Game:
             elif self.STAGE == "walk_into_edeka":
                 self.walk_into_edeka.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE, player_movement=self.movement)
                 self.walk_into_edeka.draw(self.screen)
-            elif self.STAGE == "edeka_1":
-                self.edeka_1.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE)
-                self.edeka_1.draw(self.screen)
+            elif self.STAGE == "edeka":
+                self.edeka.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE, player_movement=self.movement)
+                self.edeka.draw(self.screen)
 
             #handle pop-up menues
             if self.show_settings:
@@ -185,7 +186,7 @@ class Game:
 
             #do calculations
             self.progress += 0.005
-            if self.progress > 1.0:
+            if self.progress >= 1.0:
                 self.progress = 0.0
 
         pygame.quit()
@@ -208,8 +209,8 @@ class Game:
                 self.STAGE = stage
                 if stage == "walk_into_edeka":
                     init_pre_edeka(self)
-                elif stage == "edeka_1":
-                    init_edeka_1(self)
+                elif stage == "edeka":
+                    init_edeka(self)
 
             if ticker - start >= duration_ms:
                 self.tmp_ticker_start = 0

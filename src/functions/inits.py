@@ -56,11 +56,11 @@ def init_pre_edeka(self):
     self.walk_into_edeka.add(self.player)
 
 
-def init_edeka_1(self):
+def init_edeka(self):
     # objects in the stage
-    self.edeka_1_Background     = GImage(0, 0, Iwidth, Iheight, (123, 53, 12))
+    self.edeka_Background       = GImage(0, 0, Iwidth, Iheight, (123, 53, 12))
     self.player                 = Player(int(Iwidth*0.1), int(Iheight*0.5), Iwidth//7.5, Iheight//2.5, (208, 157, 95))
 
     # add those objects to the right sprites group
-    self.edeka_1.add(self.edeka_1_Background)
-    self.edeka_1.add(self.player)
+    self.edeka.add(self.edeka_Background)
+    self.edeka.add(self.player)
