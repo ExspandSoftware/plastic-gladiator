@@ -71,8 +71,6 @@ class Game:
 
         #pop-up screens
         self.home_buttons_pressable = True
-        self.show_settings = False
-        self.show_book = False
         
         #Pygame Logik ------------------------------------------------------------------------------------------------------
         self.clock = pygame.time.Clock()
@@ -165,12 +163,6 @@ class Game:
             #update and draw objects for each stage
             self.active_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE, progress=self.progress, player_movement=self.movement)
             self.active_sprites.draw(self.screen)
-
-            #handle pop-up menues
-            if self.show_settings:
-                pass
-            elif self.show_book:
-                pass
 
             #do everything ontop of the game then end the frame
             self.transition_black(pygame.time.get_ticks(), self.tmp_ticker_start, self.black_transition[1])
