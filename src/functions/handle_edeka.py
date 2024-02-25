@@ -20,13 +20,14 @@ def handle_edeka(self):
                 
                 elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition//2:
                     self.tmp_ticker_start = pygame.time.get_ticks()
-                    self.black_transition = (True, "home")
+                    self.black_transition = (True, "walk_into_edeka")
                     self.buttons_not_pressable = True
                     self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
+                    edeka_stage = 1
         
         #open the next stage
         if self.player.x >= Iwidth - self.player.width//2:
-            for sprite in self.edeka:
+            for sprite in self.active_sprites:
                 sprite.x -= Iwidth
             #go to the next stage
             edeka_stage = 2
@@ -35,14 +36,14 @@ def handle_edeka(self):
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
-            for sprite in self.edeka:
+            for sprite in self.active_sprites:
                 sprite.x += Iwidth
             #go to the next stage
             edeka_stage = 1
 
         #open the next stage
         if self.player.x >= Iwidth - self.player.width//2:
-            for sprite in self.edeka:
+            for sprite in self.active_sprites:
                 sprite.x -= Iwidth
             #go to the next stage
             edeka_stage = 3
@@ -51,14 +52,14 @@ def handle_edeka(self):
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
-            for sprite in self.edeka:
+            for sprite in self.active_sprites:
                 sprite.x += Iwidth
             #go to the next stage
             edeka_stage = 2
 
         #open the next stage
         if self.player.x >= Iwidth - self.player.width//2:
-            for sprite in self.edeka:
+            for sprite in self.active_sprites:
                 sprite.x -= Iwidth
             #go to the next stage
             edeka_stage = 4
@@ -67,7 +68,7 @@ def handle_edeka(self):
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
-            for sprite in self.edeka:
+            for sprite in self.active_sprites:
                 sprite.x += Iwidth
             #go to the next stage
             edeka_stage = 3
@@ -85,4 +86,5 @@ def handle_edeka(self):
                     self.black_transition = (True, "home")
                     self.buttons_not_pressable = True
                     self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
+                    edeka_stage = 1
         

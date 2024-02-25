@@ -11,6 +11,7 @@ from functions.save_state import save_state
 from functions.walk_into_edeka_check import walk_into_edeka
 from functions.inits import init_home, init_pre_edeka, init_edeka
 from functions.handle_edeka import handle_edeka
+from functions.remove_sprites import remove_sprites
 
 from screens.settings_screen import SettingsScreen
 from screens.book_screen import BookScreen
@@ -80,9 +81,7 @@ class Game:
         #Sprite Groups -----------------------------------------------------------------------------------------------------
         self.STAGE = stage
         
-        self.home_sprites = pygame.sprite.Group()
-        self.walk_into_edeka = pygame.sprite.Group()
-        self.edeka = pygame.sprite.Group()
+        self.active_sprites = pygame.sprite.Group()
 
         # init the home stage
         init_home(self)
@@ -130,18 +129,18 @@ class Game:
 
                         if self.book.is_clicked(event.pos, self.home_buttons_pressable):
                             self.home_buttons_pressable = False
-                            self.home_sprites.add(self.book_screen)
-                            self.home_sprites.add(self.next_page)
-                            self.home_sprites.add(self.last_page)
-                            self.home_sprites.add(self.close_book)
+                            self.active_sprites.add(self.book_screen)
+                            self.active_sprites.add(self.next_page)
+                            self.active_sprites.add(self.last_page)
+                            self.active_sprites.add(self.close_book)
                             self.show_book = True
                         
                         if self.close_book.is_clicked(event.pos, self.show_book):
                             self.home_buttons_pressable = True
-                            self.home_sprites.remove(self.book_screen)
-                            self.home_sprites.remove(self.next_page)
-                            self.home_sprites.remove(self.last_page)
-                            self.home_sprites.remove(self.close_book)
+                            self.active_sprites.remove(self.book_screen)
+                            self.active_sprites.remove(self.next_page)
+                            self.active_sprites.remove(self.last_page)
+                            self.active_sprites.remove(self.close_book)
                             self.show_book = False
 
         # handle stage changes for different stages
@@ -164,15 +163,8 @@ class Game:
             self.update_wh()
             
             #update and draw objects for each stage
-            if self.STAGE == "home":
-                self.home_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE, progress=self.progress)
-                self.home_sprites.draw(self.screen)
-            elif self.STAGE == "walk_into_edeka":
-                self.walk_into_edeka.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE, player_movement=self.movement)
-                self.walk_into_edeka.draw(self.screen)
-            elif self.STAGE == "edeka":
-                self.edeka.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE, player_movement=self.movement)
-                self.edeka.draw(self.screen)
+            self.active_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE, progress=self.progress, player_movement=self.movement)
+            self.active_sprites.draw(self.screen)
 
             #handle pop-up menues
             if self.show_settings:
@@ -210,9 +202,14 @@ class Game:
             if abs(ticker - start - duration_ms//2) <= 15:
                 #change stage and load sprites
                 self.STAGE = stage
-                if stage == "walk_into_edeka":
+                if stage == "home":
+                    remove_sprites(self)
+                    init_home(self)
+                elif stage == "walk_into_edeka":
+                    remove_sprites(self)
                     init_pre_edeka(self)
                 elif stage == "edeka":
+                    remove_sprites(self)
                     init_edeka(self)
 
             if ticker - start >= duration_ms:

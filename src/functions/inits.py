@@ -26,13 +26,13 @@ def init_home(self):
     self.close_book             = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, (200, 200, 140))
 
     #add those bjects to the right sprites group
-    self.home_sprites.add(self.home_background)
-    self.home_sprites.add(self.player)
-    self.home_sprites.add(self.titel_name)
-    self.home_sprites.add(self.progress_bar)
-    self.home_sprites.add(self.settings_button)
-    self.home_sprites.add(self.start_button)
-    self.home_sprites.add(self.book)
+    self.active_sprites.add(self.home_background)
+    self.active_sprites.add(self.player)
+    self.active_sprites.add(self.titel_name)
+    self.active_sprites.add(self.progress_bar)
+    self.active_sprites.add(self.settings_button)
+    self.active_sprites.add(self.start_button)
+    self.active_sprites.add(self.book)
 
 
 def init_pre_edeka(self):
@@ -46,14 +46,14 @@ def init_pre_edeka(self):
     self.secret_button_bin      = Button(Iwidth + int(Iwidth*0.75), int(Iheight*0.7 + Iheight//5 - Iheight//7.5), Iwidth//20, Iheight//7.5, (100, 100, 120))
 
     #add those objects to the right sprites group
-    self.walk_into_edeka.add(self.edeka_background)
-    self.walk_into_edeka.add(self.door_L)
-    self.walk_into_edeka.add(self.door_R)
+    self.active_sprites.add(self.edeka_background)
+    self.active_sprites.add(self.door_L)
+    self.active_sprites.add(self.door_R)
 
-    self.walk_into_edeka.add(self.secret_background)
-    self.walk_into_edeka.add(self.secret_button_bin)
+    self.active_sprites.add(self.secret_background)
+    self.active_sprites.add(self.secret_button_bin)
 
-    self.walk_into_edeka.add(self.player)
+    self.active_sprites.add(self.player)
 
 
 def init_edeka(self):
@@ -71,8 +71,8 @@ def init_edeka(self):
 
     self.player                 = Player(int(Iwidth*0.1), int(Iheight*0.5), Iwidth//7.5, Iheight//2.5, (208, 157, 95))
     # add those objects to the right sprites group
-    self.edeka.add(self.edeka_1_background)
-    self.edeka.add(self.edeka_2_background)
-    self.edeka.add(self.edeka_3_background)
-    self.edeka.add(self.edeka_4_background)
-    self.edeka.add(self.player)
+    self.active_sprites.add(self.edeka_1_background)
+    self.active_sprites.add(self.edeka_2_background)
+    self.active_sprites.add(self.edeka_3_background)
+    self.active_sprites.add(self.edeka_4_background)
+    self.active_sprites.add(self.player)
