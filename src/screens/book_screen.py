@@ -4,7 +4,7 @@ from config import *
 
 class BookScreen(pygame.sprite.Sprite):
 
-    def __init__(self, x, y, width, height, page_image):
+    def __init__(self, x, y, width, height, page_image, pages, current_page):
         super().__init__()
 
         # constants (work as and on a the initial screen size)
@@ -15,13 +15,11 @@ class BookScreen(pygame.sprite.Sprite):
         self.height = height
         
         # other vars
+        self.current_page = current_page
+        self.pages = pages
+
         self.background = pygame.Surface((Iwidth, Iheight), pygame.SRCALPHA)
         self.background.fill((0, 0, 0, 150))
-
-        self.book_page = pygame.Surface((self.width*0.35, self.height*0.95))
-        self.book_page.fill(page_image)
-
-        self.background.blit(self.book_page, self.book_page.get_rect(topleft=(int(self.x+self.width*0.5), self.height*0.025)))
 
         self.image = self.background
         self.rect = self.image.get_rect(topleft=(self.x, self.y))

@@ -20,12 +20,16 @@ def init_home(self):
     self.book                   = Button(int(Iwidth*0.02), int(Iheight*0.98 - int(Iwidth*0.15)), int(Iwidth*0.15), int(Iwidth*0.15), (176, 23, 205))
 
     #sprites for the book
-    self.book_screen            = BookScreen(0, 0, Iwidth, Iheight, (123, 93, 235))
-    self.next_page              = Button(30, Iheight/2 - 25, 100, 100, (165, 165, 112))
-    self.last_page              = Button(Iwidth - 130, Iheight/2 - 50, 100, 100, (165, 165, 112))
+    self.page1                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (123, 45, 67))
+    self.page2                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (45, 67, 123))
+    self.page3                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (67, 123, 45))
+    self.pages                  = [self.page1, self.page2, self.page3]
+    self.book_screen            = BookScreen(0, 0, Iwidth, Iheight, (123, 93, 235), self.pages, 0)
+    self.next_page              = Button(Iwidth - 130, Iheight/2 - 25, 100, 100, (165, 165, 112))
+    self.last_page              = Button(30, Iheight/2 - 50, 100, 100, (165, 165, 112))
     self.close_book             = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, (200, 200, 140))
 
-    #add those bjects to the right sprites group
+    #add those objects to the right sprites group
     self.active_sprites.add(self.home_background)
     self.active_sprites.add(self.player)
     self.active_sprites.add(self.titel_name)
