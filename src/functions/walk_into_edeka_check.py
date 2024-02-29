@@ -2,10 +2,14 @@ import pygame
 
 from config import *
 
+secret_stage = False
+
 def walk_into_edeka(self):
-        wait_before_transition = 1100 #in Milliseconds 
-        
-        #come back to home
+    global secret_stage
+    wait_before_transition = 1100 #in Milliseconds 
+    
+    #come back to home
+    if not secret_stage:
         if self.player.x <= -self.player.width:
             if not self.black_transition[0]:
                 if self.tmp_ticker_start == 0:
@@ -36,9 +40,33 @@ def walk_into_edeka(self):
                 
                 elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition:
                     self.tmp_ticker_start = pygame.time.get_ticks()
-                    self.black_transition = (True, "edeka_1")
+                    self.black_transition = (True, "edeka")
                     self.buttons_not_pressable = True
-                    self.transition_player_info = [int(Iwidth*0.05), -100, Iwidth//15, Iheight//5]
-        
         elif not self.player.x <= -self.player.width and not int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
             self.tmp_ticker_start = 0
+
+        # open secret stage
+        if self.player.x >= Iwidth - self.player.width//2:
+            #shift the object in the stage
+            for sprite in self.active_sprites:
+                sprite.x -= Iwidth
+
+            # open secret stage
+                secret_stage = True
+
+    elif secret_stage:
+        
+        # go back to previous stage
+        if self.player.x <= -self.player.width//2:
+            #shift the object in the stage
+            for sprite in self.active_sprites:
+                sprite.x += Iwidth
+
+            # open secret stage
+                secret_stage = False
+
+        #stop the player from leaving the screen
+        if self.player.x >= Iwidth - self.player.width:
+            self.player.x = Iwidth - self.player.width
+
+        

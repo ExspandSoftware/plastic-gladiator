@@ -25,7 +25,7 @@ class Player(pygame.sprite.Sprite):
 
         self.dx = 0
         self.dy = 0
-        self.walking_speed = 4
+        self.walking_speed = 5
         self.jump_power = 8
 
 
@@ -38,7 +38,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(topleft=(self.x * x_factor, self.y * y_factor))
 
         #Anzeige für Objekt anpassen
-        movement_enabled = kwargs.get("player_movement", False)
+        movement_enabled = kwargs.get("player_movement", True)
         for key, value in kwargs.items():
 
             if key == "stage":
@@ -62,14 +62,12 @@ class Player(pygame.sprite.Sprite):
                             if abs(self.dx) <= 0.0000001:
                                 self.dx = 0
                             else:   
-                                self.dx -= self.dx/abs(self.dx)*0.1
+                                self.dx -= self.dx/abs(self.dx)*0.1*x_factor
 
                     self.dy += 0.5
                     if self.y + self.dy >= int(Iheight*0.7):
                         self.y = int(Iheight*0.7)
                         self.dy = 0
-                    if -0.1 <= self.dx <= 0.1:
-                        self.dx = 0
 
                     self.x += self.dx
                     self.y += self.dy
@@ -78,13 +76,47 @@ class Player(pygame.sprite.Sprite):
                     if self.dx == 0:
                         self._wackeln(y_factor)
                     else:
-                        pass
-                    #self.animation_index = int((self.animation_index + 0.1)) % len(self.get_current_animation())
-                    #self.image = self.get_current_animation()[self.animation_index]
+                        self._wackeln(y_factor)
+                        #self.animation_index = int((self.animation_index + 0.1)) % len(self.get_current_animation())
+                        #self.image = self.get_current_animation()[self.animation_index]
+
+                elif value == "edeka":
+                    #animationshandler
+                    keys = pygame.key.get_pressed()
+                    if self.y >= int(Iheight*0.5) - 1:
+                        if movement_enabled:
+                            if keys[pygame.K_d] and not keys[pygame.K_a] and abs(self.dx) <= self.walking_speed*1.25:
+                                self.dx += self.walking_speed*0.125
+                            if keys[pygame.K_a] and not keys[pygame.K_d] and abs(self.dx) <= self.walking_speed*1.25:
+                                self.dx -= self.walking_speed*0.125
+                            if keys[pygame.K_SPACE]:
+                                self.dy = -self.jump_power*1.25
+
+                        if self.dx != 0: 
+                            if abs(self.dx) <= 0.1:
+                                self.dx = 0
+                            else:   
+                                self.dx -= self.dx/abs(self.dx)*0.2*x_factor
+
+                    self.dy += 0.5
+                    if self.y + self.dy >= int(Iheight*0.5):
+                        self.y = int(Iheight*0.5)
+                        self.dy = 0
+
+                    self.x += self.dx
+                    self.y += self.dy
+
+                    #handle animations
+                    if self.dx == 0:
+                        self._wackeln(y_factor)
+                    else:
+                        self._wackeln(y_factor)
+                        #self.animation_index = int((self.animation_index + 0.1)) % len(self.get_current_animation())
+                        #self.image = self.get_current_animation()[self.animation_index]
                 
     def _wackeln(self, y_factor):
         #dynamische Bewegung des Spielers
         factor = (100 + 2*math.sin(pygame.time.get_ticks() * 0.005))/100
 
         self.image = pygame.transform.scale(self.image, (self.image.get_width(), self.image.get_height() * factor))
-        self.rect = self.image.get_rect(topleft=(self.rect.x, self.rect.y - (self.image.get_height() - self.height * y_factor)))
+        self.rect = self.image.get_rect(topleft=(self.rect.x, self.rect.y - (self.image.get_height() - self.height*y_factor)))
