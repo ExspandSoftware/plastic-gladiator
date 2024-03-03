@@ -20,7 +20,6 @@ EXPORT_VARS = [__author__, __version__, __CIO__, __moderators__, __team__, __hea
 os.chdir(os.path.dirname(os.path.abspath(__file__)) + "/..")
 WORKING_DIR = os.getcwd()
 
-
 #Framemode
 Iwidth, Iheight = 1280, 720
 Cwidth, Cheight = 1280, 720

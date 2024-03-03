@@ -71,6 +71,8 @@ class Game:
 
         #pop-up screens
         self.home_buttons_pressable = True
+        self.next_page_pressable = False
+        self.last_page_pressable = False
         
         #Pygame Logik ------------------------------------------------------------------------------------------------------
         self.clock = pygame.time.Clock()

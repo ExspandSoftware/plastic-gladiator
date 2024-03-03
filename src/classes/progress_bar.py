@@ -1,7 +1,8 @@
 import pygame
+from config import *
 
 class ProgressBar(pygame.sprite.Sprite):
-    def __init__(self, x, y, width, height, background_image, testtube_image):
+    def __init__(self, x, y, width, height, background_image):
         super().__init__()
 
         # constants (work as and on a the initial screen size)
@@ -16,36 +17,36 @@ class ProgressBar(pygame.sprite.Sprite):
         self.background.fill(background_image)
         self.backgroundimage = background_image
 
-        self.testtube = pygame.Surface((self.width*0.35, self.height*0.95))
-        self.testtube.fill(testtube_image)
+        self.testtubes = [pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'progress_bar', 'Reagenzglas-'+str(i)+'.png')) for i in range(6)]
 
         self.update_progress_bar(0.0)
 
 
     def update_progress_bar(self, progress):
+        #determine idx
+        idx = int(progress/0.1667)
+
         # draw testtube
         self.background.fill(self.backgroundimage)
-        self.background.blit(self.testtube, self.testtube.get_rect(topleft=(int(self.x+self.width*0.5), self.height*0.025)))
 
-        # calculate the bar height and draw it
-        bar_height = self.height*0.1 + progress*self.height*0.7
-        pygame.draw.rect(self.background, (50, 175, 10), (int(self.x + self.width*0.525), self.height*0.9 - bar_height, self.width*0.3, bar_height))
+        self.testtubes = [pygame.transform.scale(self.testtubes[i], (self.width*0.72, self.height*0.9)) for i in range(6)]
+        self.background.blit(self.testtubes[idx], self.testtubes[idx].get_rect(topleft=(75, 18)))
 
         self.image = self.background
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
 
 
     def update(self, Iwidth:int, Iheight:int, Cwidth:int, Cheight:int, *args, **kwargs):
+        #progress bar updaten
+        for key, value in kwargs.items():
+            if key == 'progress':
+                self.update_progress_bar(value)
+
         #Objekt skalieren
         x_factor = Cwidth/Iwidth
         y_factor = Cheight/Iheight
 
         self.image = pygame.transform.scale(self.image, (self.width * x_factor, self.height * y_factor))
         self.rect = self.image.get_rect(topleft=(self.x * x_factor, self.y * y_factor))
-
-        #progress bar updaten
-        for key, value in kwargs.items():
-            if key == 'progress':
-                self.update_progress_bar(value)
 
         

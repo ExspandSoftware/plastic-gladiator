@@ -9,8 +9,11 @@ class Button(pygame.sprite.Sprite):
         self.width = width
         self.height = height
 
-        self.image = pygame.Surface((width, height))
-        self.image.fill(image)
+        if type(image) == tuple:
+            self.image = pygame.Surface((width, height))
+            self.image.fill(image)
+        elif type(image) == str:
+            self.image = pygame.image.load(image)
 
         self.rect = self.image.get_rect(topleft=(x, y))
 

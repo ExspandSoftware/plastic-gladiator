@@ -10,13 +10,19 @@ from screens.settings_screen import SettingsScreen
 from config import *
 
 def init_home(self):
+    def load_image_asset(subfolder, file):
+        if subfolder is not None:
+            return os.path.join(WORKING_DIR, 'assets', 'images', 'home', subfolder, file)
+        else:
+            return os.path.join(WORKING_DIR, 'assets', 'images', 'home', file)
+    
     # objects in the stage
-    self.home_background        = GImage(0, 0, Iwidth, Iheight, (15, 34, 65))
+    self.home_background        = GImage(0, 0, Iwidth, Iheight, (23, 76, 97))
     self.titel_name             = GImage(Iwidth//2 - int(Iwidth*0.2), int(Iheight*0.02), int(Iwidth*0.4), int(Iheight*0.25), (123, 65, 235))
     self.player                 = Player(Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2, (208, 157, 95))
-    self.progress_bar           = ProgressBar(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.15), int(Iheight*0.5), (70, 200, 110), (165, 213, 25))
+    self.progress_bar           = ProgressBar(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.15), int(Iheight*0.5), (70, 200, 110))
     self.settings_button        = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (234, 76, 198))
-    self.start_button           = Button(int(Iwidth*0.73), int(Iheight*0.73), int(Iwidth*0.25), int(Iheight*0.25), (234, 201, 65))
+    self.start_button           = Button(int(Iwidth*0.6675), int(Iheight*0.7675), int(Iwidth*0.3125), int(Iheight*0.2125), load_image_asset('buttons', 'Start-button.png'))
     self.book                   = Button(int(Iwidth*0.02), int(Iheight*0.98 - int(Iwidth*0.15)), int(Iwidth*0.15), int(Iwidth*0.15), (176, 23, 205))
 
     #sprites for the book
