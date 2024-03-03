@@ -1,4 +1,5 @@
 import os
+import pygame
 
 #%% Development information
 __author__ = "palo.niemann@t-online.de"

@@ -19,6 +19,7 @@ def handle_edeka(self):
                     self.tmp_ticker_start = pygame.time.get_ticks()
                 
                 elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition//2:
+                    pygame.mixer.Sound.play(self.whoosh_sound)
                     self.tmp_ticker_start = pygame.time.get_ticks()
                     self.black_transition = (True, "walk_into_edeka")
                     self.buttons_not_pressable = True
@@ -82,6 +83,7 @@ def handle_edeka(self):
                     self.tmp_ticker_start = pygame.time.get_ticks()
                 
                 elif pygame.time.get_ticks() - self.tmp_ticker_start >= wait_before_transition//2:
+                    pygame.mixer.Sound.play(self.whoosh_sound)
                     self.tmp_ticker_start = pygame.time.get_ticks()
                     self.black_transition = (True, "home")
                     self.buttons_not_pressable = True

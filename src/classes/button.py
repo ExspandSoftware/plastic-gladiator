@@ -1,7 +1,7 @@
 import pygame
 
 class Button(pygame.sprite.Sprite):
-    def __init__(self, x: int, y: int, width: int, height: int, image):
+    def __init__(self, x: int, y: int, width: int, height: int, image, sound:bool = True):
         super().__init__()
 
         self.x = x
@@ -16,8 +16,9 @@ class Button(pygame.sprite.Sprite):
             self.image = pygame.image.load(image)
 
         self.rect = self.image.get_rect(topleft=(x, y))
-
-        self.click_sound = pygame.mixer.Sound("./assets/sounds/button_click.mp3")
+        self.sound = sound
+        if sound:
+            self.click_sound = pygame.mixer.Sound("./assets/sounds/button_click.mp3")
 
 
     def update(self, Iwidth:int, Iheight:int, Cwidth:int, Cheight:int, *vars, **kwargs):
@@ -36,7 +37,8 @@ class Button(pygame.sprite.Sprite):
 
     def is_clicked(self, pos: list[int, int], is_clickable: bool = True):
         if self._mouse_is_over_button(pos) and is_clickable:
-            pygame.mixer.Sound.play(self.click_sound)
+            if self.sound:
+                pygame.mixer.Sound.play(self.click_sound)
             return True
         else:
             return False

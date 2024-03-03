@@ -10,6 +10,11 @@ from screens.settings_screen import SettingsScreen
 from config import *
 
 def init_home(self):
+    #init variables for the home page
+    self.whoosh_sound = pygame.mixer.Sound("./assets/sounds/slow-whoosh.mp3")
+    self.scroll_sound = pygame.mixer.Sound("./assets/sounds/scroll_paper.mp3")
+
+    #load images from assets
     def load_image_asset(subfolder, file):
         if subfolder is not None:
             return os.path.join(WORKING_DIR, 'assets', 'images', 'home', subfolder, file)
@@ -31,8 +36,8 @@ def init_home(self):
     self.page3                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (67, 123, 45))
     self.pages                  = [self.page1, self.page2, self.page3]
     self.book_screen            = BookScreen(0, 0, Iwidth, Iheight, (123, 93, 235), self.pages, 0)
-    self.next_page              = Button(Iwidth - 130, Iheight/2 - 25, 100, 100, (165, 165, 112))
-    self.last_page              = Button(30, Iheight/2 - 50, 100, 100, (165, 165, 112))
+    self.next_page              = Button(Iwidth - 130, Iheight/2 - 25, 100, 100, (165, 165, 112), False)
+    self.last_page              = Button(30, Iheight/2 - 50, 100, 100, (165, 165, 112), False)
     self.close_book             = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, (200, 200, 140))
 
     #add those objects to the right sprites group
