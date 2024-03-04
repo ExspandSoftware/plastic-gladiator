@@ -32,7 +32,7 @@ class Button(pygame.sprite.Sprite):
         #tone button if mouse hovers it
         #if self._mouse_is_over_button(pygame.mouse.get_pos()):
         #    semi_black_surface = pygame.Surface(self.image.get_size(), pygame.SRCALPHA)
-        #    semi_black_surface.fill((100, 100, 100, 10))
+        #    semi_black_surface.fill((255, 255, 255, 10))
         #    self.image.blit(semi_black_surface, (0, 0))
 
     def is_clicked(self, pos: list[int, int], is_clickable: bool = True):

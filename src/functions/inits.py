@@ -36,9 +36,12 @@ def init_home(self):
     self.page3                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (67, 123, 45))
     self.pages                  = [self.page1, self.page2, self.page3]
     self.book_screen            = BookScreen(0, 0, Iwidth, Iheight, (123, 93, 235), self.pages, 0)
-    self.next_page              = Button(Iwidth - 130, Iheight/2 - 25, 100, 100, (165, 165, 112), False)
-    self.last_page              = Button(30, Iheight/2 - 50, 100, 100, (165, 165, 112), False)
-    self.close_book             = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, (200, 200, 140))
+    self.next_page              = Button(Iwidth - 140, Iheight/2 - 70, 140, 140, load_image_asset('buttons', 'arrow_right.png'), False)
+    self.last_page              = Button(0, Iheight/2 - 70, 140, 140, load_image_asset('buttons', 'arrow_left.png'), False)
+    self.close_button           = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_image_asset('buttons', 'close-button.png'))
+
+    #sprites for the settings screen
+    self.settings_screen        = SettingsScreen()
 
     #add those objects to the right sprites group
     self.active_sprites.add(self.home_background)

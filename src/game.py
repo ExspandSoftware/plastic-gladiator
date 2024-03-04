@@ -155,7 +155,7 @@ class Game:
             self.clock.tick(60)
 
             #do calculations
-            self.progress += 0.005
+            self.progress += 0.001
             if self.progress >= 1.0:
                 self.progress = 0.0
 
