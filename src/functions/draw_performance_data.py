@@ -1,4 +1,5 @@
 import psutil
+import pygame
 
 from config import EXPORT_VARS
 
@@ -7,6 +8,7 @@ def draw_p_data(self, screen_width: int, stage):
     extra_spacing = 0
 
     if self.show_data:
+        self.font = pygame.font.Font(None, self.font_size)
         left_text = {
             "Author": EXPORT_VARS[0],
             "Version": EXPORT_VARS[1],

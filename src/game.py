@@ -69,11 +69,6 @@ class Game:
         self.black_transition       = (False, None)
         self.tmp_ticker_start       = 0
         self.movement               = True
-
-        #pop-up screens
-        self.home_buttons_pressable = True
-        self.next_page_pressable = False
-        self.last_page_pressable = False
         
         #Pygame Logik ------------------------------------------------------------------------------------------------------
         self.clock = pygame.time.Clock()
@@ -81,7 +76,6 @@ class Game:
 
         #Sprite Groups -----------------------------------------------------------------------------------------------------
         self.STAGE = stage
-        
         self.active_sprites = pygame.sprite.Group()
 
         # init the home stage
@@ -119,7 +113,7 @@ class Game:
                 if event.button == 1:
                     if self.STAGE == "home":
                         handle_mouse_home(self, event)
-                    elif self.STAGE == "pre_edeka":
+                    elif self.STAGE == "walk_into_edeka":
                         handle_mouse_pre_edeka(self, event)
                     elif self.STAGE == "edeka":
                         handle_mouse_edeka(self, event)
@@ -144,7 +138,7 @@ class Game:
             self.update_wh()
             
             #update and draw objects for each stage
-            self.active_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE, progress=self.progress, player_movement=self.movement)
+            self.active_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE, progress=self.progress + 0.05, player_movement=self.movement)
             self.active_sprites.draw(self.screen)
 
             #do everything ontop of the game then end the frame
@@ -203,7 +197,6 @@ class Game:
 
         font_size_factor = min(Cwidth/Iwidth, Cheight/Iheight)
         self.font_size = int(FONT_SIZE * font_size_factor)
-        self.font = pygame.font.Font(None, self.font_size)
             
     
     def __quit(self):

@@ -15,6 +15,7 @@ def handle_mouse_home(self, event):
 
     #settings button ------------------------------------------------------------------------------
     if self.settings_button.is_clicked(event.pos, self.home_buttons_pressable):
+        
         self.home_buttons_pressable = False
         self.show_settings = True
 
@@ -86,7 +87,47 @@ def handle_mouse_home(self, event):
 
 
 def handle_mouse_pre_edeka(self, event):
-    return
+
+    # open the minigame window
+    if self.secret_button_bin.is_clicked(event.pos, self.pre_edeka_buttons_pressable):
+        self.pre_edeka_buttons_pressable = False
+        self.movement = False
+
+        self.active_sprites.add(self.candy_crush_game)
+        self.active_sprites.add(self.close_button)
+
+    #close the pop-up screen
+    if not self.pre_edeka_buttons_pressable:
+        if self.close_button.is_clicked(event.pos, not self.pre_edeka_buttons_pressable):
+            self.pre_edeka_buttons_pressable = True
+            self.movement = True
+
+            self.active_sprites.remove(self.candy_crush_game)
+            self.active_sprites.remove(self.close_button)
+            self.show_book = False
+
+    #settings button ------------------------------------------------------------------------------
+    if self.settings_button.is_clicked(event.pos, self.pre_edeka_buttons_pressable):
+        
+        self.pre_edeka_buttons_pressable = False
+        self.show_settings = True
+        self.movement = False
+
+        self.active_sprites.add(self.settings_screen)
+        self.active_sprites.add(self.close_button)
+
+    if self.show_settings:
+        
+        if self.close_button.is_clicked(event.pos, self.show_settings):
+
+            self.pre_edeka_buttons_pressable = True
+            self.show_settings = False
+            self.movement = True
+
+            self.active_sprites.remove(self.close_button)
+            self.active_sprites.remove(self.settings_screen)
+
+    #inventory button -----------------------------------------------------------------------------
 
 
 def handle_mouse_edeka(self, event):

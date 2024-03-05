@@ -3,7 +3,6 @@ import pygame
 
 from game import Game
 
-
 #%% Functions --------------------------------------------------------------
 def main():
     pygame.init()
@@ -12,6 +11,7 @@ def main():
     game.run()
 
     pygame.quit()
+
 
 #%% Run Game ---------------------------------------------------------------
 if __name__ == "__main__":

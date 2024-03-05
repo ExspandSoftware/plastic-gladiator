@@ -50,8 +50,11 @@ def walk_into_edeka(self):
         # open secret stage
         if self.player.x >= Iwidth - self.player.width//2:
             #shift the object in the stage
-            for sprite in self.active_sprites:
-                sprite.x -= Iwidth
+            for idx, sprite in enumerate(self.active_sprites):
+                if idx == 5 or idx == 6:
+                    pass
+                else:
+                    sprite.x -= Iwidth
 
             # open secret stage
                 secret_stage = True
@@ -61,8 +64,11 @@ def walk_into_edeka(self):
         # go back to previous stage
         if self.player.x <= -self.player.width//2:
             #shift the object in the stage
-            for sprite in self.active_sprites:
-                sprite.x += Iwidth
+            for idx, sprite in enumerate(self.active_sprites):
+                if idx == 5 or idx == 6:
+                    pass
+                else:
+                    sprite.x += Iwidth
 
             # open secret stage
                 secret_stage = False

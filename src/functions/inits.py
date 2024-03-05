@@ -6,6 +6,7 @@ from classes.memory import MemoryGame
 
 from screens.book_screen import BookScreen
 from screens.settings_screen import SettingsScreen
+from screens.candy_crush import CandyCrush
 
 from config import *
 
@@ -14,7 +15,12 @@ def init_home(self):
     self.whoosh_sound = pygame.mixer.Sound("./assets/sounds/slow-whoosh.mp3")
     self.scroll_sound = pygame.mixer.Sound("./assets/sounds/scroll_paper.mp3")
 
-    #load images from assets
+    #pop-up screens
+    self.home_buttons_pressable = True
+    self.next_page_pressable = False
+    self.last_page_pressable = False
+
+    #load images from assets from home folder
     def load_image_asset(subfolder, file):
         if subfolder is not None:
             return os.path.join(WORKING_DIR, 'assets', 'images', 'home', subfolder, file)
@@ -22,13 +28,13 @@ def init_home(self):
             return os.path.join(WORKING_DIR, 'assets', 'images', 'home', file)
     
     # objects in the stage
-    self.home_background        = GImage(0, 0, Iwidth, Iheight, (23, 76, 97))
+    self.home_background        = GImage(0, 0, Iwidth, Iheight, load_image_asset('components', 'background.jpg'))
     self.titel_name             = GImage(Iwidth//2 - int(Iwidth*0.2), int(Iheight*0.02), int(Iwidth*0.4), int(Iheight*0.25), (123, 65, 235))
     self.player                 = Player(Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2, (208, 157, 95))
     self.progress_bar           = ProgressBar(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.15), int(Iheight*0.5), (70, 200, 110))
     self.settings_button        = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (234, 76, 198))
     self.start_button           = Button(int(Iwidth*0.6675), int(Iheight*0.7675), int(Iwidth*0.3125), int(Iheight*0.2125), load_image_asset('buttons', 'Start-button.png'))
-    self.book                   = Button(int(Iwidth*0.02), int(Iheight*0.98 - int(Iwidth*0.15)), int(Iwidth*0.15), int(Iwidth*0.15), (176, 23, 205))
+    self.book                   = Button(int(Iwidth*0.02), int(Iheight*0.98 - int(Iwidth*0.1)), int(Iwidth*0.1), int(Iwidth*0.1), (176, 23, 205))
 
     #sprites for the book
     self.page1                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (123, 45, 67))
@@ -54,23 +60,42 @@ def init_home(self):
 
 
 def init_pre_edeka(self):
+    #pop-up screens
+    self.pre_edeka_buttons_pressable = True
+    self.show_settings = False
+
+    #load images from assets from home folder
+    def load_image_asset(subfolder, file):
+        if subfolder is not None:
+            return os.path.join(WORKING_DIR, 'assets', 'images', 'pre_edeka', subfolder, file)
+        else:
+            return os.path.join(WORKING_DIR, 'assets', 'images', 'pre_edeka', file)
+
     # objects in the stage
     self.edeka_background       = GImage(0, 0, Iwidth, Iheight, (15, 65, 34))
     self.player                 = Player(int(Iwidth*0.1), -100, Iwidth//15, Iheight//5, (208, 157, 95))
     self.door_L                 = GImage(int(Iwidth*0.65), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
     self.door_R                 = GImage(int(Iwidth*0.75), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
-
     self.secret_background      = GImage(Iwidth, 0, Iwidth, Iheight, (15*2, 65*2, 34*2))
     self.secret_button_bin      = Button(Iwidth + int(Iwidth*0.75), int(Iheight*0.7 + Iheight//5 - Iheight//7.5), Iwidth//20, Iheight//7.5, (100, 100, 120))
+    self.settings_button        = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (234, 76, 198))
+    self.inventory_button       = Button(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (12, 215, 165))
+
+    #sprites for the settings screen
+    self.settings_screen        = SettingsScreen()
+    self.close_button           = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_image_asset('buttons', 'close-button.png'))
+
+    #minigame
+    self.candy_crush_game       = CandyCrush()
 
     #add those objects to the right sprites group
     self.active_sprites.add(self.edeka_background)
     self.active_sprites.add(self.door_L)
     self.active_sprites.add(self.door_R)
-
     self.active_sprites.add(self.secret_background)
     self.active_sprites.add(self.secret_button_bin)
-
+    self.active_sprites.add(self.settings_button)
+    self.active_sprites.add(self.inventory_button)
     self.active_sprites.add(self.player)
 
 
@@ -79,13 +104,13 @@ def init_edeka(self):
     self.edeka_1_background         = GImage(0, 0, Iwidth, Iheight, (123, 53, 12))
 
     # obejcts in stage 2
-    self.edeka_2_background         = GImage(Iwidth, 0, Iwidth, Iheight, (53, 123, 12))
+    self.edeka_2_background         = GImage(Iwidth, 0, Iwidth, Iheight, (53, 223, 12))
                                              
     # obejcts in stage 3
-    self.edeka_3_background         = GImage(Iwidth*2, 0, Iwidth, Iheight, (12, 123, 53))
+    self.edeka_3_background         = GImage(Iwidth*2, 0, Iwidth, Iheight, (102, 123, 53))
     
     # obejcts in stage 4
-    self.edeka_4_background         = GImage(Iwidth*3, 0, Iwidth, Iheight, (12, 53, 123))
+    self.edeka_4_background         = GImage(Iwidth*3, 0, Iwidth, Iheight, (12, 253, 123))
 
     self.player                 = Player(int(Iwidth*0.1), int(Iheight*0.5), Iwidth//7.5, Iheight//2.5, (208, 157, 95))
     # add those objects to the right sprites group
