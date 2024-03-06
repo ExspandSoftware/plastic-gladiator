@@ -54,8 +54,8 @@ class Game:
         global monitor_size
         monitor_size                = (pygame.display.Info().current_w, pygame.display.Info().current_h)
         self.screen                 = pygame.display.set_mode((Iwidth, Iheight), pygame.RESIZABLE)
-        pygame.display.set_caption('Plastic Gladiator')
-        pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'Mülleimer.png')))
+        pygame.display.set_caption('P.V.P. - Player vs. Polution (Poly...)')
+        pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'icon.png')))
 
         #Game Variables ----------------------------------------------------------------------------------------------------
         #variables that should be saved for the next opening
