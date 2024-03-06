@@ -2,7 +2,7 @@ import pygame
 
 from config import *
 
-class SettingsScreen(pygame.sprite.Sprite):
+class Space(pygame.sprite.Sprite):
 
     def __init__(self):
         super().__init__()
@@ -15,8 +15,8 @@ class SettingsScreen(pygame.sprite.Sprite):
         self.height = Iheight
         
         # other vars
-        self.interface = pygame.Surface((Iwidth*0.8, Iheight*0.8))
-        self.interface.fill((230, 100, 10))
+        self.interface = pygame.Surface((Iheight*0.4, Iheight*0.9))
+        self.interface.fill((167, 234, 100))
 
         self.image = pygame.Surface((Iwidth, Iheight), pygame.SRCALPHA)
         self.image.fill((0, 0, 0, 150))

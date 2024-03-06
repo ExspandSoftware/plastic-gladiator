@@ -33,13 +33,12 @@ class ProgressBar(pygame.sprite.Sprite):
         self.background.blit(self.testtubes[idx], self.testtubes[idx].get_rect(topleft=(75, 18)))
 
         #draw Process Text
-        font = pygame.font.SysFont(None, 82)
-        font.set_bold(True)
+        font = pygame.font.Font(os.path.join(WORKING_DIR, 'assets', 'fonts', 'game-font.ttf'), 75)
         text = font.render('PROGRESS', True, (255, 255, 255))
         text = pygame.transform.rotate(text, 90)
         self.background.blit(text, (20, (self.height-text.get_height())//2))
 
-        font = pygame.font.SysFont(None, 50)
+        font = pygame.font.Font(os.path.join(WORKING_DIR, 'assets', 'fonts', 'game-font.ttf'), 50)
         text = font.render(f'{int(progress*100)}%', True, (255, 255, 255))
         text = pygame.transform.rotate(text, 90)
         self.background.blit(text, (76, (self.height-text.get_height())//2))

@@ -96,15 +96,7 @@ def handle_mouse_pre_edeka(self, event):
         self.active_sprites.add(self.candy_crush_game)
         self.active_sprites.add(self.close_button)
 
-    #close the pop-up screen
-    if not self.pre_edeka_buttons_pressable:
-        if self.close_button.is_clicked(event.pos, not self.pre_edeka_buttons_pressable):
-            self.pre_edeka_buttons_pressable = True
-            self.movement = True
-
-            self.active_sprites.remove(self.candy_crush_game)
-            self.active_sprites.remove(self.close_button)
-            self.show_book = False
+        self.candy_crush_game.start_time = pygame.time.get_ticks()
 
     #settings button ------------------------------------------------------------------------------
     if self.settings_button.is_clicked(event.pos, self.pre_edeka_buttons_pressable):
@@ -116,19 +108,87 @@ def handle_mouse_pre_edeka(self, event):
         self.active_sprites.add(self.settings_screen)
         self.active_sprites.add(self.close_button)
 
-    if self.show_settings:
+    #inventory button -----------------------------------------------------------------------------
+    if self.inventory_button.is_clicked(event.pos, self.pre_edeka_buttons_pressable):
         
-        if self.close_button.is_clicked(event.pos, self.show_settings):
+        self.pre_edeka_buttons_pressable = False
+        self.movement = False
+
+        self.active_sprites.add(self.inventory_screen)
+        self.active_sprites.add(self.close_button)
+
+    #close all pop-up-screens
+    if not self.pre_edeka_buttons_pressable:    
+        if self.close_button.is_clicked(event.pos, not self.pre_edeka_buttons_pressable):
 
             self.pre_edeka_buttons_pressable = True
-            self.show_settings = False
             self.movement = True
 
             self.active_sprites.remove(self.close_button)
+            self.active_sprites.remove(self.inventory_screen)
             self.active_sprites.remove(self.settings_screen)
-
-    #inventory button -----------------------------------------------------------------------------
+            self.active_sprites.remove(self.candy_crush_game)
 
 
 def handle_mouse_edeka(self, event):
-    return
+    
+    #stage 1 --------------------------------------------------------------------------------------
+    # open the minigame window
+    if self.deposit_machine_button.is_clicked(event.pos, self.edeka_buttons_pressable):
+        self.edeka_buttons_pressable = False
+        self.movement = False
+
+        self.active_sprites.add(self.deposit_machine)
+        self.active_sprites.add(self.close_button)
+
+    
+    #stage 2 --------------------------------------------------------------------------------------
+    # open the minigame window
+    if self.memory_button.is_clicked(event.pos, self.edeka_buttons_pressable):
+        self.edeka_buttons_pressable = False
+        self.movement = False
+
+        self.active_sprites.add(self.memory_game)
+        self.active_sprites.add(self.close_button)
+
+    #stage 3 --------------------------------------------------------------------------------------
+    # open the minigame window
+    if self.space_button.is_clicked(event.pos, self.edeka_buttons_pressable):
+        self.edeka_buttons_pressable = False
+        self.movement = False
+
+        self.active_sprites.add(self.space)
+        self.active_sprites.add(self.close_button)
+
+    #settings button ------------------------------------------------------------------------------
+    if self.settings_button.is_clicked(event.pos, self.edeka_buttons_pressable):
+        
+        self.edeka_buttons_pressable = False
+        self.movement = False
+
+        self.active_sprites.add(self.settings_screen)
+        self.active_sprites.add(self.close_button)
+
+    #inventory button -----------------------------------------------------------------------------
+    if self.inventory_button.is_clicked(event.pos, self.edeka_buttons_pressable):
+        
+        self.edeka_buttons_pressable = False
+        self.movement = False
+
+        self.active_sprites.add(self.inventory_screen)
+        self.active_sprites.add(self.close_button)
+    
+
+    #close all pop-up-screens
+    if not self.edeka_buttons_pressable:    
+        if self.close_button.is_clicked(event.pos, not self.edeka_buttons_pressable):
+
+            self.edeka_buttons_pressable = True
+            self.movement = True
+
+            self.active_sprites.remove(self.close_button)
+            self.active_sprites.remove(self.inventory_screen)
+            self.active_sprites.remove(self.settings_screen)
+            self.active_sprites.remove(self.deposit_machine)
+            self.active_sprites.remove(self.memory_game)
+            self.active_sprites.remove(self.space)

@@ -2,11 +2,14 @@ from classes.player import Player
 from classes.button import Button
 from classes.g_image import GImage
 from classes.progress_bar import ProgressBar
-from classes.memory import MemoryGame
 
 from screens.book_screen import BookScreen
 from screens.settings_screen import SettingsScreen
+from screens.inventory import Inventory
 from screens.candy_crush import CandyCrush
+from screens.deposit_machine import DepositeMachine
+from screens.memory import Memory
+from screens.space import Space
 
 from config import *
 
@@ -62,7 +65,6 @@ def init_home(self):
 def init_pre_edeka(self):
     #pop-up screens
     self.pre_edeka_buttons_pressable = True
-    self.show_settings = False
 
     #load images from assets from home folder
     def load_image_asset(subfolder, file):
@@ -81,8 +83,9 @@ def init_pre_edeka(self):
     self.settings_button        = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (234, 76, 198))
     self.inventory_button       = Button(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (12, 215, 165))
 
-    #sprites for the settings screen
+    #sprites for the pop-up screen
     self.settings_screen        = SettingsScreen()
+    self.inventory_screen       = Inventory()
     self.close_button           = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_image_asset('buttons', 'close-button.png'))
 
     #minigame
@@ -100,22 +103,59 @@ def init_pre_edeka(self):
 
 
 def init_edeka(self):
+    #pop-up screens
+    self.edeka_buttons_pressable = True
+
+    #load images from assets from home folder
+    def load_image_asset(subfolder, file):
+        if subfolder is not None:
+            return os.path.join(WORKING_DIR, 'assets', 'images', 'edeka', subfolder, file)
+        else:
+            return os.path.join(WORKING_DIR, 'assets', 'images', 'edeka', file)
+
     # objects in stage 1
     self.edeka_1_background         = GImage(0, 0, Iwidth, Iheight, (123, 53, 12))
+    self.deposit_machine_button     = Button(200, 150, 220, 520, load_image_asset('components', 'Pfandautomat.png'))
+    self.deposit_machine_image      = GImage(420, 150, 220, 520, load_image_asset('components', 'Pfandautomat.png'))
 
     # obejcts in stage 2
     self.edeka_2_background         = GImage(Iwidth, 0, Iwidth, Iheight, (53, 223, 12))
+    self.memory_button              = Button(Iwidth + Iwidth//2 - 50, Iheight//2 - 50, 100, 100, (192, 160, 236))
                                              
     # obejcts in stage 3
     self.edeka_3_background         = GImage(Iwidth*2, 0, Iwidth, Iheight, (102, 123, 53))
+    self.space_button              = Button(Iwidth*2 + Iwidth//2 - 50, Iheight//2 - 50, 100, 100, (192, 160, 236))
     
     # obejcts in stage 4
     self.edeka_4_background         = GImage(Iwidth*3, 0, Iwidth, Iheight, (12, 253, 123))
 
-    self.player                 = Player(int(Iwidth*0.1), int(Iheight*0.5), Iwidth//7.5, Iheight//2.5, (208, 157, 95))
+    #general objects needed for the stage
+    self.settings_button            = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (234, 76, 198))
+    self.inventory_button           = Button(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (12, 215, 165))
+    self.player                     = Player(int(Iwidth*0.1), int(Iheight*0.5), Iwidth//7.5, Iheight//2.5, (208, 157, 95))
+    
+    #sprites for the pop-up screen
+    self.settings_screen        = SettingsScreen()
+    self.inventory_screen       = Inventory()
+    self.close_button           = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_image_asset('buttons', 'close-button.png'))
+    self.deposit_machine        = DepositeMachine(load_image_asset('components', 'Pfandautomat.png'))
+    self.memory_game            = Memory()
+    self.space                  = Space()      
+
+    
     # add those objects to the right sprites group
     self.active_sprites.add(self.edeka_1_background)
+    self.active_sprites.add(self.deposit_machine_button)
+    self.active_sprites.add(self.deposit_machine_image)
+
     self.active_sprites.add(self.edeka_2_background)
+    self.active_sprites.add(self.memory_button)
+
     self.active_sprites.add(self.edeka_3_background)
+    self.active_sprites.add(self.space_button)
+
     self.active_sprites.add(self.edeka_4_background)
+
+    self.active_sprites.add(self.settings_button)
+    self.active_sprites.add(self.inventory_button)
     self.active_sprites.add(self.player)

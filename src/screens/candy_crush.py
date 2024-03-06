@@ -25,9 +25,14 @@ class CandyCrush(pygame.sprite.Sprite):
         #vars for the game
         self.cells_axis = 6
 
+        self.font = pygame.font.Font(os.path.join(WORKING_DIR, 'assets', 'fonts', 'game-font.ttf'), 100)
+
 
     def update(self, Iwidth:int, Iheight:int, Cwidth:int, Cheight:int, *args, **kwargs):
-        
+
+        #handle the time for the game, after 45 sec. it should be closed automatically
+        self.handle_timer(kwargs)
+
         #draw the game
         self.draw_game()
 
@@ -60,6 +65,22 @@ class CandyCrush(pygame.sprite.Sprite):
             for j in range(self.cells_axis):
                 pygame.draw.rect(self.image, '#565656', pygame.Rect(game_x + cell_width*i + (i+1), game_y + cell_width*j + (j+1), cell_width-4, cell_width-4))
 
-                        
+        #draw the right time ontop of the game screen
+        seconds_txt = self.timer
+        if self.timer <= 9:
+            seconds_txt = "0"+str(seconds_txt)
+        else:
+            seconds_txt = str(seconds_txt)
+        timer_text = self.font.render("00:"+seconds_txt, True, (255, 255, 255))
+        self.image.blit(timer_text, (self.width//2 - timer_text.get_width()//2, ground_y + (game_y-ground_y)//2 - timer_text.get_height()//2))
 
-    
+    def handle_timer(self, kwargs):
+        #handle the time for the game, after 45 sec. it should be closed automatically
+        self.timer = (21000 - (pygame.time.get_ticks() - self.start_time))//1000
+        if self.timer == 0:
+            for key, value in kwargs.items():
+                if key == "game_class":
+                    value.pre_edeka_buttons_pressable = True
+                    value.movement = True
+                    value.active_sprites.remove(value.candy_crush_game)
+                    value.active_sprites.remove(value.close_button)     

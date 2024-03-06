@@ -28,8 +28,11 @@ def handle_edeka(self):
         
         #open the next stage
         if self.player.x >= Iwidth - self.player.width//2:
-            for sprite in self.active_sprites:
-                sprite.x -= Iwidth
+            for idx, sprite in enumerate(self.active_sprites):
+                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
+                    pass
+                else:
+                    sprite.x -= Iwidth
             #go to the next stage
             edeka_stage = 2
 
@@ -37,15 +40,21 @@ def handle_edeka(self):
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
-            for sprite in self.active_sprites:
-                sprite.x += Iwidth
+            for idx, sprite in enumerate(self.active_sprites):
+                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
+                    pass
+                else:
+                    sprite.x += Iwidth
             #go to the next stage
             edeka_stage = 1
 
         #open the next stage
         if self.player.x >= Iwidth - self.player.width//2:
-            for sprite in self.active_sprites:
-                sprite.x -= Iwidth
+            for idx, sprite in enumerate(self.active_sprites):
+                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
+                    pass
+                else:
+                    sprite.x -= Iwidth
             #go to the next stage
             edeka_stage = 3
 
@@ -53,15 +62,21 @@ def handle_edeka(self):
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
-            for sprite in self.active_sprites:
-                sprite.x += Iwidth
+            for idx, sprite in enumerate(self.active_sprites):
+                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
+                    pass
+                else:
+                    sprite.x += Iwidth
             #go to the next stage
             edeka_stage = 2
 
         #open the next stage
         if self.player.x >= Iwidth - self.player.width//2:
-            for sprite in self.active_sprites:
-                sprite.x -= Iwidth
+            for idx, sprite in enumerate(self.active_sprites):
+                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
+                    pass
+                else:
+                    sprite.x -= Iwidth
             #go to the next stage
             edeka_stage = 4
 
@@ -69,8 +84,11 @@ def handle_edeka(self):
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
-            for sprite in self.active_sprites:
-                sprite.x += Iwidth
+            for idx, sprite in enumerate(self.active_sprites):
+                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
+                    pass
+                else:
+                    sprite.x += Iwidth
             #go to the next stage
             edeka_stage = 3
 

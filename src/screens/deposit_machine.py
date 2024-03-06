@@ -2,9 +2,9 @@ import pygame
 
 from config import *
 
-class SettingsScreen(pygame.sprite.Sprite):
+class DepositeMachine(pygame.sprite.Sprite):
 
-    def __init__(self):
+    def __init__(self, image):
         super().__init__()
 
         # constants (work as and on a the initial screen size)
@@ -15,8 +15,8 @@ class SettingsScreen(pygame.sprite.Sprite):
         self.height = Iheight
         
         # other vars
-        self.interface = pygame.Surface((Iwidth*0.8, Iheight*0.8))
-        self.interface.fill((230, 100, 10))
+        self.interface = pygame.image.load(image)
+        self.interface = pygame.transform.scale(self.interface, (self.interface.get_width() * 35, self.interface.get_height() * 35))
 
         self.image = pygame.Surface((Iwidth, Iheight), pygame.SRCALPHA)
         self.image.fill((0, 0, 0, 150))
@@ -24,7 +24,7 @@ class SettingsScreen(pygame.sprite.Sprite):
 
     def update(self, Iwidth:int, Iheight:int, Cwidth:int, Cheight:int, *args, **kwargs):
         #setting up the interface
-        self.image.blit(self.interface, self.interface.get_rect(topleft=(Iwidth//2 - self.interface.get_width()//2, Iheight//2 - self.interface.get_height()//2)))
+        self.image.blit(self.interface, self.interface.get_rect(topleft=(Iwidth//2-self.interface.get_width()//2, -self.interface.get_height()*0.15)))
 
         #Objekt skalieren
         x_factor = Cwidth/Iwidth
