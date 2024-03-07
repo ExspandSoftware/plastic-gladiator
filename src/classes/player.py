@@ -1,15 +1,18 @@
 import pygame
+import os
 
 import math
 
+from config import *
+
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self, x: int, y: int, w: int, h: int, image):
+    def __init__(self, x: int, y: int, w: int, h: int):
         super().__init__()
 
-        self.stand = pygame.Surface((w, h))
-        self.stand.fill(image)
-        self.super_jump_animation = []#[pygame.Surface((150, 200)), pygame.Surface((100, 180)), pygame.Surface((110, 150)), pygame.Surface((150, 100)), pygame.Surface((110, 150)), pygame.Surface((100, 180)), pygame.Surface((80, 210))]
+        self.stand = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'player-stand-0.png'))
+        self.walk_right = []
+        self.walk_left = []
 
         self.current_state = "stand"
         self.animation_index = 0
@@ -20,8 +23,8 @@ class Player(pygame.sprite.Sprite):
         self.x = x
         self.y = y
 
-        self.width = self.image.get_width()
-        self.height = self.image.get_height()
+        self.width = w
+        self.height = h
 
         self.dx = 0
         self.dy = 0
@@ -44,7 +47,8 @@ class Player(pygame.sprite.Sprite):
             if key == "stage":
                 if value == "home":
                     #animationshandler
-                    self._wackeln(y_factor)
+                    #self._wackeln(y_factor)
+                    pass
 
                 elif value == "walk_into_edeka":
                     #animationshandler
@@ -74,9 +78,11 @@ class Player(pygame.sprite.Sprite):
 
                     #handle animations
                     if self.dx == 0:
-                        self._wackeln(y_factor)
+                        #self._wackeln(y_factor)
+                        pass
                     else:
-                        self._wackeln(y_factor)
+                        #self._wackeln(y_factor)
+                        pass
                         #self.animation_index = int((self.animation_index + 0.1)) % len(self.get_current_animation())
                         #self.image = self.get_current_animation()[self.animation_index]
 
@@ -108,15 +114,19 @@ class Player(pygame.sprite.Sprite):
 
                     #handle animations
                     if self.dx == 0:
-                        self._wackeln(y_factor)
+                        #self._wackeln(y_factor)
+                        pass
                     else:
-                        self._wackeln(y_factor)
+                        #self._wackeln(y_factor)
+                        pass
                         #self.animation_index = int((self.animation_index + 0.1)) % len(self.get_current_animation())
                         #self.image = self.get_current_animation()[self.animation_index]
                 
+    
     def _wackeln(self, y_factor):
         #dynamische Bewegung des Spielers
         factor = (100 + 2*math.sin(pygame.time.get_ticks() * 0.005))/100
 
         self.image = pygame.transform.scale(self.image, (self.image.get_width(), self.image.get_height() * factor))
         self.rect = self.image.get_rect(topleft=(self.rect.x, self.rect.y - (self.image.get_height() - self.height*y_factor)))
+    
