@@ -76,7 +76,7 @@ def init_pre_edeka(self):
 
     # objects in the stage
     self.edeka_background       = GImage(0, 0, Iwidth, Iheight, (15, 65, 34))
-    self.player                 = Player(int(Iwidth*0.1), -100, Iwidth//15, Iheight//5)
+    self.player                 = Player(int(Iwidth*0.1), -100, Iwidth//15, Iheight*0.23)
     self.door_L                 = GImage(int(Iwidth*0.65), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
     self.door_R                 = GImage(int(Iwidth*0.75), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
     self.secret_background      = GImage(Iwidth, 0, Iwidth, Iheight, (15*2, 65*2, 34*2))
