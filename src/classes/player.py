@@ -110,16 +110,6 @@ class Player(pygame.sprite.Sprite):
                     self.x += self.dx
                     self.y += self.dy
 
-                    #handle animations
-                    if self.dx == 0:
-                        #self._wackeln(y_factor)
-                        pass
-                    else:
-                        #self._wackeln(y_factor)
-                        pass
-                        #self.animation_index = int((self.animation_index + 0.1)) % len(self.get_current_animation())
-                        #self.image = self.get_current_animation()[self.animation_index]
-
                 elif value == "edeka":
                     #animationshandler
                     keys = pygame.key.get_pressed()
@@ -149,16 +139,6 @@ class Player(pygame.sprite.Sprite):
 
                     self.x += self.dx
                     self.y += self.dy
-
-                    #handle animations
-                    if self.dx == 0:
-                        #self._wackeln(y_factor)
-                        pass
-                    else:
-                        #self._wackeln(y_factor)
-                        pass
-                        #self.animation_index = int((self.animation_index + 0.1)) % len(self.get_current_animation())
-                        #self.image = self.get_current_animation()[self.animation_index]
         
         self._animations()
 
