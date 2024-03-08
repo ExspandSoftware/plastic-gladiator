@@ -40,10 +40,11 @@ def init_home(self):
     self.book                   = Button(int(Iwidth*0.02), int(Iheight*0.98 - int(Iwidth*0.1)), int(Iwidth*0.1), int(Iwidth*0.1), (176, 23, 205))
 
     #sprites for the book
+    self.book_cover             = GImage(int(Iwidth*0.5- Iheight*0.32), int(Iheight*0.1),  int(Iheight*0.64), int(Iheight*0.8), load_image_asset('book', 'Buch-Cover-mit-Titel.png'))
     self.page1                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (123, 45, 67))
     self.page2                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (45, 67, 123))
     self.page3                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (67, 123, 45))
-    self.pages                  = [self.page1, self.page2, self.page3]
+    self.pages                  = [self.book_cover, self.page1, self.page2, self.page3]
     self.book_screen            = BookScreen(0, 0, Iwidth, Iheight, (123, 93, 235), self.pages, 0)
     self.next_page              = Button(Iwidth - 140, Iheight/2 - 70, 140, 140, load_image_asset('buttons', 'arrow_right.png'), False)
     self.last_page              = Button(0, Iheight/2 - 70, 140, 140, load_image_asset('buttons', 'arrow_left.png'), False)
@@ -119,12 +120,12 @@ def init_edeka(self):
     self.deposit_machine_image      = GImage(420, 150, 220, 520, load_image_asset('components', 'Pfandautomat.png'))
 
     # obejcts in stage 2
-    self.edeka_2_background         = GImage(Iwidth, 0, Iwidth, Iheight, (53, 223, 12))
+    self.edeka_2_background         = GImage(Iwidth, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Suessigkeitentheke.png'))
     self.memory_button              = Button(Iwidth + Iwidth//2 - 50, Iheight//2 - 50, 100, 100, (192, 160, 236))
                                              
     # obejcts in stage 3
-    self.edeka_3_background         = GImage(Iwidth*2, 0, Iwidth, Iheight, (102, 123, 53))
-    self.space_button              = Button(Iwidth*2 + Iwidth//2 - 50, Iheight//2 - 50, 100, 100, (192, 160, 236))
+    self.edeka_3_background         = GImage(Iwidth*2, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Fleischtheke.png'))
+    self.space_button               = Button(Iwidth*2 + Iwidth//2 - 50, Iheight//2 - 50, 100, 100, (192, 160, 236))
     
     # obejcts in stage 4
     self.edeka_4_background         = GImage(Iwidth*3, 0, Iwidth, Iheight, (12, 253, 123))
