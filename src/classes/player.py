@@ -11,6 +11,23 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         self.stand = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'player-stand-0.png'))
+        self.stand_l = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'player-stand-l.png'))
+        self.stand_r = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'player-stand-r.png'))
+
+        self.walk_right_1 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-r-1.png'))
+        self.walk_right_2 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-r-2.png'))
+        self.walk_right_3 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-r-3.png'))
+        self.walk_right_4 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-r-4.png'))
+        self.walk_right_5 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-r-5.png'))
+
+        self.walk_left_1 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-l-1.png'))
+        self.walk_left_2 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-l-2.png'))
+        self.walk_left_3 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-l-3.png'))
+        self.walk_left_4 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-l-4.png'))
+        self.walk_left_5 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-l-5.png'))
+
+        self.last_direction = "right"
+
         self.walk_right = []
         self.walk_left = []
 
@@ -28,7 +45,7 @@ class Player(pygame.sprite.Sprite):
 
         self.dx = 0
         self.dy = 0
-        self.walking_speed = 25
+        self.walking_speed = 5
         self.jump_power = 8
 
 
@@ -64,6 +81,10 @@ class Player(pygame.sprite.Sprite):
 
                         if self.dx != 0: 
                             if abs(self.dx) <= 0.0000001:
+                                if self.dx < 0:
+                                    self.last_direction = "left"
+                                if self.dx > 0:
+                                    self.last_direction = "right"
                                 self.dx = 0
                             else:   
                                 self.dx -= self.dx/abs(self.dx)*0.1*x_factor
@@ -100,6 +121,10 @@ class Player(pygame.sprite.Sprite):
 
                         if self.dx != 0: 
                             if abs(self.dx) <= 0.1:
+                                if self.dx < 0:
+                                    self.last_direction = "left"
+                                if self.dx > 0:
+                                    self.last_direction = "right"
                                 self.dx = 0
                             else:   
                                 self.dx -= self.dx/abs(self.dx)*0.2*x_factor
@@ -121,8 +146,45 @@ class Player(pygame.sprite.Sprite):
                         pass
                         #self.animation_index = int((self.animation_index + 0.1)) % len(self.get_current_animation())
                         #self.image = self.get_current_animation()[self.animation_index]
-                
-    
+        
+        self._animations()
+
+
+    def _animations(self):
+        if self.dx == 0:
+            if self.last_direction == "left":
+                self.image = self.stand_l
+            else:
+                self.image = self.stand_r
+        
+        elif self.dx > 0:
+            match self.animation_index // 6:
+                case 0:
+                    self.image = self.walk_right_1
+                case 1:
+                    self.image = self.walk_right_2
+                case 2:
+                    self.image = self.walk_right_3
+                case 3:
+                    self.image = self.walk_right_4
+                case 4:
+                    self.image = self.walk_right_5
+
+        elif self.dx < 0:
+            match self.animation_index // 6:
+                case 0:
+                    self.image = self.walk_left_1
+                case 1:
+                    self.image = self.walk_left_2
+                case 2:
+                    self.image = self.walk_left_3
+                case 3:
+                    self.image = self.walk_left_4
+                case 4:
+                    self.image = self.walk_left_5
+
+        self.animation_index = (self.animation_index + 1) % 30
+
     def _wackeln(self, y_factor):
         #dynamische Bewegung des Spielers
         factor = (100 + 2*math.sin(pygame.time.get_ticks() * 0.005))/100
