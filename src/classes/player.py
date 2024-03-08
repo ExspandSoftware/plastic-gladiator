@@ -144,8 +144,8 @@ class Player(pygame.sprite.Sprite):
                                 self.dx -= self.dx/abs(self.dx)*0.2*x_factor
 
                     self.dy += 0.75
-                    if self.y + self.dy >= int(Iheight*0.5):
-                        self.y = int(Iheight*0.5)
+                    if self.y + self.dy >= int(Iheight*0.4):
+                        self.y = int(Iheight*0.4)
                         self.dy = 0
 
                     self.x += self.dx

@@ -7,6 +7,9 @@ from classes.button import Button
 from classes.g_image import GImage
 from classes.progress_bar import ProgressBar
 
+from functions.remove_sprites import remove_sprites
+from functions.inits import *
+
 edeka_stage = 1
 
 #load images from assets from home folder
@@ -40,20 +43,15 @@ def handle_edeka(self):
         
         #open the next stage
         if self.player.x >= Iwidth - self.player.width//2:
-            #load next stage and remove the old sprites from the sprites group
-            #obejcts in stage 2
-            self.active_sprites.add(self.edeka_2_background)
-            self.active_sprites.add(self.memory_button)
-            #remove
-            self.active_sprites.remove(self.edeka_1_background)
-            self.active_sprites.remove(self.deposit_machine_button)
-            self.active_sprites.remove(self.deposit_machine_image)
+            #remove all sprites
+            remove_sprites(self)
+            #add needed sprites
+            add_edeka_2(self)
+            add_general(self)
             
-            for idx, sprite in enumerate(self.active_sprites):
-                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
-                    pass
-                else:
-                    sprite.x -= Iwidth
+            #move the player to the other side
+            self.player.x -= Iwidth
+
             #go to the next stage
             edeka_stage = 2
 
@@ -61,32 +59,29 @@ def handle_edeka(self):
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
+            #remove all sprites
+            remove_sprites(self)
+            #add needed sprites
+            add_edeka_1(self)
+            add_general(self)
 
-            #add stage 1 sprites
-            #remove stage 2 sprites
-            self.active_sprites.remove(self.edeka_2_background)
-            self.active_sprites.remove(self.memory_button)
-            
-            for idx, sprite in enumerate(self.active_sprites):
-                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
-                    pass
-                else:
-                    sprite.x += Iwidth
+            #move the player to the other side
+            self.player.x += Iwidth
+
             #go to the next stage
             edeka_stage = 1
 
         #open the next stage
         if self.player.x >= Iwidth - self.player.width//2:
-            # obejcts in stage 3
-            self.edeka_3_background         = GImage(Iwidth*2, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Fleischtheke.png'))
-            self.space_button               = Button(Iwidth*2 + Iwidth//2 - 50, Iheight//2 - 50, 100, 100, (192, 160, 236))
-            #remove
+            #remove all sprites
+            remove_sprites(self)
+            #add needed sprites
+            add_edeka_3(self)
+            add_general(self)
 
-            for idx, sprite in enumerate(self.active_sprites):
-                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
-                    pass
-                else:
-                    sprite.x -= Iwidth
+            #move the player to the other side
+            self.player.x -= Iwidth
+
             #go to the next stage
             edeka_stage = 3
 
@@ -94,32 +89,29 @@ def handle_edeka(self):
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
-            #obejcts in stage 2
-            self.edeka_2_background         = GImage(Iwidth, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Suessigkeitentheke.png'))
-            self.memory_button              = Button(Iwidth + Iwidth//2 - 50, Iheight//2 - 50, 100, 100, (192, 160, 236))
-            #remove
-            self.active_sprites.remove(self.edeka_3_background)
-            self.active_sprites.remove(self.space_button)
+            #remove all sprites
+            remove_sprites(self)
+            #add needed sprites
+            add_edeka_2(self)
+            add_general(self)
+
+            #move the player to the other side
+            self.player.x += Iwidth
             
-            for idx, sprite in enumerate(self.active_sprites):
-                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
-                    pass
-                else:
-                    sprite.x += Iwidth
             #go to the next stage
             edeka_stage = 2
 
         #open the next stage
         if self.player.x >= Iwidth - self.player.width//2:
-            # obejcts in stage 4
-            self.edeka_4_background         = GImage(Iwidth*3, 0, Iwidth, Iheight, (12, 253, 123))
-            #remove
+            #remove all sprites
+            remove_sprites(self)
+            #add needed sprites
+            add_edeka_4(self)
+            add_general(self)
 
-            for idx, sprite in enumerate(self.active_sprites):
-                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
-                    pass
-                else:
-                    sprite.x -= Iwidth
+            #move the player to the other side
+            self.player.x -= Iwidth
+
             #go to the next stage
             edeka_stage = 4
 
@@ -127,11 +119,15 @@ def handle_edeka(self):
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
-            for idx, sprite in enumerate(self.active_sprites):
-                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
-                    pass
-                else:
-                    sprite.x += Iwidth
+            #remove all sprites
+            remove_sprites(self)
+            #add needed sprites
+            add_edeka_3(self)
+            add_general(self)
+
+            #move the player to the other side
+            self.player.x += Iwidth
+
             #go to the next stage
             edeka_stage = 3
 

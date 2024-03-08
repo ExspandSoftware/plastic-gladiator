@@ -118,37 +118,50 @@ def init_edeka(self):
     self.edeka_1_background         = GImage(0, 0, Iwidth, Iheight, (123, 53, 12))
     self.deposit_machine_button     = Button(200, 150, 220, 520, load_image_asset('components', 'Pfandautomat.png'))
     self.deposit_machine_image      = GImage(420, 150, 220, 520, load_image_asset('components', 'Pfandautomat.png'))
+    self.deposit_machine            = DepositeMachine(load_image_asset('components', 'Pfandautomat.png'))
 
     # obejcts in stage 2
-    self.edeka_2_background         = GImage(Iwidth, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Suessigkeitentheke.png'))
-    self.memory_button              = Button(Iwidth + Iwidth//2 - 50, Iheight//2 - 50, 100, 100, (192, 160, 236))
-                                             
+    self.edeka_2_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Suessigkeitentheke.png'))
+    self.memory_button              = Button(Iwidth//2 - 50, Iheight//2 - 50, 100, 100, (192, 160, 236))
+    self.memory_game                = Memory()
+                    
     # obejcts in stage 3
-    self.edeka_3_background         = GImage(Iwidth*2, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Fleischtheke.png'))
-    self.space_button               = Button(Iwidth*2 + Iwidth//2 - 50, Iheight//2 - 50, 100, 100, (192, 160, 236))
-    
+    self.edeka_3_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Fleischtheke.png'))
+    self.space_button               = Button(Iwidth//2 - 50, Iheight//2 - 50, 100, 100, (192, 160, 236))
+    self.space                      = Space()      
+
     # obejcts in stage 4
-    self.edeka_4_background         = GImage(Iwidth*3, 0, Iwidth, Iheight, (12, 253, 123))
+    self.edeka_4_background         = GImage(0, 0, Iwidth, Iheight, (12, 253, 123))
 
     #general objects needed for the stage
     self.settings_button            = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_image_asset('buttons', 'settings-button.png'))
     self.inventory_button           = Button(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (12, 215, 165))
+    self.settings_screen            = SettingsScreen()
+    self.inventory_screen           = Inventory()
+    self.close_button               = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_image_asset('buttons', 'close-button.png'))
     self.player                     = Player(int(Iwidth*0.1), int(Iheight*0.5), Iwidth//7, Iheight//2)
-    
-    #sprites for the pop-up screen
-    self.settings_screen        = SettingsScreen()
-    self.inventory_screen       = Inventory()
-    self.close_button           = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_image_asset('buttons', 'close-button.png'))
-    self.deposit_machine        = DepositeMachine(load_image_asset('components', 'Pfandautomat.png'))
-    self.memory_game            = Memory()
-    self.space                  = Space()      
 
-    
+    # add those objects to the right sprites group
+    add_edeka_1(self)
+    add_general(self)
+
+def add_general(self):
+    self.active_sprites.add(self.settings_button)
+    self.active_sprites.add(self.inventory_button)
+    self.active_sprites.add(self.player)
+def add_edeka_1(self):
     # add those objects to the right sprites group
     self.active_sprites.add(self.edeka_1_background)
     self.active_sprites.add(self.deposit_machine_button)
     self.active_sprites.add(self.deposit_machine_image)
-
-    self.active_sprites.add(self.settings_button)
-    self.active_sprites.add(self.inventory_button)
-    self.active_sprites.add(self.player)
+def add_edeka_2(self):
+    # add those objects to the right sprites group
+    self.active_sprites.add(self.edeka_2_background)
+    self.active_sprites.add(self.memory_button)
+def add_edeka_3(self):
+    # add those objects to the right sprites group
+    self.active_sprites.add(self.edeka_3_background)
+    self.active_sprites.add(self.space_button)
+def add_edeka_4(self):
+    # add those objects to the right sprites group
+    self.active_sprites.add(self.edeka_4_background)
