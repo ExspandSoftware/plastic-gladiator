@@ -1,8 +1,10 @@
 import pygame
+
 from config import *
+from functions.basic_rect import basic_rect
 
 class ProgressBar(pygame.sprite.Sprite):
-    def __init__(self, x, y, width, height, background_image):
+    def __init__(self, x, y, width, height):
         super().__init__()
 
         # constants (work as and on a the initial screen size)
@@ -11,11 +13,6 @@ class ProgressBar(pygame.sprite.Sprite):
 
         self.width = width
         self.height = height
-        
-        # other vars
-        self.background = pygame.Surface((width, height))
-        self.background.fill(background_image)
-        self.backgroundimage = background_image
 
         self.testtubes = [pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'progress_bar', 'Reagenzglas-'+str(i)+'.png')) for i in range(6)]
         self.testtubes = [pygame.transform.scale(self.testtubes[i], (self.width*0.72, self.height*0.9)) for i in range(6)]
@@ -25,11 +22,13 @@ class ProgressBar(pygame.sprite.Sprite):
 
 
     def update_progress_bar(self, progress):
+        #set the background for the element
+        self.background = basic_rect(self.width, self.height)
+
         #determine idx
         idx = int(progress/0.2)
 
         # draw testtube
-        self.background.fill(self.backgroundimage)
         self.background.blit(self.testtubes[idx], self.testtubes[idx].get_rect(topleft=(75, 18)))
 
         #draw Process Text
