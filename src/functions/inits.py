@@ -133,7 +133,7 @@ def init_edeka(self):
     #general objects needed for the stage
     self.settings_button            = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_image_asset('buttons', 'settings-button.png'))
     self.inventory_button           = Button(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (12, 215, 165))
-    self.player                     = Player(int(Iwidth*0.1), int(Iheight*0.5), Iwidth//7.5, Iheight//2.5)
+    self.player                     = Player(int(Iwidth*0.1), int(Iheight*0.5), Iwidth//7, Iheight//2)
     
     #sprites for the pop-up screen
     self.settings_screen        = SettingsScreen()
@@ -148,14 +148,6 @@ def init_edeka(self):
     self.active_sprites.add(self.edeka_1_background)
     self.active_sprites.add(self.deposit_machine_button)
     self.active_sprites.add(self.deposit_machine_image)
-
-    self.active_sprites.add(self.edeka_2_background)
-    self.active_sprites.add(self.memory_button)
-
-    self.active_sprites.add(self.edeka_3_background)
-    self.active_sprites.add(self.space_button)
-
-    self.active_sprites.add(self.edeka_4_background)
 
     self.active_sprites.add(self.settings_button)
     self.active_sprites.add(self.inventory_button)
