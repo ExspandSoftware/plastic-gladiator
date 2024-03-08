@@ -11,20 +11,33 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
 
         self.stand = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'player-stand-0.png'))
+        self.stand = pygame.transform.scale(self.stand, (w, h))
         self.stand_l = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'player-stand-l.png'))
+        self.stand_l = pygame.transform.scale(self.stand_l, (w, h))
         self.stand_r = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'player-stand-r.png'))
+        self.stand_r = pygame.transform.scale(self.stand_r, (w, h))
 
         self.walk_right_1 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-r-1.png'))
+        self.walk_right_1 = pygame.transform.scale(self.walk_right_1, (w+10, h))
         self.walk_right_2 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-r-2.png'))
+        self.walk_right_2 = pygame.transform.scale(self.walk_right_2, (w+10, h))
         self.walk_right_3 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-r-3.png'))
+        self.walk_right_3 = pygame.transform.scale(self.walk_right_3, (w+10, h))
         self.walk_right_4 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-r-4.png'))
+        self.walk_right_4 = pygame.transform.scale(self.walk_right_4, (w+10, h))
         self.walk_right_5 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-r-5.png'))
+        self.walk_right_5 = pygame.transform.scale(self.walk_right_5, (w+10, h))
 
         self.walk_left_1 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-l-1.png'))
+        self.walk_left_1 = pygame.transform.scale(self.walk_left_1, (w+10, h))
         self.walk_left_2 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-l-2.png'))
+        self.walk_left_2 = pygame.transform.scale(self.walk_left_2, (w+10, h))
         self.walk_left_3 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-l-3.png'))
+        self.walk_left_3 = pygame.transform.scale(self.walk_left_3, (w+10, h))
         self.walk_left_4 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-l-4.png'))
+        self.walk_left_4 = pygame.transform.scale(self.walk_left_4, (w+10, h))
         self.walk_left_5 = pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'home', 'player', 'walk-l-5.png'))
+        self.walk_left_5 = pygame.transform.scale(self.walk_left_5, (w+10, h))
 
         self.last_direction = "right"
 
@@ -80,7 +93,7 @@ class Player(pygame.sprite.Sprite):
                                 self.dy = -self.jump_power
 
                         if self.dx != 0: 
-                            if abs(self.dx) <= 0.0000001:
+                            if abs(self.dx) <= 0.1:
                                 if self.dx < 0:
                                     self.last_direction = "left"
                                 if self.dx > 0:
