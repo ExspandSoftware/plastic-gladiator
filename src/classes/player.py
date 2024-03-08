@@ -50,6 +50,9 @@ class Player(pygame.sprite.Sprite):
         self.image = self.stand
         self.rect = self.image.get_rect(topleft=(x, y))
 
+        self.step_sound = pygame.mixer.Sound("./assets/sounds/Step_Sound.mp3")
+        self.step_stop = 0
+
         self.x = x
         self.y = y
 
@@ -92,7 +95,11 @@ class Player(pygame.sprite.Sprite):
                             if keys[pygame.K_SPACE]:
                                 self.dy = -self.jump_power
 
-                        if self.dx != 0: 
+                        if self.dx != 0:
+                            self.step_stop += 1
+                            if self.step_stop >= 20:
+                                pygame.mixer.Sound.play(self.step_sound)
+                                self.step_stop = 0
                             if abs(self.dx) <= 0.1:
                                 if self.dx < 0:
                                     self.last_direction = "left"
@@ -100,7 +107,7 @@ class Player(pygame.sprite.Sprite):
                                     self.last_direction = "right"
                                 self.dx = 0
                             else:   
-                                self.dx -= self.dx/abs(self.dx)*0.1*x_factor
+                                self.dx -= self.dx/abs(self.dx)*0.2*x_factor
 
                     self.dy += 0.5
                     if self.y + self.dy >= int(Iheight*0.7):
@@ -113,7 +120,7 @@ class Player(pygame.sprite.Sprite):
                 elif value == "edeka":
                     #animationshandler
                     keys = pygame.key.get_pressed()
-                    if self.y >= int(Iheight*0.5) - 1:
+                    if self.y >= int(Iheight*0.4) - 1:
                         if movement_enabled:
                             if keys[pygame.K_d] and not keys[pygame.K_a] and abs(self.dx) <= self.walking_speed*1.25:
                                 self.dx += self.walking_speed*0.125
@@ -122,7 +129,8 @@ class Player(pygame.sprite.Sprite):
                             if keys[pygame.K_SPACE]:
                                 self.dy = -self.jump_power*1.25
 
-                        if self.dx != 0: 
+                        if self.dx != 0:
+                            pygame.mixer.Sound.play(self.step_sound)
                             if abs(self.dx) <= 0.1:
                                 if self.dx < 0:
                                     self.last_direction = "left"

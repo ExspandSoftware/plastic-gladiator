@@ -80,6 +80,7 @@ class Game:
 
         # init the home stage
         init_home(self)
+        pygame.mixer.Sound.play(pygame.mixer.Sound("./assets/sounds/Startbildschirm_GameMusik.mp3"))
 
 
     # events ---------------------------------------------------------------------------------------------------------------

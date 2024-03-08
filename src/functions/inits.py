@@ -149,14 +149,6 @@ def init_edeka(self):
     self.active_sprites.add(self.deposit_machine_button)
     self.active_sprites.add(self.deposit_machine_image)
 
-    self.active_sprites.add(self.edeka_2_background)
-    self.active_sprites.add(self.memory_button)
-
-    self.active_sprites.add(self.edeka_3_background)
-    self.active_sprites.add(self.space_button)
-
-    self.active_sprites.add(self.edeka_4_background)
-
     self.active_sprites.add(self.settings_button)
     self.active_sprites.add(self.inventory_button)
     self.active_sprites.add(self.player)
