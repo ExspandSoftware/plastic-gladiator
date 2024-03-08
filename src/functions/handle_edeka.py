@@ -48,7 +48,7 @@ def handle_edeka(self):
             self.active_sprites.remove(self.edeka_1_background)
             self.active_sprites.remove(self.deposit_machine_button)
             self.active_sprites.remove(self.deposit_machine_image)
-            !!!!!!!!
+            
             for idx, sprite in enumerate(self.active_sprites):
                 if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
                     pass
