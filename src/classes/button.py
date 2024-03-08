@@ -1,5 +1,7 @@
 import pygame
 
+from functions.basic_rect import basic_rect
+
 class Button(pygame.sprite.Sprite):
     def __init__(self, x: int, y: int, width: int, height: int, image, sound:bool = True):
         super().__init__()
@@ -10,8 +12,7 @@ class Button(pygame.sprite.Sprite):
         self.height = height
 
         if type(image) == tuple:
-            self.image = pygame.Surface((width, height))
-            self.image.fill(image)
+            self.image = basic_rect(width, height)
         elif type(image) == str:
             self.image = pygame.image.load(image)
 

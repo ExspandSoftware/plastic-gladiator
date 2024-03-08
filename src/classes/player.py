@@ -130,7 +130,10 @@ class Player(pygame.sprite.Sprite):
                                 self.dy = -self.jump_power*1.25
 
                         if self.dx != 0:
-                            pygame.mixer.Sound.play(self.step_sound)
+                            self.step_stop += 1
+                            if self.step_stop >= 20:
+                                pygame.mixer.Sound.play(self.step_sound)
+                                self.step_stop = 0
                             if abs(self.dx) <= 0.1:
                                 if self.dx < 0:
                                     self.last_direction = "left"
@@ -140,7 +143,7 @@ class Player(pygame.sprite.Sprite):
                             else:   
                                 self.dx -= self.dx/abs(self.dx)*0.2*x_factor
 
-                    self.dy += 0.5
+                    self.dy += 0.75
                     if self.y + self.dy >= int(Iheight*0.5):
                         self.y = int(Iheight*0.5)
                         self.dy = 0
