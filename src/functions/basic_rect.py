@@ -2,14 +2,14 @@ import pygame
 
 from config import *
 
-def basic_rect(width, height):
+def basic_rect(width, height, background:bool = True):
     line_width = 5
     line_height = 5
 
     #basic surface
     surface = pygame.Surface((width, height))
     surface.fill((174,163,151))
-    
+        
     #top line rect 2 
     line = pygame.Surface((width, line_width))
     line.fill((154,146,137))

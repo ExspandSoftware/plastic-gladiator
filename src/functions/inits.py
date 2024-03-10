@@ -32,12 +32,12 @@ def init_home(self):
     
     # objects in the stage
     self.home_background        = GImage(0, 0, Iwidth, Iheight, load_image_asset('components', 'background.jpg'))
-    self.titel_name             = GImage(Iwidth//2 - int(Iwidth*0.2), int(Iheight*0.02), int(Iwidth*0.4), int(Iheight*0.25), (123, 65, 235))
+    self.titel_name             = GImage(Iwidth//2 - int(Iwidth*0.2), int(Iwidth*0.02), int(Iwidth*0.4), int(Iheight*0.25), (123, 65, 235))
     self.player                 = Player(Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight*0.6)
-    self.progress_bar           = ProgressBar(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.16), int(Iheight*0.6))
-    self.settings_button        = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_image_asset('buttons', 'settings-button.png'))
-    self.start_button           = Button(int(Iwidth*0.6675), int(Iheight*0.7675), int(Iwidth*0.3125), int(Iheight*0.2125), load_image_asset('buttons', 'Start-button.png'))
-    self.book                   = Button(int(Iwidth*0.02), int(Iheight*0.98 - int(Iwidth*0.1)), int(Iwidth*0.1), int(Iwidth*0.1), (176, 23, 205))
+    self.progress_bar           = ProgressBar(int(Iwidth*0.02), int(Iwidth*0.02), int(Iwidth*0.16), int(Iheight*0.6))
+    self.settings_button        = Button(int(Iwidth*0.88), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_image_asset('buttons', 'settings-button.png'))
+    self.start_button           = Button(int(Iwidth*0.6675), int(Iheight - Iheight*0.2125 - Iwidth*0.02), int(Iwidth*0.3125), int(Iheight*0.2125), load_image_asset('buttons', 'Start-button.png'))
+    self.book                   = Button(int(Iwidth*0.02), int(Iheight - Iwidth*0.02 - int(Iwidth*0.1)), int(Iwidth*0.1), int(Iwidth*0.1), (176, 23, 205))
 
     #sprites for the book
     self.book_cover             = GImage(int(Iwidth*0.5- Iheight*0.32), int(Iheight*0.1),  int(Iheight*0.64), int(Iheight*0.8), load_image_asset('book', 'Buch-Cover-mit-Titel.png'))
@@ -81,8 +81,8 @@ def init_pre_edeka(self):
     self.door_R                 = GImage(int(Iwidth*0.75), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
     self.secret_background      = GImage(Iwidth, 0, Iwidth, Iheight, (15*2, 65*2, 34*2))
     self.secret_button_bin      = Button(Iwidth + int(Iwidth*0.75), int(Iheight*0.7 + Iheight//5 - Iheight//7.5), Iwidth//20, Iheight//7.5, (100, 100, 120))
-    self.settings_button        = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_image_asset('buttons', 'settings-button.png'))
-    self.inventory_button       = Button(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (12, 215, 165))
+    self.settings_button        = Button(int(Iwidth*0.88), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_image_asset('buttons', 'settings-button.png'))
+    self.inventory_button       = Button(int(Iwidth*0.02), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (12, 215, 165))
 
     #sprites for the pop-up screen
     self.settings_screen        = SettingsScreen()
@@ -116,13 +116,13 @@ def init_edeka(self):
 
     # objects in stage 1
     self.edeka_1_background         = GImage(0, 0, Iwidth, Iheight, (123, 53, 12))
-    self.deposit_machine_button     = Button(200, 150, 220, 520, load_image_asset('components', 'Pfandautomat.png'))
-    self.deposit_machine_image      = GImage(420, 150, 220, 520, load_image_asset('components', 'Pfandautomat.png'))
+    self.deposit_machine_button     = Button(200, 185, 200, 460, load_image_asset('components', 'Pfandautomat.png'))
+    self.deposit_machine_image      = GImage(400, 185, 200, 460, load_image_asset('components', 'Pfandautomat.png'))
     self.deposit_machine            = DepositeMachine(load_image_asset('components', 'Pfandautomat.png'))
 
     # obejcts in stage 2
     self.edeka_2_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Suessigkeitentheke.png'))
-    self.memory_button              = Button(Iwidth//2 - 50, Iheight//2 - 50, 100, 100, (192, 160, 236))
+    self.memory_button              = Button(Iwidth//2 - 250, Iheight//2 - 250, 500, 500, (0, 0, 0))
     self.memory_game                = Memory()
                     
     # obejcts in stage 3
@@ -134,8 +134,8 @@ def init_edeka(self):
     self.edeka_4_background         = GImage(0, 0, Iwidth, Iheight, (12, 253, 123))
 
     #general objects needed for the stage
-    self.settings_button            = Button(int(Iwidth*0.88), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_image_asset('buttons', 'settings-button.png'))
-    self.inventory_button           = Button(int(Iwidth*0.02), int(Iheight*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (12, 215, 165))
+    self.settings_button            = Button(int(Iwidth*0.88), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_image_asset('buttons', 'settings-button.png'))
+    self.inventory_button           = Button(int(Iwidth*0.02), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (12, 215, 165))
     self.settings_screen            = SettingsScreen()
     self.inventory_screen           = Inventory()
     self.close_button               = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_image_asset('buttons', 'close-button.png'))
