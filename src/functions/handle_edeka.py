@@ -145,5 +145,4 @@ def handle_edeka(self):
                     self.black_transition = (True, "home")
                     self.buttons_not_pressable = True
                     self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
-                    edeka_stage = 1
         
