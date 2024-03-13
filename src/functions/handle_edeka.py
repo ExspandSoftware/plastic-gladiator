@@ -2,7 +2,22 @@ import pygame
 
 from config import *
 
+from classes.player import Player
+from classes.button import Button
+from classes.g_image import GImage
+from classes.progress_bar import ProgressBar
+
+from functions.remove_sprites import remove_sprites
+from functions.inits import *
+
 edeka_stage = 1
+
+#load images from assets from home folder
+def load_image_asset(subfolder, file):
+    if subfolder is not None:
+        return os.path.join(WORKING_DIR, 'assets', 'images', 'edeka', subfolder, file)
+    else:
+        return os.path.join(WORKING_DIR, 'assets', 'images', 'edeka', file)
 
 def handle_edeka(self):
     global edeka_stage
@@ -28,11 +43,15 @@ def handle_edeka(self):
         
         #open the next stage
         if self.player.x >= Iwidth - self.player.width//2:
-            for idx, sprite in enumerate(self.active_sprites):
-                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
-                    pass
-                else:
-                    sprite.x -= Iwidth
+            #remove all sprites
+            remove_sprites(self)
+            #add needed sprites
+            add_edeka_2(self)
+            add_general(self)
+            
+            #move the player to the other side
+            self.player.x -= Iwidth
+
             #go to the next stage
             edeka_stage = 2
 
@@ -40,21 +59,29 @@ def handle_edeka(self):
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
-            for idx, sprite in enumerate(self.active_sprites):
-                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
-                    pass
-                else:
-                    sprite.x += Iwidth
+            #remove all sprites
+            remove_sprites(self)
+            #add needed sprites
+            add_edeka_1(self)
+            add_general(self)
+
+            #move the player to the other side
+            self.player.x += Iwidth
+
             #go to the next stage
             edeka_stage = 1
 
         #open the next stage
         if self.player.x >= Iwidth - self.player.width//2:
-            for idx, sprite in enumerate(self.active_sprites):
-                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
-                    pass
-                else:
-                    sprite.x -= Iwidth
+            #remove all sprites
+            remove_sprites(self)
+            #add needed sprites
+            add_edeka_3(self)
+            add_general(self)
+
+            #move the player to the other side
+            self.player.x -= Iwidth
+
             #go to the next stage
             edeka_stage = 3
 
@@ -62,21 +89,29 @@ def handle_edeka(self):
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
-            for idx, sprite in enumerate(self.active_sprites):
-                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
-                    pass
-                else:
-                    sprite.x += Iwidth
+            #remove all sprites
+            remove_sprites(self)
+            #add needed sprites
+            add_edeka_2(self)
+            add_general(self)
+
+            #move the player to the other side
+            self.player.x += Iwidth
+            
             #go to the next stage
             edeka_stage = 2
 
         #open the next stage
         if self.player.x >= Iwidth - self.player.width//2:
-            for idx, sprite in enumerate(self.active_sprites):
-                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
-                    pass
-                else:
-                    sprite.x -= Iwidth
+            #remove all sprites
+            remove_sprites(self)
+            #add needed sprites
+            add_edeka_4(self)
+            add_general(self)
+
+            #move the player to the other side
+            self.player.x -= Iwidth
+
             #go to the next stage
             edeka_stage = 4
 
@@ -84,11 +119,15 @@ def handle_edeka(self):
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
-            for idx, sprite in enumerate(self.active_sprites):
-                if idx == len(self.active_sprites) - 2 or idx == len(self.active_sprites) - 3:
-                    pass
-                else:
-                    sprite.x += Iwidth
+            #remove all sprites
+            remove_sprites(self)
+            #add needed sprites
+            add_edeka_3(self)
+            add_general(self)
+
+            #move the player to the other side
+            self.player.x += Iwidth
+
             #go to the next stage
             edeka_stage = 3
 
@@ -106,5 +145,4 @@ def handle_edeka(self):
                     self.black_transition = (True, "home")
                     self.buttons_not_pressable = True
                     self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
-                    edeka_stage = 1
         
