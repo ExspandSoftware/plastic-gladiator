@@ -8,7 +8,7 @@ from screens.settings_screen import SettingsScreen
 from screens.inventory import Inventory
 from screens.candy_crush import CandyCrush
 from screens.deposit_machine import DepositeMachine
-from screens.memory import Memory
+from classes.memory import MemoryGame
 from screens.space import Space
 
 from config import *
@@ -22,6 +22,17 @@ def init_home(self):
     self.home_buttons_pressable = True
     self.next_page_pressable = False
     self.last_page_pressable = False
+    
+    self.cards = [
+            ((12, 70, 138), (70, 20, 84)),
+            ((93, 83, 174), (25, 74, 46)),
+            ((83, 27, 169), (57, 42, 85)),
+            ((72, 49, 139), (64, 47, 26)),
+            ((12, 70, 138), (70, 20, 84)),
+            ((93, 83, 174), (25, 74, 46)),
+            ((83, 27, 169), (57, 42, 85)),
+            ((72, 49, 139), (64, 47, 26)),
+        ]
 
     #load images from assets from home folder
     def load_image_asset(subfolder, file):
@@ -123,7 +134,9 @@ def init_edeka(self):
     # obejcts in stage 2
     self.edeka_2_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Suessigkeitentheke.png'))
     self.memory_button              = Button(Iwidth//2 - 250, Iheight//2 - 250, 500, 500, (0, 0, 0))
-    self.memory_game                = Memory()
+    self.memory_game                = MemoryGame(0, 0, 800, 600, (40, 40, 40), 60, (123, 123, 123))
+
+
                     
     # obejcts in stage 3
     self.edeka_3_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Fleischtheke.png'))

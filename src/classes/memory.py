@@ -21,9 +21,10 @@ class MemoryGame(pygame.sprite.Sprite):
         self.default_card_image = default_card_image
         self.cards = None
         self.card_is_open = False
+        self.opened_card = None
     
-    def update(self):
-        return
+    def update(self, *args, **kwargs):
+        pass
     
     def create_board(self, cards: list[tuple[tuple[int, int, int], tuple[int, int, int]]]):
 
@@ -31,7 +32,7 @@ class MemoryGame(pygame.sprite.Sprite):
         
         for idx, card_pair in enumerate(cards):
             for card in card_pair:
-                card_list.append(MemoryCard(idx, self.card_size, card, self.default_card_image))
+                card_list.append(MemoryCard(idx//2, self.card_size, card, self.default_card_image))
 
         self.cards = card_list
 
@@ -45,3 +46,28 @@ class MemoryGame(pygame.sprite.Sprite):
             card_group.add(card)
 
         return card_group
+    
+    def is_clicked(self, pos) -> bool:
+        x, y = pos
+
+        for card in self.cards:
+            if card.is_clicked(x, y):
+                if not self.card_is_open:
+                    self.card_is_open = True
+                    self.opened_card = card
+                else:
+                    if card == self.opened_card:
+                        return
+                    elif self.opened_card.id != card.id:
+                        self.card_is_open = False
+                        self.opened_card.turn()
+                        card.turn()
+                        self.opened_card = None
+                    else:
+                        print("Match")
+                        self.cards.remove(card)
+                        self.cards.remove(self.opened_card)
+                        self.card_is_open = False
+                        self.opened_card = None
+                    
+            

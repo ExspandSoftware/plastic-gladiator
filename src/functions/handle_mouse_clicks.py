@@ -148,7 +148,13 @@ def handle_mouse_edeka(self, event):
         self.edeka_buttons_pressable = False
         self.movement = False
 
+
+        self.memory_game.create_board(self.cards)
+
         self.active_sprites.add(self.memory_game)
+        self.rendered_cards = self.memory_game.render()
+        self.active_sprites.add(self.rendered_cards)
+
         self.active_sprites.add(self.close_button)
 
     #stage 3 --------------------------------------------------------------------------------------
@@ -177,6 +183,10 @@ def handle_mouse_edeka(self, event):
 
         self.active_sprites.add(self.inventory_screen)
         self.active_sprites.add(self.close_button)
+
+    if self.memory_game.is_clicked(event.pos):
+        
+        print("TROLOLO")
     
 
     #close all pop-up-screens
@@ -192,3 +202,4 @@ def handle_mouse_edeka(self, event):
             self.active_sprites.remove(self.deposit_machine)
             self.active_sprites.remove(self.memory_game)
             self.active_sprites.remove(self.space)
+            self.active_sprites.remove(self.rendered_cards)
