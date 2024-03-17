@@ -1,6 +1,7 @@
 import pygame
 
 from functions.basic_rect import basic_rect
+from functions.speech_bubble import speech_bubble
 
 class GImage(pygame.sprite.Sprite):
     def __init__(self, x: int, y: int, width: int, height: int, image, background:bool = True):

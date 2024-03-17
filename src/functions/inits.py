@@ -13,6 +13,10 @@ from screens.space import Space
 
 from config import *
 
+#load images from assets from home folder
+def load_button(file):
+    return os.path.join(WORKING_DIR, 'assets', 'images', 'buttons', file)
+
 def init_home(self):
     #init variables for the home page
     self.whoosh_sound = pygame.mixer.Sound("./assets/sounds/slow-whoosh.mp3")
@@ -46,7 +50,7 @@ def init_home(self):
     self.titel_name             = GImage(Iwidth//2 - int(Iwidth*0.2), int(Iwidth*0.02), int(Iwidth*0.4), int(Iheight*0.25), (123, 65, 235))
     self.player                 = Player(Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight*0.6)
     self.progress_bar           = ProgressBar(int(Iwidth*0.02), int(Iwidth*0.02), int(Iwidth*0.16), int(Iheight*0.6))
-    self.settings_button        = Button(int(Iwidth*0.88), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_image_asset('buttons', 'settings-button.png'))
+    self.settings_button        = Button(int(Iwidth*0.88), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_button('settings-button.png'))
     self.start_button           = Button(int(Iwidth*0.6675), int(Iheight - Iheight*0.2125 - Iwidth*0.02), int(Iwidth*0.3125), int(Iheight*0.2125), load_image_asset('buttons', 'Start-button.png'))
     self.book                   = Button(int(Iwidth*0.02), int(Iheight - Iwidth*0.02 - int(Iwidth*0.1)), int(Iwidth*0.1), int(Iwidth*0.1), (176, 23, 205))
 
@@ -59,7 +63,7 @@ def init_home(self):
     self.book_screen            = BookScreen(0, 0, Iwidth, Iheight, (123, 93, 235), self.pages, 0)
     self.next_page              = Button(Iwidth - 140, Iheight/2 - 70, 140, 140, load_image_asset('buttons', 'arrow_right.png'), False)
     self.last_page              = Button(0, Iheight/2 - 70, 140, 140, load_image_asset('buttons', 'arrow_left.png'), False)
-    self.close_button           = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_image_asset('buttons', 'close-button.png'), False)
+    self.close_button           = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_button('close-button.png'), False)
 
     #sprites for the settings screen
     self.settings_screen        = SettingsScreen()
@@ -86,19 +90,19 @@ def init_pre_edeka(self):
             return os.path.join(WORKING_DIR, 'assets', 'images', 'pre_edeka', file)
 
     # objects in the stage
-    self.edeka_background       = GImage(0, 0, Iwidth, Iheight, (15, 65, 34), False)
-    self.player                 = Player(int(Iwidth*0.1), -100, Iwidth//15, Iheight*0.23)
-    self.door_L                 = GImage(int(Iwidth*0.65), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
-    self.door_R                 = GImage(int(Iwidth*0.75), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
+    self.edeka_background       = GImage(0, 0, Iwidth, Iheight, load_image_asset('components', 'edeka_front.png'), False)
+    self.player                 = Player(int(Iwidth*0.1), -100, Iwidth//10, Iheight*0.395)
+    self.door_L                 = GImage(int(Iwidth*0.65), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, load_image_asset('components', 'Schiebetuer_l.png'), False)
+    self.door_R                 = GImage(int(Iwidth*0.75), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, load_image_asset('components', 'Schiebetuer_r.png'), False)
     self.secret_background      = GImage(Iwidth, 0, Iwidth, Iheight, (15*2, 65*2, 34*2))
     self.secret_button_bin      = Button(Iwidth + int(Iwidth*0.75), int(Iheight*0.7 + Iheight//5 - Iheight//7.5), Iwidth//20, Iheight//7.5, (100, 100, 120))
-    self.settings_button        = Button(int(Iwidth*0.88), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_image_asset('buttons', 'settings-button.png'))
-    self.inventory_button       = Button(int(Iwidth*0.02), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (12, 215, 165))
+    self.settings_button        = Button(int(Iwidth*0.88), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_button('settings-button.png'))
+    self.inventory_button       = Button(int(Iwidth*0.02), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), os.path.join(WORKING_DIR, 'assets', 'images', 'buttons', 'inventory.png'))
 
     #sprites for the pop-up screen
     self.settings_screen        = SettingsScreen()
     self.inventory_screen       = Inventory()
-    self.close_button           = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_image_asset('buttons', 'close-button.png'), False)
+    self.close_button           = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, os.path.join(WORKING_DIR, 'assets', 'images', 'buttons', 'close-button.png'), False)
 
     #minigame
     self.candy_crush_game       = CandyCrush()
@@ -135,8 +139,6 @@ def init_edeka(self):
     self.edeka_2_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Suessigkeitentheke.png'), False)
     self.memory_button              = Button(Iwidth//2 - 250, Iheight//2 - 250, 500, 500, (0, 0, 0))
     self.memory_game                = MemoryGame(0, 0, 800, 600, (40, 40, 40), 60, (123, 123, 123))
-
-
                     
     # obejcts in stage 3
     self.edeka_3_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Fleischtheke.png'), False)
@@ -144,11 +146,11 @@ def init_edeka(self):
     self.space                      = Space()      
 
     # obejcts in stage 4
-    self.edeka_4_background         = GImage(0, 0, Iwidth, Iheight, (12, 253, 123), False)
+    self.edeka_4_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Kasse.png'), False)
 
     #general objects needed for the stage
-    self.settings_button            = Button(int(Iwidth*0.88), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_image_asset('buttons', 'settings-button.png'))
-    self.inventory_button           = Button(int(Iwidth*0.02), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (12, 215, 165))
+    self.settings_button            = Button(int(Iwidth*0.88), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_button('settings-button.png'))
+    self.inventory_button           = Button(int(Iwidth*0.02), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_button('inventory.png'))
     self.settings_screen            = SettingsScreen()
     self.inventory_screen           = Inventory()
     self.close_button               = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_image_asset('buttons', 'close-button.png'), False)

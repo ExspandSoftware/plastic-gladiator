@@ -84,11 +84,12 @@ class CandyCrush(pygame.sprite.Sprite):
         # fill board state with Candy objects
         
         candy_options = [
-            os.path.join(WORKING_DIR, "assets", "images", "candy", "blue.png"),
-            os.path.join(WORKING_DIR, "assets", "images", "candy", "green.png"),
-            os.path.join(WORKING_DIR, "assets", "images", "candy", "orange.png"),
-            os.path.join(WORKING_DIR, "assets", "images", "candy", "purple.png"),
-            os.path.join(WORKING_DIR, "assets", "images", "candy", "red.png"),
+            os.path.join(WORKING_DIR, "assets", "images", "pre_edeka", "candy_crush", "Glasflasche-mit-Pfand.png"),
+            os.path.join(WORKING_DIR, "assets", "images", "pre_edeka", "candy_crush", "Glasflasche-ohne-Pfand.png"),
+            os.path.join(WORKING_DIR, "assets", "images", "pre_edeka", "candy_crush", "Pappbecher-1.png"),
+            os.path.join(WORKING_DIR, "assets", "images", "pre_edeka", "candy_crush", "Pappbecher-2.png"),
+            os.path.join(WORKING_DIR, "assets", "images", "pre_edeka", "candy_crush", "Plastik-Flasche-mit-Pfand.png"),
+            os.path.join(WORKING_DIR, "assets", "images", "pre_edeka", "candy_crush", "Plastik-Flasche-ohne-Pfand.png"),
         ]
 
         for i in range(self.cells_axis):

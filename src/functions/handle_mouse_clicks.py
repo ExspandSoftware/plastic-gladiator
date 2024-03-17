@@ -12,6 +12,9 @@ def handle_mouse_home(self, event):
         self.black_transition = (True, "walk_into_edeka")
         self.home_buttons_pressable = False
         self.transition_player_info = [int(Iwidth*0.05), -100, Iwidth//15, Iheight//5]
+        
+        if self.progress < 0.2:
+            self.progress = 0.2
 
     #settings button ------------------------------------------------------------------------------
     if self.settings_button.is_clicked(event.pos, self.home_buttons_pressable):
@@ -183,10 +186,6 @@ def handle_mouse_edeka(self, event):
 
         self.active_sprites.add(self.inventory_screen)
         self.active_sprites.add(self.close_button)
-
-    if self.memory_game.is_clicked(event.pos):
-        
-        print("TROLOLO")
     
 
     #close all pop-up-screens

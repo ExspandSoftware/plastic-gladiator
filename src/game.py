@@ -140,7 +140,7 @@ class Game:
             self.update_wh()
             
             #update and draw objects for each stage
-            self.active_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE, progress=self.progress + 0.05, player_movement=self.movement, game_class=self)
+            self.active_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE, progress=self.progress, player_movement=self.movement, game_class=self)
             self.active_sprites.draw(self.screen)
 
             #do everything ontop of the game then end the frame
@@ -149,11 +149,6 @@ class Game:
             pygame.display.flip()
 
             self.clock.tick(60)
-
-            #do calculations
-            self.progress += 0.001
-            if self.progress >= 1.0:
-                self.progress = 0.0
 
         pygame.quit()
 

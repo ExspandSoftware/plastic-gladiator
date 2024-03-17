@@ -84,9 +84,10 @@ class Player(pygame.sprite.Sprite):
                     pass
 
                 elif value == "walk_into_edeka":
+                    ground = Iheight*0.975 - self.height
                     #animationshandler
                     keys = pygame.key.get_pressed()
-                    if self.y == int(Iheight*0.675):
+                    if self.y == int(ground):
                         if movement_enabled:
                             if keys[pygame.K_d] and not keys[pygame.K_a] and abs(self.dx) <= self.walking_speed:
                                 self.dx += self.walking_speed*0.1
@@ -110,8 +111,8 @@ class Player(pygame.sprite.Sprite):
                                 self.dx -= self.dx/abs(self.dx)*0.2*x_factor
 
                     self.dy += 0.5
-                    if self.y + self.dy >= int(Iheight*0.675):
-                        self.y = int(Iheight*0.675)
+                    if self.y + self.dy >= int(ground):
+                        self.y = int(ground)
                         self.dy = 0
 
                     self.x += self.dx

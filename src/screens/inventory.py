@@ -15,8 +15,13 @@ class Inventory(pygame.sprite.Sprite):
         self.height = Iheight
         
         # other vars
-        self.interface = pygame.Surface((Iheight*0.8, Iheight*0.2))
-        self.interface.fill((167, 156, 234))
+        self.number_of_items = 5
+        self.interface = pygame.Surface((Iheight*0.2*self.number_of_items, Iheight*0.2))
+        inventory_frame = pygame.image.load(os.path.join(WORKING_DIR, "assets", "images", "buttons", "inventory_frame.png"))
+        inventory_frame = pygame.transform.scale(inventory_frame, (Iheight*0.2, Iheight*0.2))
+        #draw the inventory frames
+        for i in range(self.number_of_items):
+            self.interface.blit(inventory_frame, (Iheight*0.2*i, 0))
 
         self.image = pygame.Surface((Iwidth, Iheight), pygame.SRCALPHA)
         self.image.fill((0, 0, 0, 150))
