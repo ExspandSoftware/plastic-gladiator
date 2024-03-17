@@ -62,7 +62,7 @@ class SettingsScreen(pygame.sprite.Sprite):
         self.font = pygame.font.Font(None, 50)
         self.volume = 50
         self.font_size = 24
-        self.slider = Slider(500, 200, 300, 20, 0, 100, 50)
+        #self.slider = Slider(500, 200, 300, 20, 0, 100, 50)
 
     def update(self, Iwidth:int, Iheight:int, Cwidth:int, Cheight:int, *args, **kwargs):
         #setting up the interface
@@ -81,10 +81,10 @@ class SettingsScreen(pygame.sprite.Sprite):
         self.show_option("Zum Hauptmenü", None, 250, action=self.return_to_menu)
 
         #sliders
-        for event in pygame.event.get():
+        #for event in pygame.event.get():
             # Übergebe das Event an den Schieberegler
-            self.slider.handle_event(event)
-        self.slider.update()
+        #    self.slider.handle_event(event)
+        #self.slider.update()
 
         #Objekt skalieren
         x_factor = Cwidth/Iwidth

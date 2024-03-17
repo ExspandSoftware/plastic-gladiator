@@ -42,7 +42,7 @@ def init_home(self):
             return os.path.join(WORKING_DIR, 'assets', 'images', 'home', file)
     
     # objects in the stage
-    self.home_background        = GImage(0, 0, Iwidth, Iheight, load_image_asset('components', 'background.jpg'))
+    self.home_background        = GImage(0, 0, Iwidth, Iheight, load_image_asset('components', 'background.jpg'), False)
     self.titel_name             = GImage(Iwidth//2 - int(Iwidth*0.2), int(Iwidth*0.02), int(Iwidth*0.4), int(Iheight*0.25), (123, 65, 235))
     self.player                 = Player(Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight*0.6)
     self.progress_bar           = ProgressBar(int(Iwidth*0.02), int(Iwidth*0.02), int(Iwidth*0.16), int(Iheight*0.6))
@@ -51,15 +51,15 @@ def init_home(self):
     self.book                   = Button(int(Iwidth*0.02), int(Iheight - Iwidth*0.02 - int(Iwidth*0.1)), int(Iwidth*0.1), int(Iwidth*0.1), (176, 23, 205))
 
     #sprites for the book
-    self.book_cover             = GImage(int(Iwidth*0.5- Iheight*0.32), int(Iheight*0.1),  int(Iheight*0.64), int(Iheight*0.8), load_image_asset('book', 'Buch-Cover-mit-Titel.png'))
-    self.page1                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (123, 45, 67))
-    self.page2                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (45, 67, 123))
-    self.page3                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (67, 123, 45))
+    self.book_cover             = GImage(int(Iwidth*0.5- Iheight*0.32), int(Iheight*0.1),  int(Iheight*0.64), int(Iheight*0.8), load_image_asset('book', 'Buch-Cover-mit-Titel.png'), False)
+    self.page1                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (123, 45, 67), False)
+    self.page2                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (45, 67, 123), False)
+    self.page3                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (67, 123, 45), False)
     self.pages                  = [self.book_cover, self.page1, self.page2, self.page3]
     self.book_screen            = BookScreen(0, 0, Iwidth, Iheight, (123, 93, 235), self.pages, 0)
     self.next_page              = Button(Iwidth - 140, Iheight/2 - 70, 140, 140, load_image_asset('buttons', 'arrow_right.png'), False)
     self.last_page              = Button(0, Iheight/2 - 70, 140, 140, load_image_asset('buttons', 'arrow_left.png'), False)
-    self.close_button           = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_image_asset('buttons', 'close-button.png'))
+    self.close_button           = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_image_asset('buttons', 'close-button.png'), False)
 
     #sprites for the settings screen
     self.settings_screen        = SettingsScreen()
@@ -86,7 +86,7 @@ def init_pre_edeka(self):
             return os.path.join(WORKING_DIR, 'assets', 'images', 'pre_edeka', file)
 
     # objects in the stage
-    self.edeka_background       = GImage(0, 0, Iwidth, Iheight, (15, 65, 34))
+    self.edeka_background       = GImage(0, 0, Iwidth, Iheight, (15, 65, 34), False)
     self.player                 = Player(int(Iwidth*0.1), -100, Iwidth//15, Iheight*0.23)
     self.door_L                 = GImage(int(Iwidth*0.65), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
     self.door_R                 = GImage(int(Iwidth*0.75), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, (178, 143, 12))
@@ -98,7 +98,7 @@ def init_pre_edeka(self):
     #sprites for the pop-up screen
     self.settings_screen        = SettingsScreen()
     self.inventory_screen       = Inventory()
-    self.close_button           = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_image_asset('buttons', 'close-button.png'))
+    self.close_button           = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_image_asset('buttons', 'close-button.png'), False)
 
     #minigame
     self.candy_crush_game       = CandyCrush()
@@ -126,32 +126,32 @@ def init_edeka(self):
             return os.path.join(WORKING_DIR, 'assets', 'images', 'edeka', file)
 
     # objects in stage 1
-    self.edeka_1_background         = GImage(0, 0, Iwidth, Iheight, (123, 53, 12))
-    self.deposit_machine_button     = Button(200, 185, 200, 460, load_image_asset('components', 'Pfandautomat.png'))
-    self.deposit_machine_image      = GImage(400, 185, 200, 460, load_image_asset('components', 'Pfandautomat.png'))
+    self.edeka_1_background         = GImage(0, 0, Iwidth, Iheight, (123, 53, 12), False)
+    self.deposit_machine_button     = Button(200, 185, 200, 460, load_image_asset('components', 'Pfandautomat.png'), False)
+    self.deposit_machine_image      = GImage(400, 185, 200, 460, load_image_asset('components', 'Pfandautomat.png'), False)
     self.deposit_machine            = DepositeMachine(load_image_asset('components', 'Pfandautomat.png'))
 
     # obejcts in stage 2
-    self.edeka_2_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Suessigkeitentheke.png'))
+    self.edeka_2_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Suessigkeitentheke.png'), False)
     self.memory_button              = Button(Iwidth//2 - 250, Iheight//2 - 250, 500, 500, (0, 0, 0))
     self.memory_game                = MemoryGame(0, 0, 800, 600, (40, 40, 40), 60, (123, 123, 123))
 
 
                     
     # obejcts in stage 3
-    self.edeka_3_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Fleischtheke.png'))
+    self.edeka_3_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Fleischtheke.png'), False)
     self.space_button               = Button(Iwidth//2 - 50, Iheight//2 - 50, 100, 100, (192, 160, 236))
     self.space                      = Space()      
 
     # obejcts in stage 4
-    self.edeka_4_background         = GImage(0, 0, Iwidth, Iheight, (12, 253, 123))
+    self.edeka_4_background         = GImage(0, 0, Iwidth, Iheight, (12, 253, 123), False)
 
     #general objects needed for the stage
     self.settings_button            = Button(int(Iwidth*0.88), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_image_asset('buttons', 'settings-button.png'))
     self.inventory_button           = Button(int(Iwidth*0.02), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), (12, 215, 165))
     self.settings_screen            = SettingsScreen()
     self.inventory_screen           = Inventory()
-    self.close_button               = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_image_asset('buttons', 'close-button.png'))
+    self.close_button               = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_image_asset('buttons', 'close-button.png'), False)
     self.player                     = Player(int(Iwidth*0.1), int(Iheight*0.5), Iwidth//7, Iheight//2)
 
     # add those objects to the right sprites group
