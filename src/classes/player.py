@@ -61,7 +61,7 @@ class Player(pygame.sprite.Sprite):
 
         self.dx = 0
         self.dy = 0
-        self.walking_speed = 5
+        self.walking_speed = 50
         self.jump_power = 8
 
 

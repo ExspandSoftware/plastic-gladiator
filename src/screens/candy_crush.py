@@ -2,6 +2,7 @@ import pygame
 import random
 
 from config import *
+from functions.speech_bubble import speech_bubble
 
 
 class Candy(pygame.sprite.Sprite):
@@ -91,11 +92,34 @@ class CandyCrush(pygame.sprite.Sprite):
             os.path.join(WORKING_DIR, "assets", "images", "pre_edeka", "candy_crush", "Plastik-Flasche-mit-Pfand.png"),
             os.path.join(WORKING_DIR, "assets", "images", "pre_edeka", "candy_crush", "Plastik-Flasche-ohne-Pfand.png"),
         ]
+        board_state = [[
+            [0, 1, 2, 4, 4, 5],
+            [0, 1, 4, 4, 1, 5],
+            [3, 0, 2, 4, 3, 1],
+            [5, 1, 2, 3, 0, 2],
+            [1, 5, 0, 0, 1, 5],
+            [3, 1, 2, 3, 2, 3],
+        ],[
+            [0, 1, 2, 4, 4, 5],
+            [0, 1, 4, 4, 1, 5],
+            [3, 0, 2, 4, 3, 1],
+            [5, 1, 2, 3, 0, 2],
+            [1, 5, 0, 0, 1, 5],
+            [3, 1, 2, 3, 2, 3],
+        ],[
+            [0, 1, 2, 4, 4, 5],
+            [0, 1, 4, 4, 1, 5],
+            [3, 0, 2, 4, 3, 1],
+            [5, 1, 2, 3, 0, 2],
+            [1, 5, 0, 0, 1, 5],
+            [3, 1, 2, 3, 2, 3],
+        ]]
+        board_idx = random.randint(0, len(board_state) - 1)
 
         for i in range(self.cells_axis):
             row = []
             for j in range(self.cells_axis):
-                idx = random.randint(0, len(candy_options) - 1)
+                idx = board_state[board_idx][i][j]
                 candy = Candy(idx, 0, 0, candy_options[idx])
 
                 candy.x_pos = Iwidth*0.5-self.ground.get_width()//2 + 10 + (self.ground.get_width() - 20)//self.cells_axis*i + (i+1)
@@ -111,11 +135,19 @@ class CandyCrush(pygame.sprite.Sprite):
 
     def update(self, Iwidth:int, Iheight:int, Cwidth:int, Cheight:int, *args, **kwargs):
 
+        #clear the screen
+        self.image.fill((0, 0, 0, 150))
+
         #handle the time for the game, after 45 sec. it should be closed automatically
         self.handle_timer(kwargs)
 
-        #draw the game
-        self.draw_game()
+        #structure the time whenm the window was opened
+        if 0 <= self.time_since_start_ms <= 5000:
+            sb = speech_bubble("awd awd awdawddddddd awdawa a aaw ad awdawd awaadawd asdaaa aaaaaa aa aaaaaa aaa aaaaaa aaaaa aaaa aadadadad  adadawdaw asdawd awda awdawd awdawdawd awdawd awd awd awddawd awd awdawd awd adw adawd awd awd awdad", 100)
+            self.image.blit(sb, (Iwidth//2 - sb.get_width()//2, Iheight//2 - sb.get_height()//2))
+        elif 5000 <= self.time_since_start_ms <= 50000:
+            #draw the game
+            self.draw_game()
 
         # scale the image to the window size
         x_factor = Cwidth/Iwidth
@@ -148,7 +180,7 @@ class CandyCrush(pygame.sprite.Sprite):
                 pygame.draw.rect(self.image, "#565656", pygame.Rect(game_x + cell_width*i + (i+1), game_y + cell_width*j + (j+1), cell_width-4, cell_width-4))
 
         #draw the right time ontop of the game screen
-        seconds_txt = 21 - (pygame.time.get_ticks() - self.start_time)//1000
+        seconds_txt = 50 - (pygame.time.get_ticks() - self.start_time)//1000
         if seconds_txt < 10:
             seconds_txt = f"0{seconds_txt}"
         else:
@@ -282,9 +314,9 @@ class CandyCrush(pygame.sprite.Sprite):
 
     def handle_timer(self, kwargs):
         #handle the time for the game, after 45 sec. it should be closed automatically
-        time_since_start = pygame.time.get_ticks() - self.start_time
+        self.time_since_start_ms = pygame.time.get_ticks() - self.start_time
         
-        if time_since_start >= 21000:
+        if self.time_since_start_ms >= 45000:
             
             if "game_class" in kwargs:
                 value = kwargs["game_class"]

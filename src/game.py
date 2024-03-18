@@ -80,6 +80,7 @@ class Game:
 
         # init the home stage
         init_home(self)
+        pygame.mixer.music.set_volume(0.25)
         music = pygame.mixer.music.load("./assets/sounds/Startbildschirm_GameMusik.mp3")
         pygame.mixer.music.play(loops=-1)
 
@@ -183,6 +184,9 @@ class Game:
                 self.black_transition = (False, None)
                 self.home_buttons_pressable = True
                 self.movement = True
+
+            #update the volume
+            pygame.mixer.music.set_volume(0.25)
         else:
             return
 
