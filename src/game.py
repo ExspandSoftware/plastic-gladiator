@@ -77,10 +77,11 @@ class Game:
         #Sprite Groups -----------------------------------------------------------------------------------------------------
         self.STAGE = stage
         self.active_sprites = pygame.sprite.Group()
+        self.edeka_stage = 1
 
         # init the home stage
         init_home(self)
-        pygame.mixer.music.set_volume(0.25)
+        pygame.mixer.music.set_volume(0.01)
         music = pygame.mixer.music.load("./assets/sounds/Startbildschirm_GameMusik.mp3")
         pygame.mixer.music.play(loops=-1)
 

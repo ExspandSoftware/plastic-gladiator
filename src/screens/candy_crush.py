@@ -139,15 +139,26 @@ class CandyCrush(pygame.sprite.Sprite):
         self.image.fill((0, 0, 0, 150))
 
         #handle the time for the game, after 45 sec. it should be closed automatically
-        self.handle_timer(kwargs)
+        self.time_since_start_ms = pygame.time.get_ticks() - self.start_time
+
 
         #structure the time whenm the window was opened
-        if 0 <= self.time_since_start_ms <= 5000:
-            sb = speech_bubble("awd awd awdawddddddd awdawa a aaw ad awdawd awaadawd asdaaa aaaaaa aa aaaaaa aaa aaaaaa aaaaa aaaa aadadadad  adadawdaw asdawd awda awdawd awdawdawd awdawd awd awd awddawd awd awdawd awd adw adawd awd awd awdad", 100)
+        self.interval_1_ms = 10000
+        self.interval_2_ms = 45000
+        if 0 <= self.time_since_start_ms <= self.interval_1_ms:
+            sb = speech_bubble("awd awd awdawddddddd awdawa a aaw ad awdawd awaadawd asdaaa aaaaaa aa aaaaaa aaa aaaaaa aaaaa aaaa aadadadad  adadawdaw asdawd awda awdawd awdawdawd awdawd awd awd awddawd awd awdawd awd adw adawd awd awd awdad", 500)
             self.image.blit(sb, (Iwidth//2 - sb.get_width()//2, Iheight//2 - sb.get_height()//2))
-        elif 5000 <= self.time_since_start_ms <= 50000:
+        elif self.interval_1_ms <= self.time_since_start_ms <= self.interval_1_ms + self.interval_2_ms:
             #draw the game
             self.draw_game()
+        elif self.time_since_start_ms >= self.interval_1_ms + self.interval_2_ms:
+            #close the window automatically after the time has finished
+            if "game_class" in kwargs:
+                value = kwargs["game_class"]
+                value.pre_edeka_buttons_pressable = True
+                value.movement = True
+                value.active_sprites.remove(value.candy_crush_game)
+                value.active_sprites.remove(value.close_button)
 
         # scale the image to the window size
         x_factor = Cwidth/Iwidth
@@ -180,7 +191,7 @@ class CandyCrush(pygame.sprite.Sprite):
                 pygame.draw.rect(self.image, "#565656", pygame.Rect(game_x + cell_width*i + (i+1), game_y + cell_width*j + (j+1), cell_width-4, cell_width-4))
 
         #draw the right time ontop of the game screen
-        seconds_txt = 50 - (pygame.time.get_ticks() - self.start_time)//1000
+        seconds_txt = ((self.interval_1_ms + self.interval_2_ms) - (pygame.time.get_ticks() - self.start_time))//1000
         if seconds_txt < 10:
             seconds_txt = f"0{seconds_txt}"
         else:
@@ -308,21 +319,4 @@ class CandyCrush(pygame.sprite.Sprite):
             for pos in self.selected_positions:
                 self.board_state[pos[0]][pos[1]].is_selected = False
             self.selected_positions = []
-        
-        
-
-
-    def handle_timer(self, kwargs):
-        #handle the time for the game, after 45 sec. it should be closed automatically
-        self.time_since_start_ms = pygame.time.get_ticks() - self.start_time
-        
-        if self.time_since_start_ms >= 45000:
-            
-            if "game_class" in kwargs:
-                value = kwargs["game_class"]
-                value.pre_edeka_buttons_pressable = True
-                value.movement = True
-                value.active_sprites.remove(value.candy_crush_game)
-                value.active_sprites.remove(value.close_button)
-        return
         

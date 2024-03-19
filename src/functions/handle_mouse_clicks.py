@@ -134,40 +134,40 @@ def handle_mouse_pre_edeka(self, event):
 
 
 def handle_mouse_edeka(self, event):
-    
+    global edeka_stage
+
     #stage 1 --------------------------------------------------------------------------------------
     # open the minigame window
-    if self.deposit_machine_button.is_clicked(event.pos, self.edeka_buttons_pressable):
-        self.edeka_buttons_pressable = False
-        self.movement = False
+    if self.edeka_stage == 1:
+        if self.deposit_machine_button.is_clicked(event.pos, self.edeka_buttons_pressable):
+            self.edeka_buttons_pressable = False
+            self.movement = False
 
-        self.active_sprites.add(self.deposit_machine)
-        self.active_sprites.add(self.close_button)
+            self.active_sprites.add(self.deposit_machine)
+            self.active_sprites.add(self.close_button)
 
     
     #stage 2 --------------------------------------------------------------------------------------
     # open the minigame window
-    if self.memory_button.is_clicked(event.pos, self.edeka_buttons_pressable):
-        self.edeka_buttons_pressable = False
-        self.movement = False
+    if self.edeka_stage == 2:
+        if self.memory_button.is_clicked(event.pos, self.edeka_buttons_pressable):
+            self.edeka_buttons_pressable = False
+            self.movement = False
 
+            self.active_sprites.add(self.memory_game)
+            self.active_sprites.add(self.rendered_cards)
 
-        self.memory_game.create_board(self.cards)
-
-        self.active_sprites.add(self.memory_game)
-        self.rendered_cards = self.memory_game.render()
-        self.active_sprites.add(self.rendered_cards)
-
-        self.active_sprites.add(self.close_button)
+            self.active_sprites.add(self.close_button)
 
     #stage 3 --------------------------------------------------------------------------------------
     # open the minigame window
-    if self.space_button.is_clicked(event.pos, self.edeka_buttons_pressable):
-        self.edeka_buttons_pressable = False
-        self.movement = False
+    if self.edeka_stage == 3:
+        if self.space_button.is_clicked(event.pos, self.edeka_buttons_pressable):
+            self.edeka_buttons_pressable = False
+            self.movement = False
 
-        self.active_sprites.add(self.space)
-        self.active_sprites.add(self.close_button)
+            self.active_sprites.add(self.space)
+            self.active_sprites.add(self.close_button)
 
     #settings button ------------------------------------------------------------------------------
     if self.settings_button.is_clicked(event.pos, self.edeka_buttons_pressable):

@@ -5,7 +5,7 @@ from config import *
 def speech_bubble(text, max_width):
 
     # modify the text --------------------------------------------------------------
-    font = pygame.font.Font(os.path.join(WORKING_DIR, 'assets', 'fonts', 'game-font.ttf'), 48)
+    font = pygame.font.Font(os.path.join(WORKING_DIR, 'assets', 'fonts', 'game-font.ttf'), 32)
     words = text.split(' ')
     rendered_lines = []
     rendered_text = ''
@@ -31,7 +31,11 @@ def speech_bubble(text, max_width):
     for line in rendered_lines:
         rendered_text += line.strip() + '\n'
 
-    text_obj = font.render(rendered_text, True, (0, 0, 0))
+    text_obj = pygame.Surface((max_width, (font.size(rendered_lines[0])[1])*len(rendered_lines) + 5*(len(rendered_lines)-1)))
+    text_obj.fill((255, 255, 255))
+    for idx, line in enumerate(rendered_lines):
+        line_sf = font.render(rendered_lines[idx], True, (0, 0, 0), (255, 255, 255))
+        text_obj.blit(line_sf, (max_width//2 - font.size(rendered_lines[idx])[0]//2, (font.size(rendered_lines[idx])[1] + 5)*idx))
     padding = 50
     width = text_obj.get_width() + padding
     height = text_obj.get_height() + padding

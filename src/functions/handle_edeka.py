@@ -10,8 +10,6 @@ from classes.progress_bar import ProgressBar
 from functions.remove_sprites import remove_sprites
 from functions.inits import *
 
-edeka_stage = 1
-
 #load images from assets from home folder
 def load_image_asset(subfolder, file):
     if subfolder is not None:
@@ -20,10 +18,8 @@ def load_image_asset(subfolder, file):
         return os.path.join(WORKING_DIR, 'assets', 'images', 'edeka', file)
 
 def handle_edeka(self):
-    global edeka_stage
-
     #handle each stage individually
-    if edeka_stage == 1:
+    if self.edeka_stage == 1:
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
@@ -39,7 +35,7 @@ def handle_edeka(self):
                     self.black_transition = (True, "walk_into_edeka")
                     self.buttons_not_pressable = True
                     self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
-                    edeka_stage = 1
+                    self.edeka_stage = 1
         
         #open the next stage
         if self.player.x >= Iwidth - self.player.width//2:
@@ -53,9 +49,9 @@ def handle_edeka(self):
             self.player.x -= Iwidth
 
             #go to the next stage
-            edeka_stage = 2
+            self.edeka_stage = 2
 
-    elif edeka_stage == 2:
+    elif self.edeka_stage == 2:
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
@@ -69,7 +65,7 @@ def handle_edeka(self):
             self.player.x += Iwidth
 
             #go to the next stage
-            edeka_stage = 1
+            self.edeka_stage = 1
 
         #open the next stage
         if self.player.x >= Iwidth - self.player.width//2:
@@ -83,9 +79,9 @@ def handle_edeka(self):
             self.player.x -= Iwidth
 
             #go to the next stage
-            edeka_stage = 3
+            self.edeka_stage = 3
 
-    elif edeka_stage == 3:
+    elif self.edeka_stage == 3:
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
@@ -99,7 +95,7 @@ def handle_edeka(self):
             self.player.x += Iwidth
             
             #go to the next stage
-            edeka_stage = 2
+            self.edeka_stage = 2
 
         #open the next stage
         if self.player.x >= Iwidth - self.player.width//2:
@@ -113,9 +109,9 @@ def handle_edeka(self):
             self.player.x -= Iwidth
 
             #go to the next stage
-            edeka_stage = 4
+            self.edeka_stage = 4
 
-    elif edeka_stage == 4:
+    elif self.edeka_stage == 4:
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
@@ -129,7 +125,7 @@ def handle_edeka(self):
             self.player.x += Iwidth
 
             #go to the next stage
-            edeka_stage = 3
+            self.edeka_stage = 3
 
         #open the next stage
         if self.player.x >= Iwidth - self.player.width//2:
