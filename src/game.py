@@ -187,7 +187,7 @@ class Game:
                 self.movement = True
 
             #update the volume
-            pygame.mixer.music.set_volume(0.25)
+            pygame.mixer.music.set_volume(0.01)
         else:
             return
 

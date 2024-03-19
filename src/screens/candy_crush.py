@@ -129,6 +129,7 @@ class CandyCrush(pygame.sprite.Sprite):
             self.board_state.append(row)
         
         self.start_time = pygame.time.get_ticks()
+        self.saved_bottles = 6
 
 
 
@@ -146,7 +147,7 @@ class CandyCrush(pygame.sprite.Sprite):
         self.interval_1_ms = 10000
         self.interval_2_ms = 45000
         if 0 <= self.time_since_start_ms <= self.interval_1_ms:
-            sb = speech_bubble("awd awd awdawddddddd awdawa a aaw ad awdawd awaadawd asdaaa aaaaaa aa aaaaaa aaa aaaaaa aaaaa aaaa aadadadad  adadawdaw asdawd awda awdawd awdawdawd awdawd awd awd awddawd awd awdawd awd adw adawd awd awd awdad", 500)
+            sb = speech_bubble("awd awd awdawddddddd awdawa a aaw ad awdawd awaadawd asdaaa aaaaaa aa aaaaaa aaa aaaaaa aaaaa aaaa aadadadad  adadawdaw asdawd awda awdawd awdawdawd awdawd awd awd awddawd awd awdawd awd adw adawd awd awd awdad adadawdaw asdawd awda awdawd awdawdawd awdawd awd awd awddawd awd awdawd awd adw adawd awd awd awdad", 500, True, "l")
             self.image.blit(sb, (Iwidth//2 - sb.get_width()//2, Iheight//2 - sb.get_height()//2))
         elif self.interval_1_ms <= self.time_since_start_ms <= self.interval_1_ms + self.interval_2_ms:
             #draw the game
@@ -159,6 +160,7 @@ class CandyCrush(pygame.sprite.Sprite):
                 value.movement = True
                 value.active_sprites.remove(value.candy_crush_game)
                 value.active_sprites.remove(value.close_button)
+                value.plastic_bottles = self.saved_bottles
 
         # scale the image to the window size
         x_factor = Cwidth/Iwidth

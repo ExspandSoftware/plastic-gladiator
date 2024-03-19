@@ -55,7 +55,9 @@ class DepositeMachine(pygame.sprite.Sprite):
         self.image.blit(self.interface, self.interface.get_rect(topleft=(Iwidth//2-self.interface.get_width()//2, -self.interface.get_height()*0.15)))
 
         #draw the insert bottle animation in a loop
-        if self.it < 5:
+        if "game_class" in kwargs:
+            game_obj = kwargs["game_class"]
+        if self.it < game_obj.plastic_bottles:
             self.image.blit(self.put_bottle[self.it_idx], (Iwidth//2-self.put_bottle[self.it_idx].get_width()//2 - 150, Iheight-self.put_bottle[self.it_idx].get_height()))
             if pygame.time.get_ticks() - self.time_interval > self.interval_ms:
                 self.time_interval = pygame.time.get_ticks()
@@ -65,12 +67,10 @@ class DepositeMachine(pygame.sprite.Sprite):
                 self.it += 1
         else:
             #close the window automatically after the time has finished
-            if "game_class" in kwargs:
-                value = kwargs["game_class"]
-                value.edeka_buttons_pressable = True
-                value.movement = True
-                value.active_sprites.remove(value.deposit_machine)
-                value.active_sprites.remove(value.close_button)
+            game_obj.edeka_buttons_pressable = True
+            game_obj.movement = True
+            game_obj.active_sprites.remove(game_obj.deposit_machine)
+            game_obj.active_sprites.remove(game_obj.close_button)
 
         #Objekt skalieren
         x_factor = Cwidth/Iwidth
