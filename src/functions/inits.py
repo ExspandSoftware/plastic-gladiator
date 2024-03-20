@@ -81,6 +81,7 @@ def init_home(self):
 def init_pre_edeka(self):
     #pop-up screens
     self.pre_edeka_buttons_pressable = True
+    self.plastic_bottles = 0
 
     #load images from assets from home folder
     def load_image_asset(subfolder, file):
@@ -121,6 +122,9 @@ def init_pre_edeka(self):
 def init_edeka(self):
     #pop-up screens
     self.edeka_buttons_pressable = True
+    self.interval_ms = 5000
+    self.time_interval = pygame.time.get_ticks()
+    self.sp_b_it = 0
 
     #load images from assets from home folder
     def load_image_asset(subfolder, file):
@@ -144,7 +148,9 @@ def init_edeka(self):
                     
     # obejcts in stage 3
     self.edeka_3_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Fleischtheke.png'), False)
-    self.space_button               = Button(Iwidth//2 - 50, Iheight//2 - 50, 100, 100, (192, 160, 236))
+    #self.edeka_3_background_top     = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Fleischtheke.png'), False)
+    #self.edeka_3_background_bottom  = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Fleischtheke.png'), False)
+    #self.seller                     = GImage(700, 200, 200, 400, (200, 230, 150), False)
     self.space                      = Space()      
 
     # obejcts in stage 4
@@ -178,7 +184,6 @@ def add_edeka_2(self):
 def add_edeka_3(self):
     # add those objects to the right sprites group
     self.active_sprites.add(self.edeka_3_background)
-    self.active_sprites.add(self.space_button)
 def add_edeka_4(self):
     # add those objects to the right sprites group
     self.active_sprites.add(self.edeka_4_background)

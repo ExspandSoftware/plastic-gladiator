@@ -144,10 +144,10 @@ class CandyCrush(pygame.sprite.Sprite):
 
 
         #structure the time whenm the window was opened
-        self.interval_1_ms = 10000
+        self.interval_1_ms = 12000
         self.interval_2_ms = 45000
         if 0 <= self.time_since_start_ms <= self.interval_1_ms:
-            sb = speech_bubble("awd awd awdawddddddd awdawa a aaw ad awdawd awaadawd asdaaa aaaaaa aa aaaaaa aaa aaaaaa aaaaa aaaa aadadadad  adadawdaw asdawd awda awdawd awdawdawd awdawd awd awd awddawd awd awdawd awd adw adawd awd awd awdad adadawdaw asdawd awda awdawd awdawdawd awdawd awd awd awddawd awd awdawd awd adw adawd awd awd awdad", 500, True, "l")
+            sb = speech_bubble("Sehr gut! Wie es aussieht, hat jemand einige Pfandflaschen im Muelleimer vergessen... Sammle die Pfandflaschen und bringe sie zum Pfandautomaten im Eingang des Supermarktes! Viel Erfolg, dir bleibt nicht viel Zeit... (Du erkennst eine Pfandflasche an dem Pfandsymbol auf dem Etikette.)", 500, True, "l")
             self.image.blit(sb, (Iwidth//2 - sb.get_width()//2, Iheight//2 - sb.get_height()//2))
         elif self.interval_1_ms <= self.time_since_start_ms <= self.interval_1_ms + self.interval_2_ms:
             #draw the game

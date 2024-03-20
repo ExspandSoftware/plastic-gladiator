@@ -47,6 +47,7 @@ class DepositeMachine(pygame.sprite.Sprite):
             img_6,
         ]
         self.it = 0
+        self.zero_one_first = True
 
     def update(self, Iwidth:int, Iheight:int, Cwidth:int, Cheight:int, *args, **kwargs):
         self.image.fill((0, 0, 0, 150))
@@ -58,6 +59,7 @@ class DepositeMachine(pygame.sprite.Sprite):
         if "game_class" in kwargs:
             game_obj = kwargs["game_class"]
         if self.it < game_obj.plastic_bottles:
+            self.zero_one_first = False
             self.image.blit(self.put_bottle[self.it_idx], (Iwidth//2-self.put_bottle[self.it_idx].get_width()//2 - 150, Iheight-self.put_bottle[self.it_idx].get_height()))
             if pygame.time.get_ticks() - self.time_interval > self.interval_ms:
                 self.time_interval = pygame.time.get_ticks()
@@ -66,11 +68,12 @@ class DepositeMachine(pygame.sprite.Sprite):
                 self.it_idx = 0
                 self.it += 1
         else:
-            #close the window automatically after the time has finished
-            game_obj.edeka_buttons_pressable = True
-            game_obj.movement = True
-            game_obj.active_sprites.remove(game_obj.deposit_machine)
-            game_obj.active_sprites.remove(game_obj.close_button)
+            if not self.zero_one_first:
+                #close the window automatically after the time has finished
+                game_obj.edeka_buttons_pressable = True
+                game_obj.movement = True
+                game_obj.active_sprites.remove(game_obj.deposit_machine)
+                game_obj.active_sprites.remove(game_obj.close_button)
 
         #Objekt skalieren
         x_factor = Cwidth/Iwidth

@@ -162,12 +162,7 @@ def handle_mouse_edeka(self, event):
     #stage 3 --------------------------------------------------------------------------------------
     # open the minigame window
     if self.edeka_stage == 3:
-        if self.space_button.is_clicked(event.pos, self.edeka_buttons_pressable):
-            self.edeka_buttons_pressable = False
-            self.movement = False
-
-            self.active_sprites.add(self.space)
-            self.active_sprites.add(self.close_button)
+        pass
 
     #settings button ------------------------------------------------------------------------------
     if self.settings_button.is_clicked(event.pos, self.edeka_buttons_pressable):

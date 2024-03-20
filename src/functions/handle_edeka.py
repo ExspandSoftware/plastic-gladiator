@@ -9,6 +9,10 @@ from classes.progress_bar import ProgressBar
 
 from functions.remove_sprites import remove_sprites
 from functions.inits import *
+from functions.speech_bubble import speech_bubble
+
+timer = 0
+check = True
 
 #load images from assets from home folder
 def load_image_asset(subfolder, file):
@@ -18,6 +22,9 @@ def load_image_asset(subfolder, file):
         return os.path.join(WORKING_DIR, 'assets', 'images', 'edeka', file)
 
 def handle_edeka(self):
+    global timer
+    global check
+    
     #handle each stage individually
     if self.edeka_stage == 1:
 
@@ -36,6 +43,8 @@ def handle_edeka(self):
                     self.buttons_not_pressable = True
                     self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
                     self.edeka_stage = 1
+
+                    self.sp_b_it = 0
         
         #open the next stage
         if self.player.x >= Iwidth - self.player.width//2:
@@ -80,8 +89,14 @@ def handle_edeka(self):
 
             #go to the next stage
             self.edeka_stage = 3
+            timer = pygame.time.get_ticks()
 
     elif self.edeka_stage == 3:
+
+        #stop the players movement so that the dialog can be played
+        if pygame.time.get_ticks() - timer > 1500 and check:
+            check = False
+            self.movement = False
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
@@ -142,3 +157,4 @@ def handle_edeka(self):
                     self.buttons_not_pressable = True
                     self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
         
+                    self.sp_b_it = 0

@@ -2,10 +2,10 @@ import pygame
 
 from config import *
 
-def speech_bubble(text, max_width, corner:bool = False, crn_dir:str = "l"):
+def speech_bubble(text, max_width, corner:bool = False, crn_dir:str = "l", font_size:int = 32):
 
     # modify the text --------------------------------------------------------------
-    font = pygame.font.Font(os.path.join(WORKING_DIR, 'assets', 'fonts', 'game-font.ttf'), 32)
+    font = pygame.font.Font(os.path.join(WORKING_DIR, 'assets', 'fonts', 'game-font.ttf'), font_size)
     words = text.split(' ')
     rendered_lines = []
     rendered_text = ''
@@ -36,12 +36,12 @@ def speech_bubble(text, max_width, corner:bool = False, crn_dir:str = "l"):
     for idx, line in enumerate(rendered_lines):
         line_sf = font.render(rendered_lines[idx], True, (0, 0, 0), (255, 255, 255))
         text_obj.blit(line_sf, (max_width//2 - font.size(rendered_lines[idx])[0]//2, (font.size(rendered_lines[idx])[1] + 5)*idx))
-    padding = 50
+    padding = 70
     width = text_obj.get_width() + padding
     height = text_obj.get_height() + padding
 
     #draw the frame around the text ------------------------------------------------
-    line_width = 10
+    line_width = font_size//3
 
     #basic surface
     if not corner:

@@ -13,6 +13,7 @@ from functions.inits import init_home, init_pre_edeka, init_edeka
 from functions.handle_edeka import handle_edeka
 from functions.remove_sprites import remove_sprites
 from functions.handle_mouse_clicks import handle_mouse_home, handle_mouse_edeka, handle_mouse_pre_edeka
+from functions.handle_draws import handle_draws
 
 from screens.settings_screen import SettingsScreen
 from screens.book_screen import BookScreen
@@ -81,7 +82,7 @@ class Game:
 
         # init the home stage
         init_home(self)
-        pygame.mixer.music.set_volume(0.01)
+        pygame.mixer.music.set_volume(0.25)
         music = pygame.mixer.music.load("./assets/sounds/Startbildschirm_GameMusik.mp3")
         pygame.mixer.music.play(loops=-1)
 
@@ -145,6 +146,9 @@ class Game:
             self.active_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE, progress=self.progress, player_movement=self.movement, game_class=self)
             self.active_sprites.draw(self.screen)
 
+            #hande all drawings that should be done besides the sprites
+            handle_draws(self)
+
             #do everything ontop of the game then end the frame
             self.transition_black(pygame.time.get_ticks(), self.tmp_ticker_start, self.black_transition[1])
             draw_p_data(self, Cwidth, self.STAGE)
@@ -187,7 +191,7 @@ class Game:
                 self.movement = True
 
             #update the volume
-            pygame.mixer.music.set_volume(0.01)
+            pygame.mixer.music.set_volume(0.25)
         else:
             return
 
