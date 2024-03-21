@@ -12,7 +12,7 @@ __supervisor__ = "Nicole Kind (Chemie S4, Abiturjahrgang 2024)"
 __sound__ = "Vincent Winter"
 __concept__ = "..."
 __graphics__ = "..."
-__quality_assurance__ = "Linus Horn (linus@linushorn.dev)"
+__chief_annoyance_officer__ = "Linus Horn (linus@linushorn.dev)"
 EXPORT_VARS = [__author__, __version__, __CIO__, __moderators__, __team__, __head__, __supervisor__, __sound__, __concept__, __graphics__, __quality_assurance__]
 
 #%% Game configuration
