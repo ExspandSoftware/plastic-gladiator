@@ -154,7 +154,7 @@ class Game:
             draw_p_data(self, Cwidth, self.STAGE)
             pygame.display.flip()
 
-            self.clock.tick(60)
+            self.clock.tick(40)
 
         pygame.quit()
 

@@ -91,10 +91,12 @@ def init_pre_edeka(self):
             return os.path.join(WORKING_DIR, 'assets', 'images', 'pre_edeka', file)
 
     # objects in the stage
-    self.edeka_background       = GImage(0, 0, Iwidth, Iheight, load_image_asset('components', 'edeka_front.png'), False)
+    self.edeka_background_top   = GImage(0, 0, Iwidth, Iheight, load_image_asset('components', 'edeka_front_top.png'), False)
+    self.edeka_background_bottom= GImage(791, 126, 380, 594, load_image_asset('components', 'edeka_front_bottom.png'), False)
+    self.door_x, self.door_w    = 810, 168
+    self.door_L                 = GImage(self.door_x, 156, self.door_w, 564, load_image_asset('components', 'Schiebetuer_l.png'), False)
+    self.door_R                 = GImage(self.door_x + self.door_w, 156, self.door_w, 564, load_image_asset('components', 'Schiebetuer_r.png'), False)
     self.player                 = Player(int(Iwidth*0.1), -100, Iwidth//10, Iheight*0.395)
-    self.door_L                 = GImage(int(Iwidth*0.65), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, load_image_asset('components', 'Schiebetuer_l.png'), False)
-    self.door_R                 = GImage(int(Iwidth*0.75), int(Iheight*0.4), int(Iwidth*0.1), int(Iheight*0.3) + Iheight//5, load_image_asset('components', 'Schiebetuer_r.png'), False)
     self.secret_background      = GImage(Iwidth, 0, Iwidth, Iheight, (15*2, 65*2, 34*2))
     self.secret_button_bin      = Button(Iwidth + int(Iwidth*0.75), int(Iheight*0.7 + Iheight//5 - Iheight//7.5), Iwidth//20, Iheight//7.5, (100, 100, 120))
     self.settings_button        = Button(int(Iwidth*0.88), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_button('settings-button.png'))
@@ -109,9 +111,10 @@ def init_pre_edeka(self):
     self.candy_crush_game       = CandyCrush()
 
     #add those objects to the right sprites group
-    self.active_sprites.add(self.edeka_background)
+    self.active_sprites.add(self.edeka_background_bottom)
     self.active_sprites.add(self.door_L)
     self.active_sprites.add(self.door_R)
+    self.active_sprites.add(self.edeka_background_top)
     self.active_sprites.add(self.secret_background)
     self.active_sprites.add(self.secret_button_bin)
     self.active_sprites.add(self.settings_button)

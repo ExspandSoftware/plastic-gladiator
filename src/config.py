@@ -18,7 +18,7 @@ EXPORT_VARS = [__author__, __version__, __CIO__, __moderators__, __team__, __hea
 #%% Game configuration
 
 # set working directory to the root of the project
-os.chdir(os.path.dirname(os.path.abspath(__file__)) + "/..")
+#os.chdir(os.path.dirname(os.path.abspath(__file__)) + "/..")
 WORKING_DIR = os.getcwd()
 
 #Framemode

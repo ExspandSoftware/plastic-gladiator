@@ -61,8 +61,8 @@ class Player(pygame.sprite.Sprite):
 
         self.dx = 0
         self.dy = 0
-        self.walking_speed = 5
-        self.jump_power = 8
+        self.walking_speed = 6.667
+        self.jump_power = 10.333
 
 
     def update(self, Iwidth:int, Iheight:int, Cwidth:int, Cheight:int, *args, **kwargs):
@@ -144,7 +144,7 @@ class Player(pygame.sprite.Sprite):
                             else:   
                                 self.dx -= self.dx/abs(self.dx)*0.2*x_factor
 
-                    self.dy += 0.75
+                    self.dy += 2
                     if self.y + self.dy >= int(Iheight*0.4):
                         self.y = int(Iheight*0.4)
                         self.dy = 0

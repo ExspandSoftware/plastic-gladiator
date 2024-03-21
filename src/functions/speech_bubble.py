@@ -36,7 +36,7 @@ def speech_bubble(text, max_width, corner:bool = False, crn_dir:str = "l", font_
     for idx, line in enumerate(rendered_lines):
         line_sf = font.render(rendered_lines[idx], True, (0, 0, 0), (255, 255, 255))
         text_obj.blit(line_sf, (max_width//2 - font.size(rendered_lines[idx])[0]//2, (font.size(rendered_lines[idx])[1] + 5)*idx))
-    padding = 70
+    padding = font_size * 2
     width = text_obj.get_width() + padding
     height = text_obj.get_height() + padding
 

@@ -6,7 +6,7 @@ secret_stage = False
 
 def walk_into_edeka(self):
     global secret_stage
-    wait_before_transition = 1100 #in Milliseconds 
+    wait_before_transition = 2000 #in Milliseconds 
     
     #come back to home
     if not secret_stage:
@@ -23,18 +23,18 @@ def walk_into_edeka(self):
                     self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
         
         #Open the doors to go into edeka
-        if int(Iwidth*0.6 - Iwidth//15) <= self.player.x <= int(Iwidth*0.8) + self.door_R.width:
-            if self.door_L.x - 2 >= int(Iwidth*0.55):
+        if self.door_x <= self.player.x <= self.door_x + self.door_w*2:
+            if self.door_L.x - 2 >= self.door_x - self.door_w*0.9:
                 self.door_L.x -= 2
-            if self.door_R.x + 2 <= int(Iwidth*0.85):
+            if self.door_R.x + 2 <= self.door_x + self.door_w*2.9:
                 self.door_R.x += 2
         else:
-            if self.door_L.x + 2 <= int(Iwidth*0.65):
+            if self.door_L.x + 2 <= self.door_x:
                 self.door_L.x += 2
-            if self.door_R.x - 2 >= int(Iwidth*0.75):
+            if self.door_R.x - 2 >= self.door_x + self.door_w:
                 self.door_R.x -= 2
 
-        if self.door_L.x - 2 <= int(Iwidth*0.65) and int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
+        if self.door_x <= self.player.x <= self.door_x + self.door_w:
             if not self.black_transition[0]:
                 if self.tmp_ticker_start == 0:
                     self.tmp_ticker_start = pygame.time.get_ticks()
@@ -44,14 +44,14 @@ def walk_into_edeka(self):
                     self.tmp_ticker_start = pygame.time.get_ticks()
                     self.black_transition = (True, "edeka")
                     self.buttons_not_pressable = True
-        elif not self.player.x <= -self.player.width and not int(Iwidth*0.65 - Iwidth//15 * 0.667) <= self.player.x <= int(Iwidth*0.85 - Iwidth//15 * 0.333):
+        elif not self.player.x <= -self.player.width and not self.door_x <= self.player.x <= self.door_x + self.door_w:
             self.tmp_ticker_start = 0
 
         # open secret stage
         if self.player.x >= Iwidth - self.player.width//2:
             #shift the object in the stage
             for idx, sprite in enumerate(self.active_sprites):
-                if idx == 5 or idx == 6:
+                if idx == 6 or idx == 7:
                     pass
                 else:
                     sprite.x -= Iwidth
@@ -65,7 +65,7 @@ def walk_into_edeka(self):
         if self.player.x <= -self.player.width//2:
             #shift the object in the stage
             for idx, sprite in enumerate(self.active_sprites):
-                if idx == 5 or idx == 6:
+                if idx == 7 or idx == 6:
                     pass
                 else:
                     sprite.x += Iwidth
