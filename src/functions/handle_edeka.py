@@ -160,3 +160,4 @@ def handle_edeka(self):
 
                     self.EI_2 = 0
                     self.sp_b_it = 0
+                    self.progress += 0.2

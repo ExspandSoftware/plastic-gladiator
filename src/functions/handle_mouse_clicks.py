@@ -197,3 +197,8 @@ def handle_mouse_edeka(self, event):
             self.active_sprites.remove(self.memory_game)
             self.active_sprites.remove(self.space)
             self.active_sprites.remove(self.rendered_cards)
+
+            if self.edeka_stage == 2:
+                self.progress += 0.2
+            elif self.edeka_stage == 3:
+                self.progress += 0.2

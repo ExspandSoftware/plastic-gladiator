@@ -19,7 +19,7 @@ def handle_draws(self, Cwidth, Cheight):
             if self.EI_2 == 0:
                 self.EI_2 = pygame.time.get_ticks()
 
-            if pygame.time.get_ticks() - self.EI_2 <= 15000:
+            if pygame.time.get_ticks() - self.EI_2 <= 10000:
                 text = "Nun mach deinen ersten Einkauf! Such dir etwas aus dem Regel aus - aber Achtung! Nimm lieber nicht das Falsche. Klick einfach auf das Regal und es beginnt..."
                 sb = speech_bubble(text, Cwidth*0.9)
                 self.screen.blit(sb, (Cwidth//2 - sb.get_width()//2, Cheight - 25 - sb.get_height()))
