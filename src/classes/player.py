@@ -130,7 +130,7 @@ class Player(pygame.sprite.Sprite):
                             if keys[pygame.K_a] and not keys[pygame.K_d] and abs(self.dx) <= self.walking_speed*1.25:
                                 self.dx -= self.walking_speed*0.125
                             if keys[pygame.K_SPACE]:
-                                self.dy = -self.jump_power*1.5
+                                self.dy = -self.jump_power
 
                         if self.dx != 0:
                             self.step_stop += 1

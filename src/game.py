@@ -147,7 +147,7 @@ class Game:
             self.active_sprites.draw(self.screen)
 
             #hande all drawings that should be done besides the sprites
-            handle_draws(self)
+            handle_draws(self, Cwidth, Cheight)
 
             #do everything ontop of the game then end the frame
             self.transition_black(pygame.time.get_ticks(), self.tmp_ticker_start, self.black_transition[1])

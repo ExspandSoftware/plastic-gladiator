@@ -43,7 +43,8 @@ def handle_edeka(self):
                     self.buttons_not_pressable = True
                     self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
                     self.edeka_stage = 1
-
+                    
+                    self.EI_2 = 0
                     self.sp_b_it = 0
         
         #open the next stage
@@ -156,5 +157,6 @@ def handle_edeka(self):
                     self.black_transition = (True, "home")
                     self.buttons_not_pressable = True
                     self.transition_player_info = [Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight//2]
-        
+
+                    self.EI_2 = 0
                     self.sp_b_it = 0

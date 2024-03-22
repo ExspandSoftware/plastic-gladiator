@@ -3,7 +3,7 @@ import pygame
 from config import *
 from functions.speech_bubble import speech_bubble
 
-def handle_draws(self):
+def handle_draws(self, Cwidth, Cheight):
     if self.STAGE == "home":
         pass
 
@@ -16,7 +16,13 @@ def handle_draws(self):
             pass
 
         elif self.edeka_stage == 2:
-            pass
+            if self.EI_2 == 0:
+                self.EI_2 = pygame.time.get_ticks()
+
+            if pygame.time.get_ticks() - self.EI_2 <= 15000:
+                text = "Nun mach deinen ersten Einkauf! Such dir etwas aus dem Regel aus - aber Achtung! Nimm lieber nicht das Falsche. Klick einfach auf das Regal und es beginnt..."
+                sb = speech_bubble(text, Cwidth*0.9)
+                self.screen.blit(sb, (Cwidth//2 - sb.get_width()//2, Cheight - 25 - sb.get_height()))
 
         elif self.edeka_stage == 3:
             
@@ -31,7 +37,7 @@ def handle_draws(self):
                 self.screen.blit(sb, (990 - sb.get_width(), 220 - sb.get_height()))
             
             elif self.sp_b_it == 3:
-                text = "Ja gerne! Koennten Sie es mir dann auch direkt in meinen Beutel geben? Ich möchte gerne ein wenig auf Plastik im Alltag verzichten."
+                text = "Ja gerne! Koennten Sie es mir dann auch direkt in meinen Beutel geben? Ich moechte gerne ein wenig auf Plastik im Alltag verzichten."
                 sb = speech_bubble(text, (950-(self.player.x+self.player.width))*0.9, True, "l", 24)
                 self.screen.blit(sb, (self.player.x + self.player.width*0.7, self.player.y - sb.get_height() + 25))
             
@@ -41,7 +47,7 @@ def handle_draws(self):
                 self.screen.blit(sb, (990 - sb.get_width(), 220 - sb.get_height()))
             
             elif self.sp_b_it == 5:
-                text = "Sind Sie sicher? Wie wäre es mit einer Wette? Wenn ich es schaffe allen Verpackungen auszuweichen, kriege ich das Broetchen so mit?"
+                text = "Sind Sie sicher? Wie waere es mit einer Wette? Wenn ich es schaffe allen Verpackungen auszuweichen, kriege ich das Broetchen so mit?"
                 sb = speech_bubble(text, (950-(self.player.x+self.player.width))*0.9, True, "l", 24)
                 self.screen.blit(sb, (self.player.x + self.player.width*0.7, self.player.y - sb.get_height() + 25))
             

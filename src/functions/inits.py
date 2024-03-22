@@ -92,7 +92,7 @@ def init_pre_edeka(self):
 
     # objects in the stage
     self.edeka_background_top   = GImage(0, 0, Iwidth, Iheight, load_image_asset('components', 'edeka_front_top.png'), False)
-    self.edeka_background_bottom= GImage(791, 126, 380, 594, load_image_asset('components', 'edeka_front_bottom.png'), False)
+    self.edeka_background_bottom= GImage(791, 126, 360, 594, load_image_asset('components', 'edeka_front_bottom.png'), False)
     self.door_x, self.door_w    = 810, 168
     self.door_L                 = GImage(self.door_x, 156, self.door_w, 545, load_image_asset('components', 'Schiebetuer_l.png'), False)
     self.door_R                 = GImage(self.door_x + self.door_w, 156, self.door_w, 545, load_image_asset('components', 'Schiebetuer_r.png'), False)
@@ -125,8 +125,11 @@ def init_pre_edeka(self):
 def init_edeka(self):
     #pop-up screens
     self.edeka_buttons_pressable = True
-    self.interval_ms = 5000
     self.time_interval = pygame.time.get_ticks()
+
+    self.EI_2 = 0
+
+    self.interval_ms = 5000
     self.sp_b_it = 0
 
     #load images from assets from home folder
@@ -144,7 +147,7 @@ def init_edeka(self):
 
     # obejcts in stage 2
     self.edeka_2_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Suessigkeitentheke.png'), False)
-    self.memory_button              = Button(Iwidth//2 - 250, Iheight//2 - 250, 500, 500, (0, 0, 0))
+    self.memory_button              = Button(Iwidth//2 - 500, Iheight//2 - 350, 1000, 625, (0, 0, 0), False, True)
     self.memory_game                = MemoryGame(0, 0, 800, 600, (40, 40, 40), 60, (123, 123, 123))
     self.memory_game.create_board(self.cards)
     self.rendered_cards             = self.memory_game.render()

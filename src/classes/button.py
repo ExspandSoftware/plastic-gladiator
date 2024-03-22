@@ -11,7 +11,10 @@ class Button(pygame.sprite.Sprite):
         self.width = width
         self.height = height
 
-        self.image = basic_rect(width, height)
+        if background:
+            self.image = basic_rect(width, height)
+        else:
+            self.image = pygame.Surface((width, height), pygame.SRCALPHA)
         if type(image) == str:
             self.ground = pygame.image.load(image)
             if background:
