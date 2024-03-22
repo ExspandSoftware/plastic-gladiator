@@ -61,8 +61,8 @@ class Player(pygame.sprite.Sprite):
 
         self.dx = 0
         self.dy = 0
-        self.walking_speed = 6.667
-        self.jump_power = 10.333
+        self.walking_speed = 7
+        self.jump_power = 15
 
 
     def update(self, Iwidth:int, Iheight:int, Cwidth:int, Cheight:int, *args, **kwargs):
@@ -110,7 +110,7 @@ class Player(pygame.sprite.Sprite):
                             else:   
                                 self.dx -= self.dx/abs(self.dx)*0.2*x_factor
 
-                    self.dy += 0.5
+                    self.dy += 1.5
                     if self.y + self.dy >= int(ground):
                         self.y = int(ground)
                         self.dy = 0
@@ -119,9 +119,11 @@ class Player(pygame.sprite.Sprite):
                     self.y += self.dy
 
                 elif value == "edeka":
+                    ground = Iheight*0.95 - self.height
+
                     #animationshandler
                     keys = pygame.key.get_pressed()
-                    if self.y >= int(Iheight*0.4) - 1:
+                    if self.y == ground:
                         if movement_enabled:
                             if keys[pygame.K_d] and not keys[pygame.K_a] and abs(self.dx) <= self.walking_speed*1.25:
                                 self.dx += self.walking_speed*0.125
@@ -144,9 +146,9 @@ class Player(pygame.sprite.Sprite):
                             else:   
                                 self.dx -= self.dx/abs(self.dx)*0.2*x_factor
 
-                    self.dy += 2
-                    if self.y + self.dy >= int(Iheight*0.4):
-                        self.y = int(Iheight*0.4)
+                    self.dy += 1
+                    if self.y + self.dy >= ground:
+                        self.y = ground
                         self.dy = 0
 
                     self.x += self.dx

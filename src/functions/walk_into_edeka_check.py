@@ -26,7 +26,7 @@ def walk_into_edeka(self):
         if self.door_x <= self.player.x <= self.door_x + self.door_w*2:
             if self.door_L.x - 2 >= self.door_x - self.door_w*0.9:
                 self.door_L.x -= 2
-            if self.door_R.x + 2 <= self.door_x + self.door_w*2.9:
+            if self.door_R.x + 2 <= self.door_x + self.door_w*1.9:
                 self.door_R.x += 2
         else:
             if self.door_L.x + 2 <= self.door_x:

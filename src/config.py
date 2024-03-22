@@ -13,7 +13,7 @@ __sound__ = "Vincent Winter"
 __concept__ = "..."
 __graphics__ = "..."
 __chief_annoyance_officer__ = "Linus Horn (linus@linushorn.dev)"
-EXPORT_VARS = [__author__, __version__, __CIO__, __moderators__, __team__, __head__, __supervisor__, __sound__, __concept__, __graphics__, __quality_assurance__]
+EXPORT_VARS = [__author__, __version__, __CIO__, __moderators__, __team__, __head__, __supervisor__, __sound__, __concept__, __graphics__, __chief_annoyance_officer__]
 
 #%% Game configuration
 

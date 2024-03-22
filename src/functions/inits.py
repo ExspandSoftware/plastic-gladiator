@@ -94,8 +94,8 @@ def init_pre_edeka(self):
     self.edeka_background_top   = GImage(0, 0, Iwidth, Iheight, load_image_asset('components', 'edeka_front_top.png'), False)
     self.edeka_background_bottom= GImage(791, 126, 380, 594, load_image_asset('components', 'edeka_front_bottom.png'), False)
     self.door_x, self.door_w    = 810, 168
-    self.door_L                 = GImage(self.door_x, 156, self.door_w, 564, load_image_asset('components', 'Schiebetuer_l.png'), False)
-    self.door_R                 = GImage(self.door_x + self.door_w, 156, self.door_w, 564, load_image_asset('components', 'Schiebetuer_r.png'), False)
+    self.door_L                 = GImage(self.door_x, 156, self.door_w, 545, load_image_asset('components', 'Schiebetuer_l.png'), False)
+    self.door_R                 = GImage(self.door_x + self.door_w, 156, self.door_w, 545, load_image_asset('components', 'Schiebetuer_r.png'), False)
     self.player                 = Player(int(Iwidth*0.1), -100, Iwidth//10, Iheight*0.395)
     self.secret_background      = GImage(Iwidth, 0, Iwidth, Iheight, (15*2, 65*2, 34*2))
     self.secret_button_bin      = Button(Iwidth + int(Iwidth*0.75), int(Iheight*0.7 + Iheight//5 - Iheight//7.5), Iwidth//20, Iheight//7.5, (100, 100, 120))
