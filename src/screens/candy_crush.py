@@ -83,7 +83,6 @@ class CandyCrush(pygame.sprite.Sprite):
         self.font = pygame.font.Font(os.path.join(WORKING_DIR, "assets", "fonts", "game-font.ttf"), 100)
 
         # fill board state with Candy objects
-        
         candy_options = [
             os.path.join(WORKING_DIR, "assets", "images", "pre_edeka", "candy_crush", "Glasflasche-mit-Pfand.png"),
             os.path.join(WORKING_DIR, "assets", "images", "pre_edeka", "candy_crush", "Glasflasche-ohne-Pfand.png"),
@@ -160,9 +159,8 @@ class CandyCrush(pygame.sprite.Sprite):
                 value.movement = True
                 value.active_sprites.remove(value.candy_crush_game)
                 value.active_sprites.remove(value.close_button)
-                value.plastic_bottles = self.saved_bottles
-
-            self.progress += 0.2
+                value.inventory_screen.items[0][1] = self.saved_bottles
+                value.progress += 0.2
 
         # scale the image to the window size
         x_factor = Cwidth/Iwidth

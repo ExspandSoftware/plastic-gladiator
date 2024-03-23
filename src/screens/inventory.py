@@ -18,13 +18,13 @@ class Inventory(pygame.sprite.Sprite):
         
         # other vars
         self.items = [
-            [pygame.image.load(os.path.join(WORKING_DIR, "assets", "images", "pre_edeka", "candy_crush", "Plastik-Flasche-mit-Pfand.png")), 0],
+            [pygame.image.load(os.path.join(WORKING_DIR, "assets", "images", "pre_edeka", "candy_crush", "Plastik-Flasche-mit-Pfand.png")), 5],
             [pygame.image.load(os.path.join(WORKING_DIR, "assets", "images", "edeka", "space", "bag.png")), 1],
-            [pygame.image.load(os.path.join(WORKING_DIR, "assets", "images", "edeka", "space", "bag.png")), 3],
-            [pygame.image.load(os.path.join(WORKING_DIR, "assets", "images", "edeka", "space", "bag.png")), 1],
+            [pygame.image.load(os.path.join(WORKING_DIR, "assets", "images", "comp", "book.png")), 3],
+            [pygame.image.load(os.path.join(WORKING_DIR, "assets", "images", "comp", "case.png")), 1],
         ]
         for item in self.items:
-            item[0] = pygame.transform.scale(item[0], (Iheight*0.12, Iheight*0.12))
+            item[0] = pygame.transform.scale(item[0], (Iheight*0.15, Iheight*0.15))
         self.number_of_items = len(self.items)
         self.interface = pygame.Surface((Iheight*0.2*self.number_of_items, Iheight*0.2))
         #self.inventory_frame = pygame.image.load(os.path.join(WORKING_DIR, "assets", "images", "buttons", "inventory_frame.png"))
@@ -49,7 +49,7 @@ class Inventory(pygame.sprite.Sprite):
             self.interface.blit(self.items[i][0], (Iheight*0.2*i + Iheight*0.1 - self.items[i][0].get_width()//2, Iheight*0.1 - self.items[i][0].get_height()//2))
 
             text = self.font.render(str(self.items[i][1])+"x", True, (255, 255, 255))
-            self.interface.blit(text, (Iheight*0.2*i + Iheight*0.15 - text.get_width(), Iheight*0.16 - text.get_height()))
+            self.interface.blit(text, (Iheight*0.2*i + Iheight*0.175 - text.get_width(), Iheight*0.18 - text.get_height()))
 
 
         #setting up the interface

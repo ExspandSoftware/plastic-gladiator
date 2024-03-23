@@ -95,7 +95,7 @@ def handle_edeka(self):
     elif self.edeka_stage == 3:
 
         #stop the players movement so that the dialog can be played
-        if pygame.time.get_ticks() - timer > 1500 and check:
+        if pygame.time.get_ticks() - timer > 500 and check:
             check = False
             self.movement = False
 

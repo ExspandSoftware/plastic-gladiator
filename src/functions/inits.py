@@ -129,7 +129,7 @@ def init_edeka(self):
         ]
 
     self.interval_ms = 5000
-    self.sp_b_it = 0
+    self.sp_b_it = -1
 
     #load images from assets from home folder
     def load_image_asset(subfolder, file):
