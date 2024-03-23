@@ -26,7 +26,7 @@ class ProgressBar(pygame.sprite.Sprite):
         self.background = basic_rect(self.width, self.height)
 
         #determine idx
-        idx = int(progress/0.2)
+        idx = int(progress/0.2)%len(self.testtubes)
 
         # draw testtube
         self.background.blit(self.testtubes[idx], self.testtubes[idx].get_rect(topleft=(75, 18)))
