@@ -4,6 +4,8 @@ import math
 
 from classes.memory_card import MemoryCard
 
+from functions.basic_rect import basic_rect
+
 class MemoryGame(pygame.sprite.Sprite):
     def __init__(self, x: int, y: int, width: int, height: int, image, card_size: int, default_card_image):
         super().__init__()
@@ -13,8 +15,7 @@ class MemoryGame(pygame.sprite.Sprite):
         self.width = width
         self.height = height
 
-        self.image = pygame.Surface((width, height))
-        self.image.fill(image)
+        self.image = basic_rect(width, height)
         self.rect = self.image.get_rect(topleft=(x, y))
 
         self.card_size = card_size
@@ -23,8 +24,13 @@ class MemoryGame(pygame.sprite.Sprite):
         self.card_is_open = False
         self.opened_card = None
     
-    def update(self, *args, **kwargs):
-        pass
+    def update(self, Iwidth:int, Iheight:int, Cwidth:int, Cheight:int, *args, **kwargs):
+        value = kwargs["game_class"]
+
+        trp_sfc = pygame.Surface((Iwidth, Iheight), pygame.SRCALPHA)
+        trp_sfc.fill((0, 0, 0, 150))
+        value.screen.blit(trp_sfc, (0, 0))
+
     
     def create_board(self, cards: list[tuple[tuple[int, int, int], tuple[int, int, int]]]):
 
@@ -42,7 +48,7 @@ class MemoryGame(pygame.sprite.Sprite):
         random.shuffle(self.cards)
 
         for idx, card in enumerate(self.cards):
-            card.set_position(((self.width - math.ceil(math.sqrt(len(self.cards))) * 1.1 * self.card_size + 0.1 * self.card_size)//2 + (idx % math.ceil(math.sqrt(len(self.cards)))) * 1.1 * self.card_size), ((self.height - int(math.sqrt(len(self.cards))) * 1.1 * self.card_size + 0.1 * self.card_size)//2 + int(idx//math.ceil(math.sqrt(len(self.cards))) % int(math.sqrt(len(self.cards)))) * 1.1 * self.card_size))
+            card.set_position(((self.width - math.ceil(math.sqrt(len(self.cards))) * 1.1 * self.card_size + 0.1 * self.card_size)//2 + (idx % math.ceil(math.sqrt(len(self.cards)))) * 1.1 * self.card_size) + 316, ((self.height - int(math.sqrt(len(self.cards))) * 1.1 * self.card_size + 0.1 * self.card_size)//2 + int(idx//math.ceil(math.sqrt(len(self.cards))) % int(math.sqrt(len(self.cards)))) * 1.1 * self.card_size) + 36)
             card_group.add(card)
 
         return card_group

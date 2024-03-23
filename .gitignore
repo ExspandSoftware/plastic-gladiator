@@ -1,5 +1,5 @@
 # files that are created by sciptes or other files that don't need to be committed to github
-GameState.json
+# GameState.json
 
  Byte-compiled / optimized / DLL files
 __pycache__/
