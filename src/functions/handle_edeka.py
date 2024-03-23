@@ -31,7 +31,7 @@ def handle_edeka(self):
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
             if not self.black_transition[0]:
-                wait_before_transition = 1100 #in Milliseconds 
+                wait_before_transition = 500 #in Milliseconds 
 
                 if self.tmp_ticker_start == 0:
                     self.tmp_ticker_start = pygame.time.get_ticks()

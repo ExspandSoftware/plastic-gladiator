@@ -104,10 +104,10 @@ class SettingsScreen(pygame.sprite.Sprite):
 
 
     def return_to_menu(self, game_obj):
-        remove_sprites(game_obj)
-        inits.init_home(game_obj)
-
-        game_obj.home_buttons_pressable = True
-        game_obj.pre_edeka_buttons_pressable = True
-        game_obj.edeka_buttons_pressable = True
-        game_obj.movement = True
+        print("aa")
+        if not game_obj.black_transition[0]:
+            print("bb")
+            pygame.mixer.Sound.play(game_obj.whoosh_sound)
+            game_obj.tmp_ticker_start = pygame.time.get_ticks()
+            game_obj.black_transition = (True, "home")
+            game_obj.transition_player_info = [533, 240, 213, 360]
