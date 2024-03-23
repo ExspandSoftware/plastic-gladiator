@@ -63,7 +63,8 @@ class Game:
         self.progress               = _try_load_from_json(os.path.join(WORKING_DIR, 'JSONs', 'GameState.json'), 'progress', 0)
 
         #update screen with data
-        self.font_size              = FONT_SIZE
+        self.font_size              = _try_load_from_json(os.path.join(WORKING_DIR, 'JSONs', 'settings.json'), 'font_size', 0)
+        self.volume                 = _try_load_from_json(os.path.join(WORKING_DIR, 'JSONs', 'settings.json'), 'volume', 0.25)
         self.toggle_data            = False
 
         #transitions
@@ -82,7 +83,7 @@ class Game:
 
         # init the home stage
         init_home(self)
-        pygame.mixer.music.set_volume(0.25)
+        pygame.mixer.music.set_volume(self.volume)
         music = pygame.mixer.music.load("./assets/sounds/Startbildschirm_GameMusik.mp3")
         pygame.mixer.music.play(loops=-1)
 
@@ -191,7 +192,7 @@ class Game:
                 self.movement = True
 
             #update the volume
-            pygame.mixer.music.set_volume(0.25)
+            pygame.mixer.music.set_volume(self.volume)
         else:
             return
 
@@ -207,7 +208,7 @@ class Game:
     
     def __quit(self):
         #save game and quit
-        save_state(self)
+        save_state(self.progress, self.font_size, self.volume)
         
         pygame.quit()
         sys.exit(1)
