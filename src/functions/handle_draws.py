@@ -1,9 +1,16 @@
 import pygame
+import random
 
 from config import *
 from functions.speech_bubble import speech_bubble
 
+price = random.randint(3, 13)
+cent = random.randint(97, 99)
+price = str(price) + "," + str(cent)
+
 def handle_draws(self, Cwidth, Cheight):
+    global price
+
     if self.STAGE == "home":
         pass
 
@@ -68,4 +75,31 @@ def handle_draws(self, Cwidth, Cheight):
                 self.sp_b_it += 1
 
         elif self.edeka_stage == 4:
-            pass
+
+            if self.sb_it == 1:
+                text = f"Moin! Das macht einmal {price}€ bitte."
+                sb = speech_bubble(text, (794-(self.player.x+self.player.width))*0.9, True, "r", 24)
+                self.screen.blit(sb, (794 - sb.get_width(), 155 - sb.get_height()))
+            
+            elif self.sb_it == 2:
+                text = "Hallo! Hier bitte. Und, wie hab ich mich geschlagen?"
+                sb = speech_bubble(text, (794-(self.player.x+self.player.width))*0.9, True, "l", 24)
+                self.screen.blit(sb, (self.player.x + self.player.width*0.7, self.player.y - sb.get_height() + 25))
+            
+            elif self.sb_it == 3:
+                text = f"Sehr gut! Aber denk immer dran: Guck lieber zweimal hin, bevor du etwas kaufst. "
+                sb = speech_bubble(text, (794-(self.player.x+self.player.width))*0.9, True, "r", 24)
+                self.screen.blit(sb, (794 - sb.get_width(), 155 - sb.get_height()))
+
+            elif self.sb_it == 4:
+                text = f"Und halte den Abfall, den du produzierst immer moeglichst gering. Es gibt viele Wege und Moeglichkeiten sparsam zu sein..."
+                sb = speech_bubble(text, (794-(self.player.x+self.player.width))*0.9, True, "r", 24)
+                self.screen.blit(sb, (794 - sb.get_width(), 155 - sb.get_height()))
+            
+            elif self.sb_it == 5:
+                self.edeka_buttons_pressable = True
+                self.movement = True
+            
+            if pygame.time.get_ticks() - self.time_interval > self.interval_ms and self.sb_it <= 5:
+                self.time_interval = pygame.time.get_ticks()
+                self.sb_it += 1

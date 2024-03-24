@@ -12,7 +12,8 @@ from functions.inits import *
 from functions.speech_bubble import speech_bubble
 
 timer = 0
-check = True
+check_3 = True
+check_4 = True
 
 #load images from assets from home folder
 def load_image_asset(subfolder, file):
@@ -23,7 +24,8 @@ def load_image_asset(subfolder, file):
 
 def handle_edeka(self):
     global timer
-    global check
+    global check_3
+    global check_4
     
     #handle each stage individually
     if self.edeka_stage == 1:
@@ -95,8 +97,8 @@ def handle_edeka(self):
     elif self.edeka_stage == 3:
 
         #stop the players movement so that the dialog can be played
-        if pygame.time.get_ticks() - timer > 500 and check:
-            check = False
+        if pygame.time.get_ticks() - timer > 500 and check_3:
+            check_3 = False
             self.movement = False
 
         #go back to the previous stage
@@ -126,8 +128,14 @@ def handle_edeka(self):
 
             #go to the next stage
             self.edeka_stage = 4
+            timer = pygame.time.get_ticks()
 
     elif self.edeka_stage == 4:
+
+        #stop the players movement so that the dialog can be played
+        if pygame.time.get_ticks() - timer > 200 and check_4:
+            check_4 = False
+            self.movement = False
 
         #go back to the previous stage
         if self.player.x <= -self.player.width//2:
