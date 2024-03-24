@@ -33,6 +33,8 @@ class SettingsScreen(pygame.sprite.Sprite):
 
         self.padding = 100
 
+        self.click_sound = pygame.mixer.Sound("./assets/sounds/button_click.mp3")
+
         #variables for the settings
         self.font = pygame.font.Font(os.path.join(WORKING_DIR, 'assets', 'fonts', 'game-font.ttf'), 50)
         self.volume = self._try_load_from_json(os.path.join(WORKING_DIR, 'JSONs', 'settings.json'), 'volume', 0.25)
@@ -97,6 +99,7 @@ class SettingsScreen(pygame.sprite.Sprite):
 
         if (x <= pos[0] - self.ix <= x + background.get_width()) and (y <= pos[1] - self.iy <= y + background.get_height()) and clicked:
             action(game_obj)
+            pygame.mixer.Sound.play(self.click_sound)
 
 
     def save_settings(self, game_obj):
