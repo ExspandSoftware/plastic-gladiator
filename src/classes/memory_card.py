@@ -28,7 +28,6 @@ class MemoryCard(pygame.sprite.Sprite):
 
     def is_clicked(self, x: int, y: int) -> bool:
         if self.x < x < self.x + self.width and self.y < y < self.y + self.height:
-            self.turn()
             return True
         else:
             return False

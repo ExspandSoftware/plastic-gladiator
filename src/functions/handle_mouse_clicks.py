@@ -1,4 +1,5 @@
 import pygame
+import time
 
 from config import *
 
@@ -155,9 +156,12 @@ def handle_mouse_edeka(self, event):
             self.movement = False
 
             self.active_sprites.add(self.memory_game)
-            self.active_sprites.add(self.rendered_cards)
+            self.active_sprites.add(self.memory_game.render())
 
             self.active_sprites.add(self.close_button)
+        
+        self.memory_game.is_clicked(event.pos)
+
 
     #stage 3 --------------------------------------------------------------------------------------
     # open the minigame window
@@ -195,8 +199,10 @@ def handle_mouse_edeka(self, event):
             self.active_sprites.remove(self.settings_screen)
             self.active_sprites.remove(self.deposit_machine)
             self.active_sprites.remove(self.memory_game)
-            self.active_sprites.remove(self.space)
             self.active_sprites.remove(self.rendered_cards)
+            self.active_sprites.remove(self.space)
+
+            self.memory_game.close()
 
             if self.edeka_stage == 2:
                 self.progress += 0.2
