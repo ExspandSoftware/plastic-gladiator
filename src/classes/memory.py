@@ -74,8 +74,12 @@ class MemoryGame(pygame.sprite.Sprite):
                     if not self.card_is_open:
                         if self.opened_card is not None:
                             self.opened_card.turn()
-                        if self.opened_card2 is not None:
-                            self.opened_card2.turn()
+                            self.opened_card = None
+                            if self.opened_card2 is not None:
+                                self.opened_card2.turn()
+                                self.opened_card2 = None
+                            return
+                                         
                         self.card_is_open = True
                         self.opened_card = card
                     else:
