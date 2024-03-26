@@ -54,7 +54,7 @@ class Game:
         #Pygame Window -----------------------------------------------------------------------------------------------------
         global monitor_size
         monitor_size                = (pygame.display.Info().current_w, pygame.display.Info().current_h)
-        self.screen                 = pygame.display.set_mode((Iwidth, Iheight), pygame.RESIZABLE)
+        self.screen                 = pygame.display.set_mode((Iwidth, Iheight))
         pygame.display.set_caption('P.V.P. - Player vs. Polution (Poly...)')
         pygame.display.set_icon(pygame.image.load(os.path.join(WORKING_DIR, 'assets', 'images', 'icon.png')))
 
@@ -103,6 +103,7 @@ class Game:
                 if keys[pygame.K_F1]:
                     self.show_data = not self.show_data
                 
+                """
                 if (keys[pygame.K_RCTRL] or keys[pygame.K_LCTRL]) and keys[pygame.K_f]:
                     self.is_fullscreen = not self.is_fullscreen
                     
@@ -113,6 +114,7 @@ class Game:
                         
                         # Workaround for https://github.com/pygame/pygame/issues/3107 from the comment https://github.com/pygame/pygame/issues/3107#issuecomment-1146788096 
                         self.screen = pygame.display.set_mode((1280, 720) if monitor_size[0] <= 1920 else (1920, 1080), pygame.RESIZABLE)
+                """
 
             # run code for mouse clicks (buttons)
             if event.type == pygame.MOUSEBUTTONDOWN:
