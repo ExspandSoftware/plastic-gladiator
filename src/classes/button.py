@@ -47,7 +47,7 @@ class Button(pygame.sprite.Sprite):
     def is_clicked(self, pos: list[int, int], is_clickable: bool = True):
         if self._mouse_is_over_button(pos) and is_clickable:
             if self.sound:
-                pygame.mixer.Sound.play(self.click_sound)
+                pygame.mixer.Channel(2).play(self.click_sound)
             return True
         else:
             return False

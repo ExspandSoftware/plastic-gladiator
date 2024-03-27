@@ -12,6 +12,7 @@ class MemoryCard(pygame.sprite.Sprite):
         self.is_open = False
         self.topside_image = image
         self.backside_image = backside_image
+        self.click_sound = pygame.mixer.Sound("./assets/sounds/button_click.mp3")
 
         self.image = pygame.Surface((card_size, card_size))
         self.image.fill(backside_image)
@@ -28,6 +29,7 @@ class MemoryCard(pygame.sprite.Sprite):
 
     def is_clicked(self, x: int, y: int) -> bool:
         if self.x < x < self.x + self.width and self.y < y < self.y + self.height:
+            pygame.mixer.Channel(2).play(self.click_sound)
             return True
         else:
             return False

@@ -159,6 +159,9 @@ def handle_mouse_edeka(self, event):
             self.active_sprites.add(self.memory_game.render())
 
             self.active_sprites.add(self.close_button)
+
+            self.active_sprites.remove(self.settings_button)
+            self.active_sprites.remove(self.inventory_button)
         
         self.memory_game.is_clicked(event.pos)
 
@@ -201,6 +204,9 @@ def handle_mouse_edeka(self, event):
             self.active_sprites.remove(self.memory_game)
             self.active_sprites.remove(self.rendered_cards)
             self.active_sprites.remove(self.space)
+
+            self.active_sprites.add(self.settings_button)
+            self.active_sprites.add(self.inventory_button)
 
             self.memory_game.close()
 

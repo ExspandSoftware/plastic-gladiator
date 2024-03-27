@@ -20,24 +20,28 @@ class MemoryGame(pygame.sprite.Sprite):
         self.width = width
         self.height = height
 
-        self.image = basic_rect(width, height)
-        self.rect = self.image.get_rect(topleft=(x, y))
+        self.image = pygame.Surface((Iwidth, Iheight), pygame.SRCALPHA)
+        self.image.fill((0, 0, 0, 150))
+        self.game_window = basic_rect(width, height)
+        self.rect = self.image.get_rect(topleft=(0, 0))
 
         self.card_size = card_size
         self.default_card_image = default_card_image
         self.cards = None
         self.clickable_cards = None
         self.card_is_open = False
+        self.cards_should_turn = False
         self.opened_card = None
         self.opened_card2 = None
         self.turn_count = 0
+
+        self.correct_sound = pygame.mixer.Sound("./assets/sounds/accomplishment_sound.wav")
+        self.wrong_sound = pygame.mixer.Sound("./assets/sounds/wrong_sound.wav")
     
     def update(self, Iwidth:int, Iheight:int, Cwidth:int, Cheight:int, *args, **kwargs):
         value = kwargs["game_class"]
 
-        trp_sfc = pygame.Surface((Iwidth, Iheight), pygame.SRCALPHA)
-        trp_sfc.fill((0, 0, 0, 150))
-        value.screen.blit(trp_sfc, (0, 0))
+        self.image.blit(self.game_window, self.game_window.get_rect(topleft=(self.x, self.y)))
 
     
     def create_board(self, cards: list[tuple[tuple[int, int, int], tuple[int, int, int]]]):
@@ -66,8 +70,14 @@ class MemoryGame(pygame.sprite.Sprite):
 
         for card in self.clickable_cards:
             if card.is_clicked(x, y):
-                print(card.id)
-                if card == self.opened_card:
+                if self.cards_should_turn:
+                    self.cards_should_turn = False
+                    self.opened_card.turn()
+                    self.opened_card2.turn()
+                    self.opened_card = None
+                    self.opened_card2 = None
+                    return
+                elif card == self.opened_card:
                     return
                 else:
                     card.turn()
@@ -86,10 +96,13 @@ class MemoryGame(pygame.sprite.Sprite):
                         self.turn_count += 1
                         if self.opened_card.id != card.id:
                             self.card_is_open = False
+                            self.cards_should_turn = True
                             self.opened_card2 = card
+                            pygame.mixer.Channel(1).play(self.wrong_sound)
                         else:
                             self.clickable_cards.remove(card)
                             self.clickable_cards.remove(self.opened_card)
+                            pygame.mixer.Channel(1).play(self.correct_sound)
                             self.card_is_open = False
                             self.opened_card = None
                             if len(self.clickable_cards) == 0:
@@ -106,7 +119,11 @@ class MemoryGame(pygame.sprite.Sprite):
         
     def close(self):
         self.turn_count = 0
+        self.card_is_open = False
+        self.cards_should_turn = False
+        self.opened_card = None
+        self.opened_card2 = None
         for card in self.cards:
             if card.is_open:
-                card.close()      
+                card.turn()
             
