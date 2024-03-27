@@ -55,9 +55,11 @@ class Inventory(pygame.sprite.Sprite):
         #setting up the interface
         self.image.blit(self.interface, self.interface.get_rect(topleft=(Iwidth//2 - self.interface.get_width()//2, Iheight//2 - self.interface.get_height()//2)))
 
+        """
         #Objekt skalieren
         x_factor = Cwidth/Iwidth
         y_factor = Cheight/Iheight
 
         self.image = pygame.transform.scale(self.image, (self.width * x_factor, self.height * y_factor))
-        self.rect = self.image.get_rect(topleft=(self.x * x_factor, self.y * y_factor))
+        """
+        self.rect = self.image.get_rect(topleft=(self.x, self.y))

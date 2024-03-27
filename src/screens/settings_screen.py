@@ -71,12 +71,14 @@ class SettingsScreen(pygame.sprite.Sprite):
         self.show_button("Speichern", self.interface.get_height() - self.padding - 200, pos, clicked, self.save_settings, kwargs["game_class"])
         self.show_button("Zum Hauptmenue", self.interface.get_height() - self.padding - 100, pos, clicked, self.return_to_menu, kwargs["game_class"])
 
+        """
         #Objekt skalieren
         x_factor = Cwidth/Iwidth
         y_factor = Cheight/Iheight
 
         self.image = pygame.transform.scale(self.image, (self.width * x_factor, self.height * y_factor))
-        self.rect = self.image.get_rect(topleft=(self.x * x_factor, self.y * y_factor))
+        """
+        self.rect = self.image.get_rect(topleft=(self.x, self.y))
 
 
     def show_option(self, text, value, y):

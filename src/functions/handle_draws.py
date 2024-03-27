@@ -78,7 +78,7 @@ def handle_draws(self, Cwidth, Cheight):
 
             if self.sb_it == 1:
                 text = f"Moin! Das macht einmal {price}€ bitte."
-                sb = speech_bubble(text, (794-(self.player.x+self.player.width))*0.9, True, "r", 24)
+                sb = speech_bubble(text, 550, True, "r", 24)
                 self.screen.blit(sb, (794 - sb.get_width(), 155 - sb.get_height()))
             
             elif self.sb_it == 2:
@@ -88,12 +88,12 @@ def handle_draws(self, Cwidth, Cheight):
             
             elif self.sb_it == 3:
                 text = f"Sehr gut! Aber denk immer dran: Guck lieber zweimal hin, bevor du etwas kaufst. "
-                sb = speech_bubble(text, (794-(self.player.x+self.player.width))*0.9, True, "r", 24)
+                sb = speech_bubble(text, 550, True, "r", 24)
                 self.screen.blit(sb, (794 - sb.get_width(), 155 - sb.get_height()))
 
             elif self.sb_it == 4:
                 text = f"Und halte den Abfall, den du produzierst immer moeglichst gering. Es gibt viele Wege und Moeglichkeiten sparsam zu sein..."
-                sb = speech_bubble(text, (794-(self.player.x+self.player.width))*0.9, True, "r", 24)
+                sb = speech_bubble(text, 550, True, "r", 24)
                 self.screen.blit(sb, (794 - sb.get_width(), 155 - sb.get_height()))
             
             elif self.sb_it == 5:

@@ -104,6 +104,7 @@ class Game:
                 if keys[pygame.K_F1]:
                     self.show_data = not self.show_data
                 
+                """
                 if (keys[pygame.K_RCTRL] or keys[pygame.K_LCTRL]) and keys[pygame.K_f]:
                     self.is_fullscreen = not self.is_fullscreen
                     
@@ -114,7 +115,8 @@ class Game:
                         
                         # Workaround for https://github.com/pygame/pygame/issues/3107 from the comment https://github.com/pygame/pygame/issues/3107#issuecomment-1146788096 
                         self.screen = pygame.display.set_mode((1280, 720) if monitor_size[0] <= 1920 else (1920, 1080), pygame.RESIZABLE)
-
+                """
+                
             # run code for mouse clicks (buttons)
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if event.button == 1:

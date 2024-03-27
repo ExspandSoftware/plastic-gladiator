@@ -79,9 +79,11 @@ class DepositeMachine(pygame.sprite.Sprite):
                     game_obj.active_sprites.remove(game_obj.deposit_machine)
                     game_obj.active_sprites.remove(game_obj.close_button)
 
+        """
         #Objekt skalieren
         x_factor = Cwidth/Iwidth
         y_factor = Cheight/Iheight
 
         self.image = pygame.transform.scale(self.image, (self.width * x_factor, self.height * y_factor))
-        self.rect = self.image.get_rect(topleft=(self.x * x_factor, self.y * y_factor))
+        """
+        self.rect = self.image.get_rect(topleft=(self.x, self.y))
