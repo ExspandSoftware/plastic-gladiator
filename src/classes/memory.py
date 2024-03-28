@@ -25,6 +25,8 @@ class MemoryGame(pygame.sprite.Sprite):
         self.game_window = basic_rect(width, height)
         self.rect = self.image.get_rect(topleft=(0, 0))
 
+        self.turn_count_background = basic_rect(250, 75)
+
         self.card_size = card_size
         self.default_card_image = default_card_image
         self.cards = None
@@ -35,6 +37,7 @@ class MemoryGame(pygame.sprite.Sprite):
         self.opened_card2 = None
         self.turn_count = 0
 
+        self.font = pygame.font.Font(os.path.join(WORKING_DIR, "assets", "fonts", "game-font.ttf"), 55)
         self.correct_sound = pygame.mixer.Sound("./assets/sounds/accomplishment_sound.wav")
         self.wrong_sound = pygame.mixer.Sound("./assets/sounds/wrong_sound.wav")
     
@@ -42,6 +45,10 @@ class MemoryGame(pygame.sprite.Sprite):
         value = kwargs["game_class"]
 
         self.image.blit(self.game_window, self.game_window.get_rect(topleft=(self.x, self.y)))
+        self.image.blit(self.turn_count_background, self.turn_count_background.get_rect(topleft=(Iwidth//2 - 125, 0)))
+
+        turn_count_text = self.font.render(f"Züge: {str(0) + str(self.turn_count) if self.turn_count < 10 else str(self.turn_count)}", True, (255, 255, 255))
+        self.image.blit(turn_count_text, turn_count_text.get_rect(center=(Iwidth//2, 40)))
 
     
     def create_board(self, cards: list[tuple[tuple[int, int, int], tuple[int, int, int]]]):
@@ -93,8 +100,10 @@ class MemoryGame(pygame.sprite.Sprite):
                         self.card_is_open = True
                         self.opened_card = card
                     else:
-                        self.turn_count += 1
                         if self.opened_card.id != card.id:
+                            if self.turn_count < 99:
+                                self.turn_count += 1
+                            
                             self.card_is_open = False
                             self.cards_should_turn = True
                             self.opened_card2 = card
