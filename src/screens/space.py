@@ -1,5 +1,7 @@
 import pygame
 
+from functions.basic_rect import basic_rect
+
 from config import *
 
 class Space(pygame.sprite.Sprite):
@@ -15,7 +17,7 @@ class Space(pygame.sprite.Sprite):
         self.height = Iheight
         
         # other vars
-        self.interface = pygame.Surface((Iheight*0.4, Iheight*0.9))
+        self.interface = basic_rect((Iwidth*0.4, Iheight*0.9))
         self.interface.fill((167, 234, 100))
 
         self.image = pygame.Surface((Iwidth, Iheight), pygame.SRCALPHA)
