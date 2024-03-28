@@ -70,7 +70,10 @@ def handle_draws(self, Cwidth, Cheight):
                 self.active_sprites.add(self.space)
                 self.active_sprites.add(self.space.minigame_player)
                 self.active_sprites.add(self.close_button)
-            
+                self.active_sprites.remove(self.player)
+                self.active_sprites.remove(self.settings_button)
+                self.active_sprites.remove(self.inventory_button)
+
             if not DEV_MODE:
                 if pygame.time.get_ticks() - self.time_interval > self.interval_ms and self.sp_b_it <= 7:
                     self.time_interval = pygame.time.get_ticks()

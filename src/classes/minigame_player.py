@@ -2,6 +2,8 @@ import pygame
 
 from classes.player import Player
 
+from config import *
+
 class MinigamePlayer(Player):
 
     def __init__(self, x:int, y:int, width:int, height:int):
@@ -85,3 +87,6 @@ class MinigamePlayer(Player):
                     self.image = self.walk_left_5
 
         self.animation_index = (self.animation_index + 1) % 30
+
+    def reset(self):
+        self.x = Iwidth//2 - 25

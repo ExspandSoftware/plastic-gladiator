@@ -118,11 +118,13 @@ class MemoryGame(pygame.sprite.Sprite):
                                 with open(os.path.join(WORKING_DIR, "JSONs", "GameState.json"), "r") as f:
                                     data = json.load(f)
                                     progress = data.get("progress", 0)
+                                    space_bags_cleared = data.get("space_bags_cleared", 0)
                                     f.close()
                                 with open(os.path.join(WORKING_DIR, "JSONs", "GameState.json"), "w") as f:
                                     data = {
                                         "progress": progress,
-                                        "memory_turns": self.turn_count
+                                        "memory_turns": self.turn_count,
+                                        "space_bags_cleared": space_bags_cleared,
                                     }
                                     json.dump(data, f, indent=4)
         
