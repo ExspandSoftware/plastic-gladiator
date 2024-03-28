@@ -28,3 +28,4 @@ Cwidth, Cheight = 1280, 720
 #Gamerules
 stage: str = "home"
 FONT_SIZE: int = 24
+DEV_MODE: bool = True

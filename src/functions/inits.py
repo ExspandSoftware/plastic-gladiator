@@ -158,7 +158,7 @@ def init_edeka(self):
     #self.edeka_3_background_top     = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Fleischtheke.png'), False)
     #self.edeka_3_background_bottom  = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Fleischtheke.png'), False)
     #self.seller                     = GImage(700, 200, 200, 400, (200, 230, 150), False)
-    self.space                      = Space()      
+    self.space                      = Space()
 
     # obejcts in stage 4
     self.edeka_4_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Kasse.png'), False)
