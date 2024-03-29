@@ -105,7 +105,7 @@ class SettingsScreen(pygame.sprite.Sprite):
 
 
     def save_settings(self, game_obj):
-        save_state(game_obj.progress, self.font_size, self.volume)
+        save_state(game_obj.progress, game_obj.secret_progress, self.font_size, self.volume)
 
 
     def return_to_menu(self, game_obj):

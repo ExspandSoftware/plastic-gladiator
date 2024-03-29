@@ -162,14 +162,20 @@ def handle_mouse_edeka(self, event):
 
             self.active_sprites.remove(self.settings_button)
             self.active_sprites.remove(self.inventory_button)
-        
-        self.memory_game.is_clicked(event.pos)
-
 
     #stage 3 --------------------------------------------------------------------------------------
     # open the minigame window
     if self.edeka_stage == 3:
-        pass
+        if self.retry_button.is_clicked(event.pos, self.edeka_buttons_pressable):
+            self.edeka_buttons_pressable = False
+            self.movement = False
+
+            self.active_sprites.add(self.space)
+            self.active_sprites.add(self.space.minigame_player)
+            self.active_sprites.add(self.close_button)
+
+            self.active_sprites.remove(self.settings_button)
+            self.active_sprites.remove(self.inventory_button)
 
     #settings button ------------------------------------------------------------------------------
     if self.settings_button.is_clicked(event.pos, self.edeka_buttons_pressable):
@@ -212,8 +218,3 @@ def handle_mouse_edeka(self, event):
 
             self.memory_game.close()
             self.space.reset()
-
-            if self.edeka_stage == 2:
-                self.progress += 0.2
-            elif self.edeka_stage == 3:
-                self.progress += 0.2

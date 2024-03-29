@@ -168,4 +168,9 @@ def handle_edeka(self):
 
                     self.EI_2 = 0
                     self.sp_b_it = 0
-                    self.progress += 0.2
+                    if 0.2 < self.progress < 0.4:
+                        self.progress = 0.4
+                    elif 0.4 < self.progress < 0.6:
+                        self.progress = 0.6
+                    else:
+                        self.progress = 0.8

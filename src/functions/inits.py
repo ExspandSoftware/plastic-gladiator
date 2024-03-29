@@ -115,6 +115,7 @@ def init_edeka(self):
     #pop-up screens
     self.edeka_buttons_pressable = True
     self.time_interval = pygame.time.get_ticks()
+    self.edeka_stage = 1
 
     self.EI_2 = 0
     self.cards = [
@@ -158,6 +159,7 @@ def init_edeka(self):
     #self.edeka_3_background_top     = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Fleischtheke.png'), False)
     #self.edeka_3_background_bottom  = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Fleischtheke.png'), False)
     #self.seller                     = GImage(700, 200, 200, 400, (200, 230, 150), False)
+    self.retry_button               = Button(Iwidth*0.98 - Iheight*0.1, Iheight*0.9 - Iwidth*0.02, Iheight*0.1, Iheight*0.1, load_image_asset('buttons', 'retry.png'), True, True)
     self.space                      = Space()
 
     # obejcts in stage 4

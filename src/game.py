@@ -62,7 +62,7 @@ class Game:
         #Game Variables ----------------------------------------------------------------------------------------------------
         #variables that should be saved for the next opening
         self.progress               = _try_load_from_json(os.path.join(WORKING_DIR, 'JSONs', 'GameState.json'), 'progress', 0)
-
+        self.secret_progress        = _try_load_from_json(os.path.join(WORKING_DIR, 'JSONs', 'GameState.json'), 'secret_progress', 0)
         #update screen with data
         self.font_size              = _try_load_from_json(os.path.join(WORKING_DIR, 'JSONs', 'settings.json'), 'font_size', 0)
         self.volume                 = _try_load_from_json(os.path.join(WORKING_DIR, 'JSONs', 'settings.json'), 'volume', 0.25)
@@ -147,7 +147,7 @@ class Game:
             self.update_wh()
             
             #update and draw objects for each stage
-            self.active_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE, progress=self.progress, player_movement=self.movement, game_class=self)
+            self.active_sprites.update(Iwidth, Iheight, Cwidth, Cheight, stage=self.STAGE, progress=self.progress + self.secret_progress, player_movement=self.movement, game_class=self)
             self.active_sprites.draw(self.screen)
 
             #hande all drawings that should be done besides the sprites
@@ -211,7 +211,7 @@ class Game:
     
     def __quit(self):
         #save game and quit
-        save_state(self.progress, self.font_size, self.volume)
+        save_state(self.progress, self.secret_progress, self.font_size, self.volume)
         
         pygame.quit()
         sys.exit(1)

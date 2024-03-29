@@ -26,7 +26,7 @@ def handle_draws(self, Cwidth, Cheight):
             if self.EI_2 == 0:
                 self.EI_2 = pygame.time.get_ticks()
 
-            if pygame.time.get_ticks() - self.EI_2 <= 10000:
+            if pygame.time.get_ticks() - self.EI_2 <= 5000:
                 text = "Nun mach deinen ersten Einkauf! Such dir etwas aus dem Regel aus - aber Achtung! Nimm lieber nicht das Falsche. Klick einfach auf das Regal und es beginnt..."
                 sb = speech_bubble(text, Cwidth*0.9)
                 self.screen.blit(sb, (Cwidth//2 - sb.get_width()//2, Cheight - 25 - sb.get_height()))
@@ -66,7 +66,8 @@ def handle_draws(self, Cwidth, Cheight):
             elif self.sp_b_it == 7:
                 self.edeka_buttons_pressable = False
                 self.movement = False
-
+                
+                self.active_sprites.add(self.retry_button)
                 self.active_sprites.add(self.space)
                 self.active_sprites.add(self.space.minigame_player)
                 self.active_sprites.add(self.close_button)

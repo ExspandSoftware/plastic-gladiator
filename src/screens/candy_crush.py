@@ -160,7 +160,7 @@ class CandyCrush(pygame.sprite.Sprite):
                 value.active_sprites.remove(value.candy_crush_game)
                 value.active_sprites.remove(value.close_button)
                 value.inventory_screen.items[0][1] += self.saved_bottles
-                value.progress += 0.2
+                value.secret_progress = 0.2
 
         """
         # scale the image to the window size
