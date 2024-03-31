@@ -25,7 +25,7 @@ class MemoryGame(pygame.sprite.Sprite):
         self.game_window = basic_rect(width, height)
         self.rect = self.image.get_rect(topleft=(0, 0))
 
-        self.turn_count_background = basic_rect(250, 75)
+        self.turn_count_background = basic_rect(250, 100)
 
         self.card_size = card_size
         #self.default_card_image = default_card_image
@@ -46,10 +46,10 @@ class MemoryGame(pygame.sprite.Sprite):
         value = kwargs["game_class"]
 
         self.image.blit(self.game_window, self.game_window.get_rect(topleft=(self.x, self.y)))
-        self.image.blit(self.turn_count_background, self.turn_count_background.get_rect(topleft=(Iwidth//2 - 125, 0)))
+        self.image.blit(self.turn_count_background, self.turn_count_background.get_rect(center=((Iwidth//2 - Iheight*0.45)//2, Iheight//2)))
 
         turn_count_text = self.font.render(f"Züge: {str(0) + str(self.turn_count) if self.turn_count < 10 else str(self.turn_count)}", True, (255, 255, 255))
-        self.image.blit(turn_count_text, turn_count_text.get_rect(center=(Iwidth//2, 40)))
+        self.image.blit(turn_count_text, turn_count_text.get_rect(center=((Iwidth//2 - Iheight*0.45)//2, Iheight//2)))
 
         if self.cards_should_turn and pygame.time.get_ticks() - self.t1 > 1500:
             self.cards_should_turn = False

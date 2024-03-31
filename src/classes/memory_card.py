@@ -12,11 +12,15 @@ class MemoryCard(pygame.sprite.Sprite):
         self.x = 0
         self.y = 0
         self.is_open = False
-        self.topside_image = pygame.image.load(image)
+        tmp_surface = basic_rect(card_size, card_size)
+        tmp_image = pygame.image.load(image)
+        tmp_image = pygame.transform.scale(tmp_image, (card_size*0.9, card_size*0.9))
+        tmp_surface.blit(tmp_image, (card_size*0.05, card_size*0.05))
+        self.topside_image = tmp_surface
         self.backside_image = basic_rect(card_size, card_size)
         self.click_sound = pygame.mixer.Sound("./assets/sounds/button_click.mp3")
 
-        self.image = self.backside_image
+        self.image = self.topside_image
         self.rect = self.image.get_rect(topleft=(0, 0))
 
 

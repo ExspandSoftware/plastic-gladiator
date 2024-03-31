@@ -157,7 +157,7 @@ def init_edeka(self):
     # obejcts in stage 2
     self.edeka_2_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Suessigkeitentheke.png'), False)
     self.memory_button              = Button(Iwidth//2 - 500, Iheight//2 - 350, 1000, 625, (0, 0, 0), False, True)
-    self.memory_game                = MemoryGame(Iwidth//2 - Iheight*0.45, Iheight*0.05, Iheight*0.9, Iheight*0.9, (0, 0, 0), 125, (0, 0, 0))
+    self.memory_game                = MemoryGame(Iwidth//2 - Iheight*0.45, Iheight*0.05, Iheight*0.9, Iheight*0.9, (0, 0, 0), 141, (0, 0, 0))
     self.memory_game.create_board(self.cards)
     self.rendered_cards             = self.memory_game.render()
                     

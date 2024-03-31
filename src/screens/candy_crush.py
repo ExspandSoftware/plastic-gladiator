@@ -143,14 +143,26 @@ class CandyCrush(pygame.sprite.Sprite):
 
 
         #structure the time whenm the window was opened
-        self.interval_1_ms = 12000
+        self.interval_1_ms = 8000
         self.interval_2_ms = 45000
+        self.interval_3_ms = 10000
+        self.interval_4_ms = 10000
         if 0 <= self.time_since_start_ms <= self.interval_1_ms:
             sb = speech_bubble("Sehr gut! Wie es aussieht, hat jemand einige Pfandflaschen im Muelleimer vergessen... Sammle die Pfandflaschen und bringe sie zum Pfandautomaten im Eingang des Supermarktes! Viel Erfolg, dir bleibt nicht viel Zeit... (Du erkennst eine Pfandflasche an dem Pfandsymbol auf dem Etikette.)", 500, True, "r")
             self.image.blit(sb, (Iwidth//2 - sb.get_width()//2, Iheight//2 - sb.get_height()//2))
         elif self.interval_1_ms <= self.time_since_start_ms <= self.interval_1_ms + self.interval_2_ms:
             #draw the game
             self.draw_game()
+        elif self.interval_1_ms + self.interval_2_ms <= self.time_since_start_ms <= self.interval_1_ms + self.interval_2_ms + self.interval_3_ms:
+            with open(os.path.join(WORKING_DIR, "assets", "data", "note_1.txt"), 'r') as file:
+                text = file.read()
+            sb = speech_bubble(text, 650, True, "r")
+            self.image.blit(sb, (Iwidth//2 - sb.get_width()//2, Iheight//2 - sb.get_height()//2))
+        elif self.interval_1_ms + self.interval_2_ms + self.interval_3_ms <= self.time_since_start_ms <= self.interval_1_ms + self.interval_2_ms + self.interval_3_ms + self.interval_4_ms:
+            with open(os.path.join(WORKING_DIR, "assets", "data", "note_2.txt"), 'r') as file:
+                text = file.read()
+            sb = speech_bubble(text, 650, True, "r")
+            self.image.blit(sb, (Iwidth//2 - sb.get_width()//2, Iheight//2 - sb.get_height()//2))
         elif self.time_since_start_ms >= self.interval_1_ms + self.interval_2_ms:
             #close the window automatically after the time has finished
             if "game_class" in kwargs:
