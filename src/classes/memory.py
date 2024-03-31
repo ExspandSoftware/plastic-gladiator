@@ -28,7 +28,7 @@ class MemoryGame(pygame.sprite.Sprite):
         self.turn_count_background = basic_rect(250, 75)
 
         self.card_size = card_size
-        self.default_card_image = default_card_image
+        #self.default_card_image = default_card_image
         self.cards = None
         self.clickable_cards = None
         self.card_is_open = False
@@ -65,7 +65,7 @@ class MemoryGame(pygame.sprite.Sprite):
         
         for idx, card_pair in enumerate(cards):
             for card in card_pair:
-                card_list.append(MemoryCard(idx, self.card_size, card, self.default_card_image))
+                card_list.append(MemoryCard(idx, self.card_size, card))
 
         self.cards = card_list
 

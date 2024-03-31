@@ -45,10 +45,17 @@ def init_home(self):
 
     #sprites for the book
     self.book_cover             = GImage(int(Iwidth*0.5- Iheight*0.32), int(Iheight*0.1),  int(Iheight*0.64), int(Iheight*0.8), load_image_asset('book', 'Buch-Cover-mit-Titel.png'), False)
-    self.page1                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (123, 45, 67), False)
-    self.page2                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (45, 67, 123), False)
-    self.page3                  = GImage(int(Iwidth * 0.1), int(Iheight * 0.1), int(Iwidth * 0.8), int(Iheight * 0.8), (67, 123, 45), False)
-    self.pages                  = [self.book_cover, self.page1, self.page2, self.page3]
+    self.page1                  = GImage(Iwidth//2 - (int(Iheight * 0.8) * 1.3825)//2, int(Iheight * 0.1), int(Iheight * 0.8) * 1.3825, int(Iheight * 0.8), load_image_asset('book', 'Seite-1.png'), False)
+    self.page2                  = GImage(Iwidth//2 - (int(Iheight * 0.8) * 1.3825)//2, int(Iheight * 0.1), int(Iheight * 0.8) * 1.3825, int(Iheight * 0.8), load_image_asset('book', 'Seite-2.png'), False)
+    self.page3                  = GImage(Iwidth//2 - (int(Iheight * 0.8) * 1.3825)//2, int(Iheight * 0.1), int(Iheight * 0.8) * 1.3825, int(Iheight * 0.8), load_image_asset('book', 'Seite-3.png'), False)
+    self.page4                  = GImage(Iwidth//2 - (int(Iheight * 0.8) * 1.3825)//2, int(Iheight * 0.1), int(Iheight * 0.8) * 1.3825, int(Iheight * 0.8), load_image_asset('book', 'Seite-4.png'), False)
+    self.page5                  = GImage(Iwidth//2 - (int(Iheight * 0.8) * 1.3825)//2, int(Iheight * 0.1), int(Iheight * 0.8) * 1.3825, int(Iheight * 0.8), load_image_asset('book', 'Seite-5.png'), False)
+    self.page6                  = GImage(Iwidth//2 - (int(Iheight * 0.8) * 1.3825)//2, int(Iheight * 0.1), int(Iheight * 0.8) * 1.3825, int(Iheight * 0.8), load_image_asset('book', 'Seite-6.png'), False)
+    self.page7                  = GImage(Iwidth//2 - (int(Iheight * 0.8) * 1.3825)//2, int(Iheight * 0.1), int(Iheight * 0.8) * 1.3825, int(Iheight * 0.8), load_image_asset('book', 'Seite-7.png'), False)
+    self.page8                  = GImage(Iwidth//2 - (int(Iheight * 0.8) * 1.3825)//2, int(Iheight * 0.1), int(Iheight * 0.8) * 1.3825, int(Iheight * 0.8), load_image_asset('book', 'Seite-8.png'), False)
+    self.page9                  = GImage(Iwidth//2 - (int(Iheight * 0.8) * 1.3825)//2, int(Iheight * 0.1), int(Iheight * 0.8) * 1.3825, int(Iheight * 0.8), load_image_asset('book', 'Seite-9.png'), False)
+    self.page10                 = GImage(Iwidth//2 - (int(Iheight * 0.8) * 1.3825)//2, int(Iheight * 0.1), int(Iheight * 0.8) * 1.3825, int(Iheight * 0.8), load_image_asset('book', 'Seite-10.png'), False)
+    self.pages                  = [self.book_cover, self.page1, self.page2, self.page3, self.page4, self.page5, self.page6, self.page7, self.page8, self.page9, self.page10]
     self.book_screen            = BookScreen(0, 0, Iwidth, Iheight, (123, 93, 235), self.pages, 0)
     self.next_page              = Button(Iwidth - 140, Iheight/2 - 70, 140, 140, load_image_asset('buttons', 'arrow_right.png'), False)
     self.last_page              = Button(0, Iheight/2 - 70, 140, 140, load_image_asset('buttons', 'arrow_left.png'), False)
@@ -119,14 +126,14 @@ def init_edeka(self):
 
     self.EI_2 = 0
     self.cards = [
-            ((0, 104, 132), (0, 104, 132)),
-            ((0, 144, 159), (0, 144, 159)),
-            ((137, 210, 236), (137, 210, 236)),
-            ((250, 157, 0), (250, 157, 0)),
-            ((255, 208, 141), (255, 208, 141)),
-            ((110, 0, 108), (110, 0, 108)),
-            ((145, 30, 143),(145, 30, 143)),
-            ((207, 151, 215), (207, 151, 215)),
+            (os.path.join(WORKING_DIR, "assets", "images", "edeka", "memory", "Paerchen_1_Teil_1.png"), os.path.join(WORKING_DIR, "assets", "images", "edeka", "memory", "Paerchen_1_Teil_2.png")),
+            (os.path.join(WORKING_DIR, "assets", "images", "edeka", "memory", "Paerchen_2_Teil_1.png"), os.path.join(WORKING_DIR, "assets", "images", "edeka", "memory", "Paerchen_2_Teil_2.png")),
+            (os.path.join(WORKING_DIR, "assets", "images", "edeka", "memory", "Paerchen_3_Teil_1.png"), os.path.join(WORKING_DIR, "assets", "images", "edeka", "memory", "Paerchen_3_Teil_2.png")),
+            (os.path.join(WORKING_DIR, "assets", "images", "edeka", "memory", "Paerchen_4_Teil_1.png"), os.path.join(WORKING_DIR, "assets", "images", "edeka", "memory", "Paerchen_4_Teil_2.png")),
+            (os.path.join(WORKING_DIR, "assets", "images", "edeka", "memory", "Paerchen_5_Teil_1.png"), os.path.join(WORKING_DIR, "assets", "images", "edeka", "memory", "Paerchen_5_Teil_2.png")),
+            (os.path.join(WORKING_DIR, "assets", "images", "edeka", "memory", "Paerchen_6_Teil_1.png"), os.path.join(WORKING_DIR, "assets", "images", "edeka", "memory", "Paerchen_6_Teil_2.png")),
+            (os.path.join(WORKING_DIR, "assets", "images", "edeka", "memory", "Paerchen_7_Teil_1.png"), os.path.join(WORKING_DIR, "assets", "images", "edeka", "memory", "Paerchen_7_Teil_2.png")),
+            (os.path.join(WORKING_DIR, "assets", "images", "edeka", "memory", "Paerchen_8_Teil_1.png"), os.path.join(WORKING_DIR, "assets", "images", "edeka", "memory", "Paerchen_8_Teil_2.png")),
         ]
 
     self.interval_ms = 5000
@@ -150,7 +157,7 @@ def init_edeka(self):
     # obejcts in stage 2
     self.edeka_2_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Suessigkeitentheke.png'), False)
     self.memory_button              = Button(Iwidth//2 - 500, Iheight//2 - 350, 1000, 625, (0, 0, 0), False, True)
-    self.memory_game                = MemoryGame(Iwidth//2 - Iheight*0.45, Iheight*0.05, Iheight*0.9, Iheight*0.9, (40, 40, 40), 125, (123, 123, 123))
+    self.memory_game                = MemoryGame(Iwidth//2 - Iheight*0.45, Iheight*0.05, Iheight*0.9, Iheight*0.9, (0, 0, 0), 125, (0, 0, 0))
     self.memory_game.create_board(self.cards)
     self.rendered_cards             = self.memory_game.render()
                     

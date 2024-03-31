@@ -1,7 +1,9 @@
 import pygame
 
+from functions.basic_rect import basic_rect
+
 class MemoryCard(pygame.sprite.Sprite):
-    def __init__(self, id: int, card_size: tuple[int, int], image, backside_image):
+    def __init__(self, id: int, card_size: tuple[int, int], image:str):
         super().__init__()
 
         self.id = id
@@ -10,12 +12,11 @@ class MemoryCard(pygame.sprite.Sprite):
         self.x = 0
         self.y = 0
         self.is_open = False
-        self.topside_image = image
-        self.backside_image = backside_image
+        self.topside_image = pygame.image.load(image)
+        self.backside_image = basic_rect(card_size, card_size)
         self.click_sound = pygame.mixer.Sound("./assets/sounds/button_click.mp3")
 
-        self.image = pygame.Surface((card_size, card_size))
-        self.image.fill(backside_image)
+        self.image = self.backside_image
         self.rect = self.image.get_rect(topleft=(0, 0))
 
 
@@ -45,8 +46,8 @@ class MemoryCard(pygame.sprite.Sprite):
 
     def turn(self):
         if self.is_open:
-            self.image.fill(self.backside_image)
+            self.image = self.backside_image
         else:
-            self.image.fill(self.topside_image)
+            self.image = self.topside_image
         
         self.is_open = not self.is_open
