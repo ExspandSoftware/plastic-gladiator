@@ -81,7 +81,7 @@ def handle_draws(self, Cwidth, Cheight):
                     self.sp_b_it += 1
 
             else:
-                if pygame.time.get_ticks() - self.time_interval > 500 and self.sp_b_it <= 7:
+                if pygame.time.get_ticks() - self.time_interval > self.interval_ms and self.sp_b_it <= 7:
                     self.time_interval = pygame.time.get_ticks()
                     self.sp_b_it += 1
 

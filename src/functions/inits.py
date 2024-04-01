@@ -36,7 +36,8 @@ def init_home(self):
     
     # objects in the stage
     self.home_background        = GImage(0, 0, Iwidth, Iheight, load_image_asset('components', 'background.jpg'), False)
-    self.titel_name             = GImage(Iwidth//2 - int(Iwidth*0.2), int(Iwidth*0.02), int(Iwidth*0.4), int(Iheight*0.25), (123, 65, 235))
+    self.titel_background       = GImage(Iwidth//2 - int(Iwidth*0.2), int(Iwidth*0.02), int(Iwidth*0.4), int(Iwidth*0.459)*0.32, (0, 0, 0), True)
+    self.titel_name             = GImage(Iwidth//2 - int(Iwidth*0.225), int(Iwidth*0.0), int(Iwidth*0.45), int(Iwidth*0.45)*0.3862, load_image_asset('components', 'Game-main-logo.png'), False)
     self.player                 = Player(Iwidth//2 - Iwidth//12, int(Iheight * 0.333), Iwidth//6, Iheight*0.6)
     self.progress_bar           = ProgressBar(int(Iwidth*0.02), int(Iwidth*0.02), int(Iwidth*0.16), int(Iheight*0.6))
     self.settings_button        = Button(int(Iwidth*0.88), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_button('settings-button.png'))
@@ -67,6 +68,7 @@ def init_home(self):
     #add those objects to the right sprites group
     self.active_sprites.add(self.home_background)
     self.active_sprites.add(self.player)
+    self.active_sprites.add(self.titel_background)
     self.active_sprites.add(self.titel_name)
     self.active_sprites.add(self.progress_bar)
     self.active_sprites.add(self.settings_button)
@@ -157,7 +159,7 @@ def init_edeka(self):
     # obejcts in stage 2
     self.edeka_2_background         = GImage(0, 0, Iwidth, Iheight, load_image_asset('backgrounds', 'Suessigkeitentheke.png'), False)
     self.memory_button              = Button(Iwidth//2 - 500, Iheight//2 - 350, 1000, 625, (0, 0, 0), False, True)
-    self.memory_game                = MemoryGame(Iwidth//2 - Iheight*0.45, Iheight*0.05, Iheight*0.9, Iheight*0.9, (0, 0, 0), 141, (0, 0, 0))
+    self.memory_game                = MemoryGame(Iwidth//2 - Iheight*0.45, Iheight*0.05, Iheight*0.9, Iheight*0.9, (0, 0, 0), 142, (0, 0, 0))
     self.memory_game.create_board(self.cards)
     self.rendered_cards             = self.memory_game.render()
                     
