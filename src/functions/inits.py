@@ -178,7 +178,7 @@ def init_edeka(self):
     self.settings_button            = Button(int(Iwidth*0.88), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_button('settings-button.png'))
     self.inventory_button           = Button(int(Iwidth*0.02), int(Iwidth*0.02), int(Iwidth*0.1), int(Iwidth*0.1), load_button('inventory.png'))
     self.settings_screen            = SettingsScreen()
-    self.inventory_screen           = Inventory()
+    #self.inventory_screen           = Inventory()
     self.close_button               = Button(Iwidth - 50 - Iheight*0.025, Iheight*0.025, 50, 50, load_image_asset('buttons', 'close-button.png'), False)
     self.player                     = Player(int(Iwidth*0.1), int(Iheight*0.5), Iwidth//7, Iheight//2)
 

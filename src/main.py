@@ -1,4 +1,3 @@
-#%% Imports ----------------------------------------------------------------
 import pygame
 
 from game import Game

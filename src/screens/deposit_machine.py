@@ -1,5 +1,7 @@
 import pygame
 
+from functions.speech_bubble import speech_bubble
+
 from config import *
 
 class DepositeMachine(pygame.sprite.Sprite):
@@ -25,7 +27,10 @@ class DepositeMachine(pygame.sprite.Sprite):
         #work by intervals
         self.time_interval = pygame.time.get_ticks()
         self.start_interval = 0
-        self.interval_ms = 200
+        if not DEV_MODE:
+            self.interval_ms = 200
+        else:
+            self.interval_ms = 10
         img_1 = pygame.Surface((600, 600), pygame.SRCALPHA)
         img_1.fill((0, 200, 100))
         img_2 = pygame.Surface((600, 600), pygame.SRCALPHA)
@@ -49,6 +54,7 @@ class DepositeMachine(pygame.sprite.Sprite):
         ]
         self.it = 0
         self.zero_one_first = True
+        self.timer = 0
 
     def update(self, Iwidth:int, Iheight:int, Cwidth:int, Cheight:int, *args, **kwargs):
         self.image.fill((0, 0, 0, 150))
@@ -57,9 +63,13 @@ class DepositeMachine(pygame.sprite.Sprite):
         self.image.blit(self.interface, self.interface.get_rect(topleft=(Iwidth//2-self.interface.get_width()//2, -self.interface.get_height()*0.15)))
 
         #draw the insert bottle animation in a loop after a certain amout of time
+        if not DEV_MODE:
+            wait_interval = 1000
+        else:
+            wait_interval = 0
         if self.start_interval == 0:
             self.start_interval = pygame.time.get_ticks()
-        if pygame.time.get_ticks() - self.start_interval > 1500:
+        if pygame.time.get_ticks() - self.start_interval > wait_interval:
             if "game_class" in kwargs:
                 game_obj = kwargs["game_class"]
             if 0 < game_obj.inventory_screen.items[0][1]:
@@ -70,14 +80,21 @@ class DepositeMachine(pygame.sprite.Sprite):
                     self.it_idx += 1
                 if self.it_idx >= len(self.put_bottle):
                     self.it_idx = 0
+                    self.it += 1
                     game_obj.inventory_screen.items[0][1] -= 1
+                self.timer = pygame.time.get_ticks()
             else:
                 if not self.zero_one_first:
-                    #close the window automatically after the time has finished
-                    game_obj.edeka_buttons_pressable = True
-                    game_obj.movement = True
-                    game_obj.active_sprites.remove(game_obj.deposit_machine)
-                    game_obj.active_sprites.remove(game_obj.close_button)
+                    if pygame.time.get_ticks() - self.timer < 5000:
+                        text = f"Bon über {self.it * 0.25}€ - An der Kasse einzulösen"
+                        sb = speech_bubble(text, 400, True, "l")
+                        self.image.blit(sb, (800, 100))
+                    else:
+                        #close the window automatically after the time has finished
+                        game_obj.edeka_buttons_pressable = True
+                        game_obj.movement = True
+                        game_obj.active_sprites.remove(game_obj.deposit_machine)
+                        game_obj.active_sprites.remove(game_obj.close_button)
 
         """
         #Objekt skalieren

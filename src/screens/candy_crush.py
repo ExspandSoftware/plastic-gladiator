@@ -143,10 +143,17 @@ class CandyCrush(pygame.sprite.Sprite):
 
 
         #structure the time whenm the window was opened
-        self.interval_1_ms = 8000
-        self.interval_2_ms = 45000
-        self.interval_3_ms = 10000
-        self.interval_4_ms = 10000
+        if not DEV_MODE:
+            self.interval_1_ms = 8000
+            self.interval_2_ms = 45000
+            self.interval_3_ms = 10000
+            self.interval_4_ms = 10000
+        else:
+            self.interval_1_ms = 100
+            self.interval_2_ms = 100
+            self.interval_3_ms = 100
+            self.interval_4_ms = 100
+
         if 0 <= self.time_since_start_ms <= self.interval_1_ms:
             sb = speech_bubble("Sehr gut! Wie es aussieht, hat jemand einige Pfandflaschen im Muelleimer vergessen... Sammle die Pfandflaschen und bringe sie zum Pfandautomaten im Eingang des Supermarktes! Viel Erfolg, dir bleibt nicht viel Zeit... (Du erkennst eine Pfandflasche an dem Pfandsymbol auf dem Etikette.)", 500, True, "r")
             self.image.blit(sb, (Iwidth//2 - sb.get_width()//2, Iheight//2 - sb.get_height()//2))
@@ -156,7 +163,7 @@ class CandyCrush(pygame.sprite.Sprite):
         elif self.interval_1_ms + self.interval_2_ms <= self.time_since_start_ms <= self.interval_1_ms + self.interval_2_ms + self.interval_3_ms:
             with open(os.path.join(WORKING_DIR, "assets", "data", "note_1.txt"), 'r') as file:
                 text = file.read()
-            sb = speech_bubble(text, 650, True, "r")
+            sb = speech_bubble(text, 650, True, "l")
             self.image.blit(sb, (Iwidth//2 - sb.get_width()//2, Iheight//2 - sb.get_height()//2))
         elif self.interval_1_ms + self.interval_2_ms + self.interval_3_ms <= self.time_since_start_ms <= self.interval_1_ms + self.interval_2_ms + self.interval_3_ms + self.interval_4_ms:
             with open(os.path.join(WORKING_DIR, "assets", "data", "note_2.txt"), 'r') as file:
