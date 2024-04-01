@@ -51,7 +51,7 @@ class MemoryGame(pygame.sprite.Sprite):
         turn_count_text = self.font.render(f"Züge: {str(0) + str(self.turn_count) if self.turn_count < 10 else str(self.turn_count)}", True, (255, 255, 255))
         self.image.blit(turn_count_text, turn_count_text.get_rect(center=((Iwidth//2 - Iheight*0.45)//2, Iheight//2)))
 
-        if self.cards_should_turn and pygame.time.get_ticks() - self.t1 > 1500:
+        if self.cards_should_turn and pygame.time.get_ticks() - self.t1 > 7500:
             self.cards_should_turn = False
             self.opened_card.turn()
             self.opened_card2.turn()
@@ -81,6 +81,7 @@ class MemoryGame(pygame.sprite.Sprite):
         return card_group
     
     def is_clicked(self, pos) -> bool:
+        print("clicked")
         x, y = pos
 
         for card in self.clickable_cards:

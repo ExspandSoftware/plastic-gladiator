@@ -162,6 +162,8 @@ def handle_mouse_edeka(self, event):
 
             self.active_sprites.remove(self.settings_button)
             self.active_sprites.remove(self.inventory_button)
+        
+        self.memory_game.is_clicked(event.pos)
 
     #stage 3 --------------------------------------------------------------------------------------
     # open the minigame window

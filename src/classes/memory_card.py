@@ -20,7 +20,7 @@ class MemoryCard(pygame.sprite.Sprite):
         self.backside_image = basic_rect(card_size, card_size)
         self.click_sound = pygame.mixer.Sound("./assets/sounds/button_click.mp3")
 
-        self.image = self.topside_image
+        self.image = self.backside_image
         self.rect = self.image.get_rect(topleft=(0, 0))
 
 
