@@ -15,8 +15,8 @@ def save_state(progress, sp, fz, v):
             data = {
                 "progress": progress,
                 "secret_progress": sp,
-                "memory_turns": memory_turns or 0,
-                "space_bags_cleared": space_bags_cleared or 0
+                "memory_turns": memory_turns,
+                "space_bags_cleared": space_bags_cleared
             }
             json.dump(data, f, indent=4)
 

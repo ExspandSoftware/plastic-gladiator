@@ -1,33 +1,47 @@
 import psutil
 import pygame
 import os
+import time
 
 from config import *
 
+last_update_performance_data = time.time()
+left_text = None
+
 def draw_p_data(self, screen_width: int, stage):
+    global last_update_performance_data
+    global left_text
+
+    curr_time = time.time()
+
     line_spacing = self.font.size("TEST")[1] * 1.25
     extra_spacing = 0
 
     if self.show_data:
-        self.font = pygame.font.Font(os.path.join(WORKING_DIR, 'assets', 'fonts', 'game-font.ttf'), self.font_size)
-        left_text = {
-            "Author": EXPORT_VARS[0],
-            "Version": EXPORT_VARS[1],
-            "Chief Information Officer": EXPORT_VARS[2],
-            "Moderators": EXPORT_VARS[3],
-            "Head": EXPORT_VARS[5],
-            "Supervisor": EXPORT_VARS[6],
-            "Sound": EXPORT_VARS[7],
-            "Concept": EXPORT_VARS[8],
-            "Graphics": EXPORT_VARS[9],
-            "Chief Annoyance Officer": EXPORT_VARS[10],
-            "FPS": int(self.clock.get_fps()),
-            "CPU Usage": f"{psutil.cpu_percent()}%",
-            "CPU Cores": f"{psutil.cpu_count(logical=False)}",
-            "CPU logical Threads": f"{psutil.cpu_count(logical=True)}",
-            "virtual memory (RAM)": f"{psutil.virtual_memory().total/1024**2} MB",
-            "virtual memory (RAM) used": f"{(psutil.virtual_memory().total - psutil.virtual_memory().available)/1024**2} MB - ({psutil.virtual_memory().percent}%)",
-        }
+        if curr_time - last_update_performance_data > 1 or not left_text:
+            last_update_performance_data = curr_time
+
+            self.font = pygame.font.Font(os.path.join(WORKING_DIR, 'assets', 'fonts', 'game-font.ttf'), self.font_size)
+            left_text = {
+                "Author": EXPORT_VARS[0],
+                "Version": EXPORT_VARS[1],
+                "Chief Information Officer": EXPORT_VARS[2],
+                "Moderators": EXPORT_VARS[3],
+                "Head": EXPORT_VARS[5],
+                "Supervisor": EXPORT_VARS[6],
+                "Sound": EXPORT_VARS[7],
+                "Concept": EXPORT_VARS[8],
+                "Graphics": EXPORT_VARS[9],
+                "Quality Assurance": EXPORT_VARS[10],
+                "FPS": int(self.clock.get_fps()),
+
+                "CPU Usage": f"{psutil.cpu_percent()}%",
+                "CPU Cores": f"{psutil.cpu_count(logical=False)}",
+                "CPU logical Threads": f"{psutil.cpu_count(logical=True)}",
+                "virtual memory (RAM)": f"{int(psutil.virtual_memory().total//1024**2)} MB",
+                "virtual memory (RAM) used": f"{int((psutil.virtual_memory().total - psutil.virtual_memory().available)//1024**2)} MB - ({psutil.virtual_memory().percent}%)",
+            }
+
         
         for idx, (key, value) in enumerate(left_text.items()):
             if key == "CPU Usage" or key == "FPS" or key == "virtual memory (RAM)":

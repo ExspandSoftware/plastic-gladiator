@@ -166,7 +166,6 @@ class Game:
     #transitions ------------------------------------------------------------------------------------------------------------------------------
     def transition_black(self, ticker, start, stage) -> None:
         if self.black_transition[0]:
-            global STAGE
             self.movement = False
             duration_ms = 2000 # in milliseconds
             Opacity = min(((math.e/(duration_ms*100))+1)**(-((ticker-(start+duration_ms//2))**2)), 1.0)*255
@@ -175,10 +174,13 @@ class Game:
             semi_black_surface.fill((0, 0, 0, Opacity))
             self.screen.blit(semi_black_surface, (0, 0))
 
+            #print(abs(ticker - start) - duration_ms//2 <= 15)
+
             if abs(ticker - start - duration_ms//2) <= 15:
                 #change stage and load sprites
                 self.STAGE = stage
                 if stage == "home":
+                    print("home")
                     remove_sprites(self)
                     init_home(self)
                 elif stage == "walk_into_edeka":

@@ -1,5 +1,6 @@
 import pygame
 import json
+import time
 
 from config import *
 
@@ -12,6 +13,7 @@ import functions.inits as inits
 
 
 class SettingsScreen(pygame.sprite.Sprite):
+    last_button_clicks = {} # {button_name: last_click_time}
 
 
     def __init__(self):
@@ -68,7 +70,7 @@ class SettingsScreen(pygame.sprite.Sprite):
         pos = pygame.mouse.get_pos()
         clicked = pygame.mouse.get_pressed()[0]
                         
-        self.show_button("Speichern", self.interface.get_height() - self.padding - 200, pos, clicked, self.save_settings, kwargs["game_class"])
+        self.show_button("Speichern", self.interface.get_height() - self.padding - 200, pos, clicked, self.save_settings, kwargs["game_class"], min_time_between_clicks_ms=150)
         self.show_button("Zum Hauptmenue", self.interface.get_height() - self.padding - 100, pos, clicked, self.return_to_menu, kwargs["game_class"])
 
         """
@@ -91,13 +93,19 @@ class SettingsScreen(pygame.sprite.Sprite):
         self.interface.blit(text_surface, text_rect)
 
     
-    def show_button(self, text, y, pos, clicked, action, game_obj):
+    def show_button(self, text, y, pos, clicked, action, game_obj, min_time_between_clicks_ms=0):
         text_surface = self.font.render(f"{text}", True, (255, 255, 255))
         background = basic_rect(text_surface.get_width() + 50, text_surface.get_height() + 50)
         background.blit(text_surface, (25, 27))
 
         x = self.interface.get_width()//2 - background.get_width()//2
         self.interface.blit(background, (x, y))
+
+        time_since_last_click_ms = (time.time() - self.last_button_clicks.get(text, 0)) * 1000
+        if time_since_last_click_ms < min_time_between_clicks_ms:
+            return
+        
+        self.last_button_clicks[text] = time.time()
 
         if (x <= pos[0] - self.ix <= x + background.get_width()) and (y <= pos[1] - self.iy <= y + background.get_height()) and clicked:
             action(game_obj)
@@ -109,9 +117,7 @@ class SettingsScreen(pygame.sprite.Sprite):
 
 
     def return_to_menu(self, game_obj):
-        print("aa")
         if not game_obj.black_transition[0]:
-            print("bb")
             pygame.mixer.Sound.play(game_obj.whoosh_sound)
             game_obj.tmp_ticker_start = pygame.time.get_ticks()
             game_obj.black_transition = (True, "home")
